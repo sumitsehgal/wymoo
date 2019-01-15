@@ -1,0 +1,115 @@
+@charset "utf-8";
+/* CSS Document */
+/* some custom fonts via google font api */
+
+
+/* content block 4 */
+
+#mcs4_container .customScrollBox{overflow:auto;}
+#mcs4_container .dragger_container{display:none;}
+
+#mcs4_container{ margin:0; width:970px; height:130px;}
+#mcs4_container .customScrollBox{position:relative; height:100%; overflow:hidden;}
+#mcs4_container .customScrollBox .container{position:relative; width:968px; top:0; float:left;}
+#mcs4_container .customScrollBox .content{clear:both;}
+#mcs4_container .dragger_container{position:relative; width:7px; height:118px; float:left; margin:5px 0 0 -12px; cursor:pointer; background:url(../img/casenotes_scrollbg.png) top left repeat-y; }
+#mcs4_container .dragger{position:absolute; width:12px; height:50px; background:url(../img/casenotes-2.png) center no-repeat; margin-left:-2px; text-align:center; overflow:hidden; cursor:pointer; -moz-border-radius:6px; -khtml-border-radius:6px; -webkit-border-radius:6px; border-radius:6px;}
+#mcs4_container .dragger_pressed{position:absolute; width:12px; height:50px; background:#09C; margin-left:-2px; overflow:hidden; cursor:s-resize;}
+
+/* content block 1 */
+
+#mcs1_container .customScrollBox{overflow:auto;}
+#mcs1_container .dragger_container{display:none;}
+
+#mcs1_container{ margin:0; width:285px; height:250px;}
+#mcs1_container .customScrollBox{position:relative; height:100%; overflow:hidden;}
+#mcs1_container .customScrollBox .container{position:relative; width:283px; top:0; float:left;}
+#mcs1_container .customScrollBox .content{clear:both;}
+#mcs1_container .dragger_container{position:relative; width:12px; height:240px; float:left; margin:5px 0 0 -12px; cursor:pointer; background:url(../img/description_scrollbg.png) top left repeat-y; }
+#mcs1_container .dragger{position:absolute; width:12px; height:100px; background:url(../img/casenotes-1.png) center no-repeat; margin-left:-2px; text-align:center; overflow:hidden; cursor:pointer; }
+#mcs1_container .dragger_pressed{position:absolute; width:12px; height:100px; background:#09C; margin-left:-2px; overflow:hidden; cursor:s-resize; -moz-border-radius:18px; -khtml-border-radius:18px; -webkit-border-radius:18px; border-radius:18px;}
+
+/* content block 2 */
+
+#mcs2_container .customScrollBox{overflow:auto;}
+#mcs2_container .dragger_container{display:none;}
+
+#mcs2_container{ margin:0; width:300px; height:150px;}
+#mcs2_container .customScrollBox{position:relative; height:100%; overflow:hidden;}
+#mcs2_container .customScrollBox .container{position:relative; width:299px; top:0; float:left;}
+#mcs2_container .customScrollBox .content{clear:both;}
+#mcs2_container .dragger_container{position:relative; width:7px; height:134px; float:left; margin:5px 0 0 -9px; cursor:pointer; background:url(../img/communication_scrollbg.png) top left repeat-y; border-radius:10px;}
+#mcs2_container .dragger{position:absolute; width:12px; height:50px; background:url(../img/casenotes-2.png) center no-repeat; margin-left:-2px; text-align:center; overflow:hidden; cursor:pointer; -moz-border-radius:6px; -khtml-border-radius:6px; -webkit-border-radius:6px; border-radius:6px;}
+#mcs2_container .dragger_pressed{position:absolute; width:12px; height:50px; background:#09C; margin-left:-2px; overflow:hidden; cursor:s-resize;}
+
+
+/* content block 3 */
+
+#mcs3_container .customScrollBox{overflow:auto;}
+#mcs3_container .dragger_container{display:none;}
+
+#mcs3_container{ margin:0; width:300px; height:55px;}
+#mcs3_container .customScrollBox{position:relative; height:100%; overflow:hidden;}
+#mcs3_container .customScrollBox .container{position:relative; width:298px; top:0; float:left;}
+#mcs3_container .customScrollBox .content{clear:both;}
+#mcs3_container .dragger_container{position:relative; width:12px; height:48px; float:left; margin:5px 0 0 -12px; cursor:pointer; background:url(../img/attachments_scrollbar.png) top left repeat-y; }
+#mcs3_container .dragger{position:absolute; width:12px; height:29px; background:url(../img/slider.png) center no-repeat; margin-left:-2px; text-align:center; overflow:hidden; cursor:pointer; }
+#mcs3_container .dragger_pressed{position:absolute; width:12px; height:29px; background:#09C; margin-left:-2px; overflow:hidden; cursor:s-resize;-moz-border-radius:18px; -khtml-border-radius:18px; -webkit-border-radius:18px; border-radius:18px;}
+
+/* content block 5 */
+
+#mcs5_container .customScrollBox{overflow:auto;}
+#mcs5_container .dragger_container{display:none;}
+
+#mcs5_container{ margin:0; width:300px; height:55px;}
+#mcs5_container .customScrollBox{position:relative; height:100%; overflow:hidden;}
+#mcs5_container .customScrollBox .container{position:relative; width:298px; top:0; float:left;}
+#mcs5_container .customScrollBox .content{clear:both;}
+#mcs5_container .dragger_container{position:relative; width:12px; height:48px; float:left; margin:5px 0 0 -12px; cursor:pointer; background:url(../img/attachments_scrollbar.png) top left repeat-y; }
+#mcs5_container .dragger{position:absolute; width:12px; height:29px; background:url(../img/slider.png) center no-repeat; margin-left:-2px; text-align:center; overflow:hidden; cursor:pointer; }
+#mcs5_container .dragger_pressed{position:absolute; width:12px; height:29px; background:#09C; margin-left:-2px; overflow:hidden; cursor:s-resize;-moz-border-radius:18px; -khtml-border-radius:18px; -webkit-border-radius:18px; border-radius:18px;}
+
+
+
+
+
+/* content block 6 */
+
+#mcs6_container .customScrollBox{overflow:auto;}
+#mcs6_container .dragger_container{display:none;}
+
+#mcs6_container{ margin:0; width:490px; height:143px;}
+#mcs6_container .customScrollBox{position:relative; height:100%; overflow:hidden;}
+#mcs6_container .customScrollBox .container{position:relative; width:488px; top:0; float:left;}
+#mcs6_container .customScrollBox .content{clear:both;}
+#mcs6_container .dragger_container{position:relative; width:12px; height:134px; float:left; margin:5px 0 0 -12px; cursor:pointer; background:url(../img/communication_scrollbg.png) top left repeat-y; }
+#mcs6_container .dragger{position:absolute; width:12px; height:50px; background:url(../img/casenotes-2.png) center no-repeat; margin-left:-2px; text-align:center; overflow:hidden; cursor:pointer;}
+#mcs6_container .dragger_pressed{position:absolute; width:12px; height:50px; background:#09C; margin-left:-2px; overflow:hidden; cursor:s-resize; -moz-border-radius:18px; -khtml-border-radius:18px; -webkit-border-radius:18px; border-radius:18px;}
+
+
+/* content block 7 */
+
+#mcs7_container .customScrollBox{overflow:auto;}
+#mcs7_container .dragger_container{display:none;}
+
+#mcs7_container{ margin:0; width:550px; height:200px;}
+#mcs7_container .customScrollBox{position:relative; height:100%; overflow:hidden;}
+#mcs7_container .customScrollBox .container{position:relative; width:548px; top:0; float:left;}
+#mcs7_container .customScrollBox .content{clear:both;}
+#mcs7_container .dragger_container{position:relative; width:12px; height:195px; float:left; margin:5px 0 0 -12px; cursor:pointer; background:url(../img/investigator_scrollbg.png) top left repeat-y;  }
+#mcs7_container .dragger{position:absolute; width:12px; height:100px; background:url(../img/casenotes-1.png) center no-repeat; margin-left:-2px; text-align:center; overflow:hidden; cursor:pointer;}
+#mcs7_container .dragger_pressed{position:absolute; width:12px; height:100px; background:#09C; margin-left:-2px; overflow:hidden; cursor:s-resize; -moz-border-radius:18px; -khtml-border-radius:18px; -webkit-border-radius:18px; border-radius:18px;}
+
+/* content block 8 */
+
+#mcs8_container .customScrollBox{overflow:auto;}
+#mcs8_container .dragger_container{display:none;}
+
+#mcs8_container{ margin:0; width:970px; height:250px;}
+#mcs8_container .customScrollBox{position:relative; height:100%; overflow:hidden;}
+#mcs8_container .customScrollBox .container{position:relative; width:968px; top:0; float:left;}
+#mcs8_container .customScrollBox .content{clear:both;}
+#mcs8_container .dragger_container{position:relative; width:12px; height:240px; float:left; margin:5px 0 0 -12px; cursor:pointer; background:url(../img/description_scrollbg.png) top left repeat-y;}
+#mcs8_container .dragger{position:absolute; width:12px; height:100px; background:url(../img/casenotes-1.png) center no-repeat; margin-left:-2px; text-align:center; overflow:hidden; cursor:pointer; }
+#mcs8_container .dragger_pressed{position:absolute; width:12px; height:100px; background:#09C; margin-left:-2px; overflow:hidden; cursor:s-resize; -moz-border-radius:18px; -khtml-border-radius:18px; -webkit-border-radius:18px; border-radius:18px;}
+

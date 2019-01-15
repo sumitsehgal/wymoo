@@ -1,0 +1,7 @@
+[17-Oct-2016 14:18:05 UTC] PHP Fatal error:  Class 'CasesAppController' not found in /home/wymoo/public_html/client/app/plugins/cases/controllers/cases_controller.php on line 19
+[17-Oct-2016 14:21:06 UTC] PHP Fatal error:  Class 'CasesAppController' not found in /home/wymoo/public_html/client/app/plugins/cases/controllers/cases_controller.php on line 19
+[17-Oct-2016 15:31:23 UTC] PHP Fatal error:  Class 'CasesAppController' not found in /home/wymoo/public_html/client/app/plugins/cases/controllers/cases_controller.php on line 19
+[17-Oct-2016 15:33:34 UTC] PHP Fatal error:  Class 'CasesAppController' not found in /home/wymoo/public_html/client/app/plugins/cases/controllers/cases_controller.php on line 19
+[17-Oct-2016 15:41:59 UTC] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/wymoo/public_html/client/app/plugins/cases/controllers/cases_controller.php on line 32
+[17-Oct-2016 15:43:28 UTC] PHP Fatal error:  Class 'CasesAppController' not found in /home/wymoo/public_html/client/app/plugins/cases/controllers/cases_controller.php on line 19
+[17-Oct-2016 15:46:53 UTC] PHP Fatal error:  Class 'CasesAppController' not found in /home/wymoo/public_html/client/app/plugins/cases/controllers/cases_controller.php on line 19

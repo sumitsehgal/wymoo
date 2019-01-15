@@ -1,0 +1,139 @@
+<?php
+if($referer=='/login'){
+	echo $this->Session->flash();
+	echo $this->Session->flash('auth');
+}else{
+	 $this->Session->flash();
+	 $this->Session->flash('auth');
+	}
+ echo $javascript->link(array('jquery-ui.min.js'),false); 
+$autoOpen = ($form->error($model.'.client_email')) ? 'true' : 'false';
+
+echo $javascript->codeBlock('
+ $(document).ready(function () {
+	 
+		
+		 
+		  $("#forgot_password").click(function(e){
+			 
+			  $( "div#forgot_password_dialog").dialog("open");
+			 
+			  e.preventDefault();
+		});
+		$("div#forgot_password_dialog" ).dialog({
+			autoOpen: '.$autoOpen .',
+			width:450,
+			modal:true
+						
+		});	
+			
+			 $("div#forgot_password_dialog" ).find("#submit_password").click(function(e){
+				  $("div#forgot_password_dialog" ).find("#UserForgotpasswordForm").submit();
+				e.preventDefault();
+			  });
+	 });
+',array('allowCache'=>true,'safe'=>true,'inline'=>false));
+
+
+
+ ?>	<?php
+/**
+ * Copyright 2010, Cake Development Corporation (http://cakedc.com)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright 2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+?> 
+ 
+<div id="forgot_password_dialog" title="Forgot your password?" >
+ <?php
+	echo $this->Form->create($model, array(
+										'action' => 'forgotpassword',
+										'class' => 'form-horizontal'));
+	echo $this->Form->hidden('User.return_to', array('value' => $return_to));
+
+	
+?>
+ <table width="100%" border="0" cellspacing="8" cellpadding="0">
+                  <tr>
+                    <td width="135">Email Address:</td>
+                    <td><div class="inputover floatleft">
+        	<div class="inputlt"></div>
+            <div class="inputmid"><?php echo $form->text($model.'.client_email',array('class'=>'wid243'));?></div>
+            <div class="inputrt"></div>
+           
+        </div></td>
+                  </tr>
+                   <?php if( $form->error($model.'.client_email')){ ?>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td><small  style="color:#FF0000;"> <?php echo $form->error($model.'.client_email');?> </small></td>
+                  </tr>
+                  <?php }?>
+                 
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td><div class="pt15">
+        	<div class="btnlt"></div>
+            <div class="btnmid"><a href="javascript:void(0);"  style="color:#FFFFFF;" id="submit_password">Submit</a></div>
+            <div class="btnrt"></div>
+        </div></td>
+                  </tr>
+                
+                  
+                   
+                  
+                  
+              </table>
+               <?php
+			echo $this->Form->end();
+		?>
+ </div>
+	 <?php
+	echo $this->Form->create($model, array(
+										'action' => 'login',
+										'class' => 'form-horizontal'));
+	echo $this->Form->hidden('User.return_to', array('value' => $return_to));
+?>
+    <div class="divfull">
+    	 <div class="wid420" style="margin:auto"><div class="loginbox">
+      
+        	<div class="loginhead"><?php __('Secure Client Login');?> </div>
+            <div class="loginform">
+            <div class="divfull pt20">
+            	<div class="log_input"><span><?php echo $this->Html->image('usericon.png');?></span>
+           	    <div><?php echo $form->text('username'); ?></div></div>
+            </div>
+            <?php echo $form->error('username',array('wrap'=>false)); ?>
+            <div class="divfull pt6">
+            	<div class="log_input"><span><?php echo $this->Html->image('passwordicon.png');?></span>
+       	      <div><?php echo $form->password('passwd'); ?></div></div>
+            </div>
+            <?php echo $form->error('passwd',array('wrap'=>false)); ?>
+            <div class="loginbtn">
+             <?php echo $form->submit('goicon.png'); ?>
+          </div>
+        
+            <div class="divfull pt10">
+            <div class="floatleft">
+            	 <?php 
+			 echo $this->Html->link('Forgot your password?',array('plugin'=>'users','controller'=>'users','action'=> 'forgot_password'),array('id'=>'forgot_password','style'=>'text-decoration:underline'));
+			?>	</div>
+            	 <div class="floatright"><strong>Are you starting a new case?  <?php 
+			 echo $this->Html->link('Click here.',array('plugin'=>'cases','controller'=>'cases','action'=> 'casebegin'),array('class'=>'color:red'));
+			?></strong></div>
+            </div>
+            
+            </div>
+         
+        </div>
+        </div>
+    </div>
+       
+            <?php
+			echo $this->Form->end();
+		?>
+   
