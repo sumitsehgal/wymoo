@@ -39,13 +39,35 @@ $(document).ready(function () {$("#forgot_password").click(function(e){$( "div#f
 </head>
 <body>
     <div id="wrapper">
-        <div id="header">
-            <div class="logo"><a href="<?php echo WEBSITE_URL;?>">&nbsp;</a></div>
-            <div class="admintxt">Administrator<span>CASE MANAGEMENT SYSTEM</span></div>
-            <div class="divfull pt30">
+        
+            <div id="header">
+                <div class="logo">
+                    <a href="https://www.wymoo.com/client/"><span>Wymoo International</span></a>
+                </div>
+                <div class="admintxt">Administrator<span>CASE MANAGEMENT SYSTEM</span></div>
+                <?php if(isset($Auth) && !empty($Auth->user())): ?>
+                <div class="logoutsec floatright">  
+                    <span><img src="/img/user.png" width="30" height="25" alt=""></span>
+                    <span class="pt10">Hello, <a href="/client/admin/myaccount" class="newlink"><?= $Auth->user('fname') ?></a>&nbsp;|&nbsp;<a href="/client/admin/users/logout" class="newlink">Logout</a>	  </span>
+                </div>
+                <?php endif; ?>
+                <div class="divfull pt30">
+                    <ul class="nav" style="height:28px;">
+                        <li></li>
+                        <?php if(isset($Auth) && !empty($Auth->user())): ?>
+                        <li>
+                            <a href="/client/admin/casebrowser" class="<?php echo $this->request->getParam('action') == 'casebrowser' ? 'active' : ''; ?>"><span><strong>Case Browser</strong></span></a>
+                        </li>
+                        <li>
+                            <a href="/client/admin/myaccount" class="<?php echo $this->request->getParam('action') == 'myaccount' ? 'active' : ''; ?>"><span><strong>Admin Details</strong></span></a>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+                
+
+                <div class="clear"></div>
             </div>
-            <div class="clear"></div>
-        </div>
         <div id="middle">
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
