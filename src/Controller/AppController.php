@@ -48,11 +48,6 @@ class AppController extends Controller
         //$this->loadHelper('Paginator');
         
         $this->loadComponent('Auth', [
-            'loginAction' => [
-                'controller' => 'Users',
-                'action' => 'login',
-            ],
-            'authError' => 'Did you really think you are allowed to see that?',
             'authenticate' => [
                 'Form' => [
                     'fields' => ['username' => 'username', 'password' => 'passwd']

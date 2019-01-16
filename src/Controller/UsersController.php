@@ -27,7 +27,7 @@ class UsersController extends AppController
 		if (!Configure::read('App.defaultEmail')) {
 			Configure::write('App.defaultEmail', Configure::read('noreply_email.email'));
 		}
-		 $this->Auth->allow('add'); // Temporary Allow
+		 $this->Auth->allow(['add', 'logout']); // Temporary Allow
 	}
 
     /**
@@ -50,9 +50,7 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => ['Articles']
-        ]);
+        $user = $this->Users->get($id);
 
         $this->set('user', $user);
     }
@@ -148,5 +146,10 @@ class UsersController extends AppController
 		} else {
 			$this->set('return_to', false);
 		}
-	}
+    }
+    
+    public function logout()
+    {
+        return $this->redirect($this->Auth->logout());
+    }
 }

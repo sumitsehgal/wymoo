@@ -62,15 +62,15 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
-    $routes->connect('/', ['controller' => 'Client', 'action' => 'index']);
+    $routes->connect('/', ['controller' => 'Client', 'action' => 'casebegin']);
     $routes->connect('/client/casebegin', ['controller' => 'Client', 'action' => 'casebegin']);
     $routes->connect('/client/post-casebegin', ['controller' => 'Client', 'action' => 'casebeginPost']);
 
-    $routes->connect('/admin/login', ['controller' => 'Client', 'action' => 'adminLogin']);
-    $routes->connect('/admin/casebrowser', ['controller' => 'Client', 'action' => 'adminCasebrowser']);
+    // $routes->connect('/admin/login', ['controller' => 'Client', 'action' => 'adminLogin']);
+    // $routes->connect('/admin/casebrowser', ['controller' => 'Client', 'action' => 'adminCasebrowser']);
     
-    $routes->connect('admin/casenotes/*', ['controller' => 'Client', 'action' => 'adminCasenotes']);
-    $routes->connect('admin/casetracker/*', ['controller' => 'Client', 'action' => 'adminCasetracker']);
+    // $routes->connect('admin/casenotes/*', ['controller' => 'Client', 'action' => 'adminCasenotes']);
+    // $routes->connect('admin/casetracker/*', ['controller' => 'Client', 'action' => 'adminCasetracker']);
 
     
 
@@ -99,6 +99,17 @@ Router::scope('/', function (RouteBuilder $routes) {
      * You can remove these routes once you've connected the
      * routes you want in your application.
      */
+    $routes->fallbacks(DashedRoute::class);
+});
+
+Router::prefix('client', function ($routes) {
+    $routes->prefix('admin', function($routes)
+    {
+        $routes->connect('/myaccount', ['controller' => 'Admin', 'action' => 'myaccount']);
+        $routes->connect('/casebrowser', ['controller' => 'Admin', 'action' => 'casebrowser']);
+        $routes->connect('/', ['controller' => 'Admin', 'action' => 'casebrowser']);
+        $routes->fallbacks(DashedRoute::class);    
+    });
     $routes->fallbacks(DashedRoute::class);
 });
 

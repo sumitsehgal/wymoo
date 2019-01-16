@@ -28,8 +28,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->fetch('meta') ?>
     <?php
-    echo $this->Html->css('all.in.one');
-    echo $this->Html->script('all.in.one.js');
+    echo $this->Html->css(['bootstrap.css','jquery-ui','all.in.one']);
+    echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one']);
     ?>
     <script type="text/javascript">
 //<![CDATA[
@@ -40,7 +40,7 @@ $(document).ready(function () {$("#forgot_password").click(function(e){$( "div#f
 <body>
     <div id="wrapper">
         <div id="header">
-            <div class="logo"><a href="<?php echo WEBSITE_URL;?>"><img src="<?php echo WEBSITE_URL;?>images/logo_image.jpg" alt="waymoo"/></a></div>
+            <div class="logo"><a href="<?php echo WEBSITE_URL;?>">&nbsp;</a></div>
             <div class="admintxt">Administrator<span>CASE MANAGEMENT SYSTEM</span></div>
             <div class="divfull pt30">
             </div>
