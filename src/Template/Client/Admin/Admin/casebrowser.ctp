@@ -136,7 +136,48 @@
                                     </tr>
                                     <?php $count++; endforeach; ?>
                                 <?php endif; ?>
-                                
-
-                                </tbody></table></div></div></div></div></div><div class="divfull pt15"><div class="floatleft pr10"><div class="btnlt"></div><div class="btnmid"><a href="/client/admin/casebrowser">Refresh</a>	</div><div class="btnrt"></div></div><div class="floatleft pr10"><div class="btnlt"></div><div class="btnmid"><a href="#" id="edit_case">Edit Case</a></div><div class="btnrt"></div></div><div class="floatleft pr10"><div class="btnlt"></div><div class="btnmid"><a href="#" id="email_case">Email Case</a></div><div class="btnrt"></div></div><div class="floatleft pr10"><div class="btnlt"></div><div class="btnmid"><a href="#" id="delete_case">Delete</a></div><div class="btnrt"></div></div></div>   </form><form action="/client/admin/cases/cases/change_case_status" class="form-inline" id="CaseTableAdminChangeCaseStatusForm" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"></div><input type="hidden" name="data[CaseTable][case_id]" id="CaseTableCaseId"><input type="hidden" name="data[CaseTable][case_status]" id="CaseTableCaseStatus"></form>   
-  </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="divfull pt15">
+        <div class="floatleft pr10">
+            <div class="btnlt"></div>
+            <div class="btnmid">
+                <a href="/client/admin/casebrowser">Refresh</a>	
+            </div>
+            <div class="btnrt"></div>
+        </div>
+        <div class="floatleft pr10">
+            <div class="btnlt"></div>
+            <div class="btnmid">
+                <a href="#" id="edit_case">Edit Case</a>
+            </div>
+            <div class="btnrt"></div>
+        </div>
+        <div class="floatleft pr10">
+            <div class="btnlt"></div>
+            <div class="btnmid">
+                <a href="#" id="email_case">Email Case</a>
+            </div>
+            <div class="btnrt"></div>
+        </div>
+        <div class="floatleft pr10">
+            <div class="btnlt"></div>
+            <div class="btnmid">
+                <a href="#" id="delete_case">Delete</a>
+            </div>
+            <div class="btnrt"></div>
+        </div>
+    </div>
+</form>
+<form action="/client/admin/cases/cases/change_case_status" class="form-inline" id="CaseTableAdminChangeCaseStatusForm" method="post" accept-charset="utf-8">
+    <div style="display:none;">
+        <input type="hidden" name="_method" value="POST"></div>
+        <input type="hidden" name="data[CaseTable][case_id]" id="CaseTableCaseId">
+        <input type="hidden" name="data[CaseTable][case_status]" id="CaseTableCaseStatus">
+    </div>
+</form>   

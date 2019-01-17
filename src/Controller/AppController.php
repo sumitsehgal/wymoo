@@ -55,7 +55,7 @@ class AppController extends Controller
             ]
         ]);
         $this->Auth->allow('casebegin','login','logout','forgotpassword','cleancasefiles');
-                             
+        $this->set('Auth', $this->Auth);                   
         /*
         * Enable the following component for recommended CakePHP security settings.
         * see https://book.cakephp.org/3.0/en/controllers/components/security.html

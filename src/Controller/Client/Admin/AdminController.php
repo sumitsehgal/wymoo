@@ -20,13 +20,13 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Cases');
 
-        $this->paginate = [ ];
+        $this->paginate = [];
         $pages = $this->paginate($this->Cases);
         $this->set('pages', $pages);
     }
 
     public function myaccount()
     {
-        
+        $this->viewBuilder()->setLayout('admin');
     }
 }
