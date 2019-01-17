@@ -17,3 +17,4 @@ if (!isset($params['escape']) || $params['escape'] !== false) {
     </div>
     <div><img width="1" height="10" alt="" src="/img/dot.png"></div>
 </div>
+    

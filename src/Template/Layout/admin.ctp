@@ -39,15 +39,6 @@ $(document).ready(function () {$("#forgot_password").click(function(e){$( "div#f
 </head>
 <body>
     <div id="wrapper">
-<<<<<<< HEAD
-        <div id="header">
-            <div class="logo"><a href="<?php echo WEBSITE_URL;?>">&nbsp;</a></div>
-            <div class="admintxt">Administrator<span>CASE MANAGEMENT SYSTEM</span></div>
-            <div class="divfull pt30">
-            <ul class="nav" style="height:28px;"><li></li>
-            </ul>
-=======
-        
             <div id="header">
                 <div class="logo">
                     <a href="https://www.wymoo.com/client/"><span>Wymoo International</span></a>
@@ -75,7 +66,6 @@ $(document).ready(function () {$("#forgot_password").click(function(e){$( "div#f
                 
 
                 <div class="clear"></div>
->>>>>>> e68cd486e5eda77793b8e4f34acb0b225e38fd51
             </div>
         <div id="middle">
             <?= $this->Flash->render() ?>
