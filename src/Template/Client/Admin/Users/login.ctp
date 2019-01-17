@@ -1,4 +1,4 @@
-<div id="middle">
+
       <h1>Login <span>Required</span></h1>
         
         <!--  -->
@@ -70,4 +70,3 @@
             </div>
         </form>
     </div>   
-</div>

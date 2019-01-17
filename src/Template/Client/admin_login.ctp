@@ -1,4 +1,4 @@
-<div id="middle">
+
     <h1>Login <span>Required</span></h1>
     <div class="divfull">
         <div class="adminloginbox">
@@ -64,4 +64,3 @@
             </div>
         </form>
     </div>
-</div>

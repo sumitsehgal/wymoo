@@ -42,7 +42,7 @@ class UsersController extends AppController
 				$this->Auth->setUser($user);
 				return $this->redirect('/client/admin');
 			} else {
-				$this->Flash->error(__('Username or password is incorrect'));
+				$this->Flash->error(__('Invalid User-ID / password combination. Please try again'));
 			}
 		}
     }

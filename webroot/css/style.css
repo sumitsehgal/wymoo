@@ -522,3 +522,14 @@ table td {
     vertical-align: top;
     word-break: break-all;
 }
+
+//* changes css 16.01.2019 cybertron*/
+
+.inputmid {
+    border-top: 1px solid silver;
+    border-bottom: 1px solid silver;
+    background: #fbfbfb;
+    height: 27px;
+    float: left;
+    padding: 2px 0;
+}

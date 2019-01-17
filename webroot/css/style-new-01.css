@@ -1,0 +1,18 @@
+/*    
+.inputmid {
+    border-top: 1px solid silver;
+    border-bottom: 1px solid silver;
+    background: #fbfbfb;
+    height: 27px;
+    float: left;
+    padding: 2px 0;
+}
+.errormsg {
+    background-color: #ffecce;
+    border: 1px solid #e9c59b;
+    font: bold 12px Arial,Helvetica,sans-serif;
+    color: #ed302c;
+    position: relative;
+    height: 32px;
+    padding: 10px;
+}

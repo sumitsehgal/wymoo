@@ -28,7 +28,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->fetch('meta') ?>
     <?php
-    echo $this->Html->css(['bootstrap.css','jquery-ui','all.in.one']);
+    echo $this->Html->css(['bootstrap.css','jquery-ui','all.in.one','style-new-01']);
     echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one']);
     ?>
     <script type="text/javascript">
@@ -43,6 +43,8 @@ $(document).ready(function () {$("#forgot_password").click(function(e){$( "div#f
             <div class="logo"><a href="<?php echo WEBSITE_URL;?>">&nbsp;</a></div>
             <div class="admintxt">Administrator<span>CASE MANAGEMENT SYSTEM</span></div>
             <div class="divfull pt30">
+            <ul class="nav" style="height:28px;"><li></li>
+            </ul>
             </div>
             <div class="clear"></div>
         </div>
