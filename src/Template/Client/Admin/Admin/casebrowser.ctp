@@ -20,7 +20,7 @@
                     <div class="selectedTxt">On or before</div>
                     <div class="SSContainerDivWrapper" style="visibility: visible; top: 25px; height: 69px; left: 0px; display: none;">
                         <ul class="newList" style="height: 69px;">
-                            <li><a href="JavaScript:void(0);" class="hiLite">On or before</a></li>
+                            static<li><a href="JavaScript:void(0);" class="hiLite">On or before</a></li>
                             <li><a href="JavaScript:void(0);">After</a></li>
                             <li><a href="JavaScript:void(0);">On</a></li>
                         </ul>
