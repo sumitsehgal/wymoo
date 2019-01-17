@@ -15,22 +15,26 @@ class UsersController extends AppController
     
     public function index()
     {
-
+        $this->viewBuilder()->setLayout('admin');
     }
 
     public function add()
     {
-
+        $this->viewBuilder()->setLayout('admin');
     }
 
     public function edit()
     {
-
+        $this->viewBuilder()->setLayout('admin');
     }
 
     public function delete()
     {
-
+        $this->viewBuilder()->setLayout('admin');
+    }
+    public function view()
+    {
+        $this->viewBuilder()->setLayout('admin');
     }
 
     public function login()

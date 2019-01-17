@@ -28,7 +28,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->fetch('meta') ?>
     <?php
-    echo $this->Html->css(['bootstrap.css','jquery-ui','all.in.one','style-new-01']);
+    echo $this->Html->css(['all.in.one','style-new-01']);
     echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one']);
     ?>
     <script type="text/javascript">
@@ -66,6 +66,7 @@ $(document).ready(function () {$("#forgot_password").click(function(e){$( "div#f
                 
 
                 <div class="clear"></div>
+
             </div>
         <div id="middle">
             <?= $this->Flash->render() ?>
