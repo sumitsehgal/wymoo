@@ -1,6 +1,6 @@
 <h1 class="relative">Add <span>New User </span>
          <div class="btnh1"><div class="btnlt"></div>
-            <div class="btnmid"><a href="#" id="view_users">View users</a></div>
+            <div class="btnmid"><a href="/client/admin/user/view" id="view_users">View users</a></div>
             <div class="btnrt"></div>
         </div>
 </h1>
