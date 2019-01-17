@@ -125,12 +125,22 @@
                                         <td width="25%"> 
                                             <img src="/client/img/dot.png" height="13" width="10" alt="">&nbsp;&nbsp;<a href="/client/admin/casenotes/<?= $page['id'] ?>?iframe" class="newlink lightbox iframe" onclick="$(this).parents(&quot;tr&quot;).css(&quot;font-weight&quot;,&quot;normal&quot;);" style=""><?= $page['client_email'] ?></a>	
                                         </td>
-                                        <td width="10%">Wymoo <!-- TODO --></td>
-                                        <td width="10%">Pending <!-- TODO --></td>
-                                        <td width="12%">1 <!-- TODO --></td>
+                                        <td width="10%"><?= $page['site_name'] ?></td>
+                                        <td width="10%"><?php echo ($page['due_date']==0) ? 'Pending' : date('D, M j',$page['due_date']);?> </td>
+                                        <td width="12%"><?php echo ($page['is_submited']==0) ? '' : floor((time()-(floor($page['submited_date']/86400)*86400))/86400);?><!-- TODO --></td>
                                         <td nowrap="nowrap"> <!-- TODO -->
                                             <span class="floatleft">
-                                                <a href="/client/admin/casetracker/7911" class="newlink">Case On Hold</a></span><span class="statusicon"><img src="/client/img/orange_bull.png" id="7911" value="7" class="chage_stateus" style="cursor:pointer" alt="">
+                                                <a href="/client/admin/casetracker/7911" class="newlink"><?= $page['case_status'] ?></a></span><span class="statusicon">
+                                                <?php 
+                                                
+                                                    echo $this->Html->image($caseIcons[$page['case_status_id']], [
+                                                        "alt" => $page['case_status'],
+                                                        "value" => $page['case_status_id'],
+                                                        "id" => $page['id'],
+                                                        "class" => 'chage_stateus',
+                                                        "style" => 'cursor:pointer'
+                                                    ]); 
+                                                ?>
                                             </span>
                                         </td>
                                     </tr>
