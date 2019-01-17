@@ -19,10 +19,11 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Cases');
+        $caseIcons = Configure::read('case_icon');
 
         $this->paginate = [];
         $pages = $this->paginate($this->Cases);
-        $this->set('pages', $pages);
+        $this->set(compact('pages', 'caseIcons'));
     }
 
     public function myaccount()

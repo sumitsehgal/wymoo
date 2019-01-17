@@ -203,3 +203,4 @@ Type::build('timestamp')
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 
 define('WEBSITE_URL', 'http://wymoolocal.com/');
+Configure::load('global_constants');
