@@ -29,8 +29,13 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('meta') ?>
     <?php
     echo $this->Html->css(['all.in.one','style-new-01']);
-    echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one']);
+    echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one','jquery_new_01']);
     ?>
+    <script type="text/javascript">
+    $(function() {
+        $( "#datepiCaseTableDueDatecker" ).datepicker();
+    })
+    </script>
  <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function () {$("#forgot_password").click(function(e){$( "div#forgot_password_dialog").dialog("open");e.preventDefault();});$("div#forgot_password_dialog" ).dialog({autoOpen: false,width:450,modal:true});   $("div#forgot_password_dialog" ).find("#submit_password").click(function(e){$("div#forgot_password_dialog" ).find("#UserForgotpasswordForm").submit();e.preventDefault();});});
