@@ -6,6 +6,7 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Auth\DefaultPasswordHasher; 
 
 class AdminController extends AppController
 {
@@ -37,15 +38,25 @@ class AdminController extends AppController
         ])->first();
         
         if ($this->request->is(['post', 'put'])) {
-            
-            $this->User->patchEntity($user, $this->request->getData());
-            if ($this->user->save($user)) {
-                $this->Flash->success(__('Your user has been updated.'));
-                //return $this->redirect('/client/admin/myaccount');
+            $data = $this->request->getData();
+            if(!empty($data['passwd']) && ((new DefaultPasswordHasher)->check($data['passwd'], $user->passwd)))
+            {
+                if(!empty($data['newpassword']))
+                {
+                    $data['passwd'] = $data['newpassword'];
+                }
+                $this->Users->patchEntity($user, $data);
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('Your user has been updated.'));
+                }
+                else
+                {
+                    $this->Flash->error(__('Unable to update your user.'));
+                }
             }
             else
             {
-                $this->Flash->error(__('Unable to update your user.'));
+                $this->Flash->error(__('Please Enter Correct Current Password.'));
             }
         }
         $this->set('user', $user);

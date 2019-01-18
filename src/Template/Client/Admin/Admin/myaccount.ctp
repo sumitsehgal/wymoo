@@ -82,7 +82,7 @@
               <td><div class="inputover floatleft pr20">
                 <div class="inputlt"></div>
                 <div class="inputmid">
-                    <?php echo $this->Form->control('password', ['type' => 'password', 'class'=>'wid243', 'id'=>'UserPassword', 'label'=>false]); ?>
+                    <?php echo $this->Form->control('passwd', ['type' => 'password', 'class'=>'wid243', 'id'=>'UserPassword', 'label'=>false, 'value'=>'']); ?>
                 </div>
                 <div class="inputrt"></div>
               </div>

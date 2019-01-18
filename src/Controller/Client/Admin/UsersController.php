@@ -16,11 +16,27 @@ class UsersController extends AppController
     public function index()
     {
         $this->viewBuilder()->setLayout('admin');
+        $users = $this->paginate($this->Users);
+        $this->set(compact('users'));
     }
 
     public function add()
     {
         $this->viewBuilder()->setLayout('admin');
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
+            $data['slug'] = $data['username'];
+            $data['passwd'] = $data['newpassword'];
+            $user = $this->Users->patchEntity($user, $data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The user has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $this->set(compact('user'));
     }
 
     public function edit()

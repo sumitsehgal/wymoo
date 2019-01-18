@@ -1,14 +1,18 @@
 <h1 class="relative">Add <span>New User </span>
          <div class="btnh1"><div class="btnlt"></div>
-            <div class="btnmid"><a href="/client/admin/user/view" id="view_users">View users</a></div>
+            <div class="btnmid"><a href="/client/admin/users/" id="view_users">View users</a></div>
             <div class="btnrt"></div>
         </div>
 </h1>
-<form action="/client/admin/users/users/add" class="form-horizontal" id="UserAdminAddForm" method="post" accept-charset="utf-8">
+<?= $this->Form->create($user, [
+    'url' => '/client/admin/users/add',
+    'class' => 'form-horizontal',
+    'id' => 'UserAdminAddForm',
+    'method' => 'post'
+]) ?>
     <div style="display:none;">
         <input type="hidden" name="_method" value="POST" />
     </div>
-    <input type="hidden" name="data[User][id]" id="UserId" />
     <div class="divfull">
         <div class="gradbox">
             <small style="color:#FF0000"> All fields are mandatory.</small>
@@ -22,7 +26,12 @@
                                     <div class="inputover floatleft pr20">
                                         <div class="inputlt"></div>
                                         <div class="inputmid">
-                                            <input name="data[User][username]" type="text" class="wid243" id="UserUsername" />
+                                            <?= $this->Form->control('username', [
+                                                'type' => 'text',
+                                                'class' => 'wid243',
+                                                'id' => 'UserUsername',
+                                                'label' => false
+                                            ]) ?>
                                         </div>
                                         <div class="inputrt"></div>
                                     </div>
@@ -34,7 +43,12 @@
                                     <div class="inputover floatleft pr20">
                                         <div class="inputlt"></div>
                                         <div class="inputmid">
-                                            <input name="data[User][fname]" type="text" class="wid243" id="UserFname" />
+                                            <?= $this->Form->control('fname', [
+                                                'type' => 'text',
+                                                'class' => 'wid243',
+                                                'id' => 'UserFname',
+                                                'label' => false
+                                            ]) ?>
                                         </div>
                                         <div class="inputrt"></div>
                                     </div>
@@ -46,7 +60,12 @@
                                     <div class="inputover floatleft pr20">
                                         <div class="inputlt"></div>
                                         <div class="inputmid">
-                                            <input name="data[User][lname]" type="text" class="wid243" id="UserLname" />
+                                            <?= $this->Form->control('lname', [
+                                                'type' => 'text',
+                                                'class' => 'wid243',
+                                                'id' => 'UserLname',
+                                                'label' => false
+                                            ]) ?>                                            
                                         </div>
                                         <div class="inputrt"></div>
                                     </div><span class="pt5 floatleft"></span></td>
@@ -57,7 +76,12 @@
                                     <div class="inputover floatleft pr20">
                                         <div class="inputlt"></div>
                                         <div class="inputmid">
-                                            <input name="data[User][email]" type="text" class="wid243" id="UserEmail" />
+                                            <?= $this->Form->control('email', [
+                                                'type' => 'email',
+                                                'class' => 'wid243',
+                                                'id' => 'UserEmail',
+                                                'label' => false
+                                            ]) ?>
                                         </div>
                                         <div class="inputrt"></div>
                                     </div>
@@ -73,7 +97,12 @@
                                     <div class="inputover floatleft pr20">
                                         <div class="inputlt"></div>
                                         <div class="inputmid">
-                                            <input type="password" name="data[User][newpassword]" class="wid243" id="UserNewpassword" />
+                                            <?= $this->Form->control('newpassword', [
+                                                'type' => 'password',
+                                                'class' => 'wid243',
+                                                'id' => 'UserNewpassword',
+                                                'label' => false
+                                            ]) ?>
                                         </div>
                                         <div class="inputrt"></div>
                                     </div>
@@ -85,7 +114,12 @@
                                     <div class="inputover floatleft pr20">
                                         <div class="inputlt"></div>
                                         <div class="inputmid">
-                                            <input type="password" name="data[User][temppassword]" class="wid243" id="UserTemppassword" />
+                                            <?= $this->Form->control('temppassword', [
+                                                'type' => 'password',
+                                                'class' => 'wid243',
+                                                'id' => 'UserTemppassword',
+                                                'label' => false
+                                            ]) ?>
                                         </div>
                                         <div class="inputrt"></div>
                                     </div>
@@ -97,21 +131,41 @@
                                     <div class="inputover floatleft pr20">
                                         <div class="inputlt"></div>
                                         <div class="inputmid select244">
-                                            <select name="data[User][user_type_id]" class="select" id="UserUserTypeId">
-                                                <option value="4">Full Access</option>
-                                                <option value="3">Limited Access</option>
-                                            </select>
+                                        <?= 
+                                            $this->Form->select(
+                                                'user_type_id',
+                                                [4 => 'Full Access', 3 => 'Limited Access']
+                                            );
+                                        ?>
                                         </div>
                                         <div class="inputrt"></div>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
+                                <td>Phone:</td>
+                                <td>
+                                    <div class="inputover floatleft pr20">
+                                        <div class="inputlt"></div>
+                                        <div class="inputmid">
+                                            <?= $this->Form->control('phone', [
+                                                'type' => 'text',
+                                                'class' => 'wid243',
+                                                'id' => 'UserPhone',
+                                                'label' => false
+                                            ]) ?>
+                                        </div>
+                                        <div class="inputrt"></div>
+                                    </div>
+                                </td>
+                            <tr>
                                 <td>&nbsp;</td>
                                 <td>
                                     <div class="floatleft pr10">
                                         <div class="btnlt"></div>
-                                        <div class="btnmid"><a href="#" id="update">Add User</a></div>
+                                        <div class="btnmid">
+                                            <input type="submit" id="update" value="Add User" />
+                                        </div>
                                         <div class="btnrt"></div>
                                     </div>
                                 </td>
@@ -122,7 +176,4 @@
             </table>
         </div>
     </div>
-
-    <input type="submit" style="display:none" />
-
 </form>
