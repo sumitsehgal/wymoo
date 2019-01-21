@@ -39,9 +39,25 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
-    public function edit()
+    public function edit($id)
     {
         $this->viewBuilder()->setLayout('admin');
+        $user = $this->Users->get($id);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $data = $this->request->getData();
+            if(!empty($data['newpassword']))
+            {
+                $data['passwd'] = $data['newpassword'];
+            }
+            $user = $this->Users->patchEntity($user, $data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The user has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $this->set(compact('user'));
     }
 
     public function delete()
