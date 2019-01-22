@@ -107,6 +107,7 @@ Router::prefix('client', function ($routes) {
     {
         $routes->connect('/myaccount', ['controller' => 'Admin', 'action' => 'myaccount']);
         $routes->connect('/casebrowser', ['controller' => 'Admin', 'action' => 'casebrowser']);
+        $routes->connect('/casenotes/*', ['controller' => 'Admin', 'action' => 'casenotes']);
         $routes->connect('/', ['controller' => 'Admin', 'action' => 'casebrowser']);
         $routes->fallbacks(DashedRoute::class);    
     });

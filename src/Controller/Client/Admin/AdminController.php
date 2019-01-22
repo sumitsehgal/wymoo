@@ -16,6 +16,33 @@ class AdminController extends AppController
 
     }
 
+    public function casenotes($id) {
+        $this->viewBuilder()->setLayout('fancybox');
+        $this->loadModel('Cases');
+        $this->loadModel('Users');
+
+
+        $role = $this->Auth->User('role');
+        $breadcumb = '<h1 class="relative">Case <span>Notes </span></h1>';
+        $caseIcons = Configure::read('case_icon');
+
+        $case = $this->Cases->find('all',[
+            'conditions' => [
+                'id' => $id
+            ]
+        ])->contain(['Quotes','CaseNotes','CaseNotifications'])->first();
+        $model = 'Cases';
+        $user = $this->Users->find('all',[
+            'conditions' => [
+                'id' => $case['user_id']
+            ]
+        ])->first();
+        $result[$model]=$case;
+        $result['User']=$user;
+        //print_r($result);die();
+        $this->set(compact('id','role','breadcumb','caseIcons','model','result'));
+    }
+
     public function casebrowser()
     {
         $this->viewBuilder()->setLayout('admin');
