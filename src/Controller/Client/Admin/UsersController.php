@@ -16,7 +16,22 @@ class UsersController extends AppController
     public function index()
     {
         $this->viewBuilder()->setLayout('admin');
-        $users = $this->paginate($this->Users);
+        $conditions = [];
+        if ($this->request->is('post')) 
+        {
+            $data = $this->request->getData();
+            if(!empty($data))
+            {
+                if(!empty($data['fname']))
+                    $conditions['fname LIKE'] = '%'.$data['fname'].'%';
+                if(!empty($data['lname']))
+                    $conditions['lname LIKE'] = '%'.$data['lname'].'%';
+                if(!empty($data['email']))
+                    $conditions['email LIKE'] = '%'.$data['email'].'%';
+            }
+        }
+        $query = $this->Users->find('all')->where($conditions);
+        $users = $this->paginate($query);
         $this->set(compact('users'));
     }
 
@@ -60,9 +75,19 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
-    public function delete()
+    public function delete($id)
     {
         $this->viewBuilder()->setLayout('admin');
+        
+        $this->request->allowMethod(['post', 'delete']);
+        $user = $this->Users->get($id);
+        if ($this->Users->delete($user)) {
+            $this->Flash->success(__('The user has been deleted.'));
+        } else {
+            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
     }
     public function view()
     {
