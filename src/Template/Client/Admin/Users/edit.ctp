@@ -1,4 +1,4 @@
-<h1 class="relative">Add <span>New User </span>
+<h1 class="relative">Edit <span> User </span>
          <div class="btnh1"><div class="btnlt"></div>
             <div class="btnmid"><a href="/client/admin/users/" id="view_users">View users</a></div>
             <div class="btnrt"></div>
@@ -78,7 +78,7 @@
                                     <div class="inputover floatleft pr20">
                                         <div class="inputlt"></div>
                                         <div class="inputmid">
-                                        <?= $this->Form->control('lname', [
+                                        <?= $this->Form->control('email', [
                                                 'type' => 'email',
                                                 'class' => 'wid243',
                                                 'id' => 'UserEmail',
