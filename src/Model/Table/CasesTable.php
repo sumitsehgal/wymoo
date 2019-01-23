@@ -15,6 +15,17 @@ class CasesTable extends Table {
             ]
         ]);
 
+        $this->hasMany('Quotes', [
+            'sort' => [
+                'Quotes.create_dt' => 'DESC'
+            ]
+        ]);
+        $this->hasMany('CaseNotifications', [
+            'sort' => [
+                'CaseNotifications.created' => 'DESC'
+            ]
+        ]);
+
         // $this->hasMany('CaseNotifications', [
         //     'sort' => [
         //         'CaseNotifications.created' => 'DESC'

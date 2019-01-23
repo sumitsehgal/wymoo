@@ -3,7 +3,12 @@
 <script>
     var emailregs = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i;
 </script>
-<form action="/client/admin/users/users/view" class="form-inline" id="UserAdminViewForm" method="post" accept-charset="utf-8">
+<?= $this->Form->create(null, [
+    'url' => '/client/admin/users/',
+    'class' => 'form-inline',
+    'id' => 'UserAdminViewForm',
+    'method' => 'post'
+    ]) ?>
     <div style="display:none;">
         <input type="hidden" name="_method" value="POST" />
     </div>
@@ -12,7 +17,13 @@
         <div class="inputover floatleft pr20">
             <div class="inputlt"></div>
             <div class="inputmid ">
-                <input name="data[User][fname]" type="text" placeholder="First Name" class="wid120" id="UserFname" />
+                <?= $this->Form->control('fname', [
+                    'type' => 'text',
+                    'class' => 'wid120',
+                    'id' => 'UserFname',
+                    'label' => false,
+                    'placeholder' => 'First Name'
+                ]) ?>
             </div>
             <div class="inputrt"></div>
         </div>
@@ -20,7 +31,13 @@
         <div class="inputover floatleft pr20">
             <div class="inputlt"></div>
             <div class="inputmid">
-                <input name="data[User][lname]" type="text" placeholder="Last Name" class="wid120" id="UserLname" />
+                <?= $this->Form->control('lname', [
+                    'type' => 'text',
+                    'class' => 'wid120',
+                    'id' => 'UserLname',
+                    'label' => false,
+                    'placeholder' => 'Last Name'
+                ]) ?>
             </div>
             <div class="inputrt"></div>
         </div>
@@ -28,13 +45,21 @@
         <div class="inputover floatleft pr20">
             <div class="inputlt"></div>
             <div class="inputmid select150">
-                <input name="data[User][email]" type="text" placeholder="Email Address" class="wid120" id="UserEmail" />
+                <?= $this->Form->control('email', [
+                    'type' => 'text',
+                    'class' => 'wid120',
+                    'id' => 'UserEmail',
+                    'label' => false,
+                    'placeholder' => 'Email'
+                ]) ?>
             </div>
             <div class="inputrt"></div>
         </div>
         <div class="floatleft">
             <div class="btnlt"></div>
-            <div class="btnmid"><a href="#" id="process">Search</a></div>
+            <div class="btnmid">
+                    <input type="submit" id="process" value="Search" />
+            </div>
             <div class="btnrt"></div>
         </div>
         <div class="clr"></div>
@@ -77,7 +102,13 @@
                     <div class="floatleft pr10">
                         <div class="btnlt"></div>
                         <div class="btnmid">
-                            <a href="/client/admin/users/delete/<?= $user->id ?>" class="deleteuser">Delete</a>
+                            <?php
+                                echo $this->Form->postLink('Delete', '/client/admin/users/delete/'.$user->id, [
+                                    'class' => 'deleteuser',
+                                    'confirm' => 'Are you sure you want to delete this user?'
+                                ]);
+                            ?>
+                            <!-- <a href="/client/admin/users/delete/<?= $user->id ?>" class="deleteuser">Delete</a> -->
                         </div>
                         <div class="btnrt"></div>
                     </div>
@@ -90,7 +121,7 @@
             <?php echo $this->Paginator->numbers(); ?>
     </div>
 </div>
-<div id="unlock_case_dialog" title="Are you sure?">
+<!-- <div id="unlock_case_dialog" title="Are you sure?">
     <br/> Are you sure you want to delete this user?
     <div class="floatright pt15" id="floatrightbtn" style="padding-top:20px;">
         <div class="btnlt"></div>
@@ -100,5 +131,5 @@
         <div class="btnmid"><a href="/client/admin/users/users/view" id="close_dialog" style="color:#FFFFFF">No</a></div>
         <div class="btnrt"></div>
     </div>
-</div>
+</div> -->
 </div>
