@@ -22,12 +22,12 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
  
 <ul id="myTab" class="nav nav-tabs" style="margin-top: -34px;">
 <li>
-  <a href="/client/casetracker" class="">Case Tracker</a></li>
+  <a href="/client/client/tracker" class="">Case Tracker</a></li>
 <li>
-	<a href="/client/notifications" class="">Notifications</a></li>
+	<a href="/client/client/notifications" class="">Notifications</a></li>
 
 <li class="active">
-  <a href="/client/caseinfo" class="">Edit Case Data</a></li>
+  <a href="/client/client/caseedit" class="">Edit Case Data</a></li>
 
 </ul>
 <div id="myTabContent" class="tab-content">
