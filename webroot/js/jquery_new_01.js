@@ -1,18 +1,31 @@
 $(document).ready(function(){
 
-    $(".newListSelected").mouseover(function(){
+    $(".selectedTxt").mouseover(function(){
         
-     $(this).addClass('newListSelHover').css('postion','relative');
+     $(this).parent().addClass('newListSelHover').css('postion','relative');
+    // $(this).children('.selectedTxt').addClass('dueTxt');
+    
+        
+      });
+
+     $(".selectedTxt").mouseleave(function(){
+        
+     $(this).parent().removeClass('newListSelHover');
+     $(this).css('position','static');
+     //$(this).find('.SSContainerDivWrapper').css('display','none');
+    // $(this).children('.selectedTxt').addClass('dueTxt');
+    
     
         
       });
       
-      $(".newListSelected ,.newListSelHover").click(function(){
+      $(".selectedTxt").click(function(){
         
-       $(this).addClass('newListSelFocus');
+      $(this).parent().addClass('newListSelFocus');
       // $(".newListSelected ,.newListSelHover,.newListSelFocus").css('position','relative');
-      $(this).css('position','relative');
-       $(this).find('.SSContainerDivWrapper').css('display','block');
+      $(this).parent().css('position','relative');
+     //  $(this).find('.SSContainerDivWrapper').css('display','block');
+       $(this).parent().find('div:eq(1)').css('display','block');
        
        
 
@@ -32,29 +45,41 @@ $(document).ready(function(){
                    
         });
 
-        $(".SSContainerDivWrapper .newList li a").click(function(){
+      //  $(".newList li").click(function(){
         
-           //console.log('sadasdasd');
-           var txt=$(this).text();
-
-
-          // $(this).parent().find('.selectedTxt').css('color','red'); 
-           console.log(txt);
+         // var p= $(this).parent();
          
-       
-                  
-                       
-            });
+         // var p=$('.SSContainerDivWrapper').parent()
+         // console.log(p);
+       // var txt=$(this).text();
+      //  console.log(txt);
 
-            $( function() {
-                $( "#CaseTableDueDate" ).datepicker();
-              } );
-         
+        
+       //  $(this).parents().find('.newListSelected').eq(1).text(txt);
+
+        // $(this).parents().find('.newListSelected').css('position','static');
+        // $(this).parents().find('.SSContainerDivWrapper').css('display','none');
+        // $(this).parents().find('.newListSelHover').removeClass();
+ //});
+
+ $('.newList li a').click(function(){
+    var txt=$(this).text();
+
+    var par=$(this).parents();
+    console.log(par);
+
+            $(this).parents().find('.newListSelected').children('div:eq(0)').text(txt);
+            $(this).parents().find('.SSContainerDivWrapper').css('display','none');
+            $(this).parents().find('.newListSelected').css('position','static');
+            
+
+})
+
+          
 
 
    
 });
-
-// $( function() {
-//     $( "#CaseTableDueDate" ).datepicker();
-//   } )
+$( function() {
+ $( "#CaseTableDueDate" ).datepicker();
+} )

@@ -138,5 +138,9 @@ $(document).ready(function () {$("#forgot_password").click(function(e){$( "div#f
             </div>
         </div>
     </footer>
+    <?php
+    
+    echo $this->Html->script(['https://code.jquery.com/jquery-1.10.2.js','https://code.jquery.com/ui/1.10.4/jquery-ui.js']);
+    ?>
 </body>
 </html>
