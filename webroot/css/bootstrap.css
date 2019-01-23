@@ -6763,3 +6763,10 @@ padding:3px 10px;
 .border_color{border:1px solid #9D9879;margin-bottom:5px;width:100%!important;}
 .custom_anchor{color: #6F6F71;font-family: 'calibriregular';font-size: 15px;}
 .custom_anchor:hover{color: #FFF;}
+
+.logo a {
+  background:url(../img/logo.jpg) top left no-repeat;
+  width:474px;
+  height:45px;
+  display:block;
+  }

@@ -1,0 +1,29 @@
+.logo a {
+    background:url(../img/logo.jpg) top left no-repeat;
+    width:474px;
+    height:45px;
+    display:block;
+    }
+    
+    .logo1 a {
+    background:url(../img/logo1.jpg) top left no-repeat;
+    width:474px;
+    height:45px;
+    display:block;
+    }
+    
+    .logo2 a {
+    background:url(../img/logo2.jpg) top left no-repeat;
+    width:474px;
+    height:45px;
+    display:block;
+    }
+    
+.logo,.logo1,.logo2 {
+    float:left;
+    padding:25px 20px 25px 5px;
+    }
+    
+    .logo a span,.logo1 a span,.logo2 a span {
+    visibility:hidden;
+    }

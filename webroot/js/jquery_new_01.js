@@ -83,3 +83,26 @@ $(document).ready(function(){
 $( function() {
  $( "#CaseTableDueDate" ).datepicker();
 } )
+
+
+    // $(document).ready(function() {
+    //     $("#forgot_password").click(function(e) {
+    //         $("div#forgot_password_dialog").dialog("open");
+    //         e.preventDefault();
+    //     });
+    //     $("div#forgot_password_dialog").dialog({
+    //         autoOpen: false,
+    //         width: 450,
+    //         modal: true
+    //     });
+    //     $("div#forgot_password_dialog").find("#submit_password").click(function(e) {
+    //         $("div#forgot_password_dialog").find("#UserForgotpasswordForm").submit();
+    //         e.preventDefault();
+    //     });
+    // });
+$(document).ready(function(){
+
+    $('#ui-dialog-title-forgot_password_dialog').replaceWith('Forget Password');
+
+});
+    
