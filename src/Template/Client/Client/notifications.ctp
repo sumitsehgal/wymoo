@@ -1,10 +1,13 @@
-<div class="container">
+
 	<style>
 
 </style>
 
 
 
+<<<<<<< HEAD
+ 
+=======
  <div class="tab_case">
   <div class="bs-example bs-example-tabs">
 <ul id="myTab" class="nav nav-tabs" style="margin-top: -34px;">
@@ -18,6 +21,7 @@
 
 </ul>
 <div id="myTabContent" class="tab-content">
+>>>>>>> dd16642f9d02a32cff01363f5155a43e0c6a678a
 <div id="Notifications" class="tab-pane fade active in">
   <div class="content_box">
     <h1>Case<span>Notification  </span></h1>
@@ -35,10 +39,7 @@ $(function(){$("#send_notification").click(function(e){$("#CaseTableNotification
 	 <div class="clearfix"></div>
 	   </form></div>
   </div>
-</div>
-</div>
-  
-</div>
+
 <style type="text/css">
 .chzn-container{width:100%!important;z-index:0!important;}
 .qq-upload-button{z-index:1!important;}

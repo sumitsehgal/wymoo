@@ -1,4 +1,4 @@
-<div class="container">
+
     <style type="text/css" id="page-css">
         /* Styles specific to this particular page */
         
@@ -18,6 +18,10 @@
             });
         });
     </script>
+<<<<<<< HEAD
+   
+            
+=======
     <div class="tab_case">
         <div class="bs-example bs-example-tabs">
             <ul id="myTab" class="nav nav-tabs" style="margin-top: -34px;">
@@ -30,6 +34,7 @@
 
             </ul>
             <div id="myTabContent" class="tab-content">
+>>>>>>> dd16642f9d02a32cff01363f5155a43e0c6a678a
                 <div id="tracker" class="tab-pane fade active in">
                     <div class="content_box">
                         <h1>Case<span>Tracker  </span></h1>
@@ -151,7 +156,4 @@
 
                 </div>
             </div>
-        </div>
-
-    </div>
-</div>
+      
