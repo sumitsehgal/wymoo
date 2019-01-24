@@ -29,23 +29,15 @@ class ClientController extends AppController
                 'id' => $id
             ]
         ])->contain(['CaseNotes', 'CaseNotes.Users'])->first();
-        $investorList = $this->Users->find('all',[
+        if($case['assigned_to']!='')
+        $investor = $this->Users->find('all',[
             'conditions' => [
-                'user_type_id'=>2,
-                'id'=>$case['user_id']
+                'id'=>$case['assigned_to']
             ]
-        ])->all()->toList();
-        $inverstors = array();
-        foreach($investorList as $key=>$investor){
-            $investors[$investor['id']]=$investor['fname'].' '.$investor['lname'];
-        }
-        //print_r($investors);die();
+        ])->first();
+        
         $caseStatus = array();
-        foreach ($case_status as $key => $status) {
-            $caseStatus[$key]=$status['title'];
-        }
-        //print_r($case);die();
-        $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus','investors'));
+        $this->set(compact('id','breadcrumb','caseIcons','model','case','investor'));
     }
 
     public function notifications()

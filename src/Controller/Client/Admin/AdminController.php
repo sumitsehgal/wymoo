@@ -38,12 +38,11 @@ class AdminController extends AppController
         foreach($investorList as $key=>$investor){
             $investors[$investor['id']]=$investor['fname'].' '.$investor['lname'];
         }
-        //print_r($investors);die();
         $caseStatus = array();
         foreach ($case_status as $key => $status) {
             $caseStatus[$key]=$status['title'];
         }
-        //print_r($case);die();
+        //to do case update and add notes
         $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus','investors'));
     }
 

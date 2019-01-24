@@ -1,4 +1,6 @@
-
+<?php 
+$form = $this->Form;
+?>
 	<script type="text/javascript">
 $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaultDate:new Date(1910,00,01),changeMonth:true,yearRange: "1910:c",changeYear:true,onClose: function() {
     $(this).data("datepicker").inline = false;
@@ -18,25 +20,10 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
 	}, onSelect: function(dateText) {$(this).data("datepicker").inline = true;  var date = $("#CaseTableSubjectDob").datepicker("getDate");d = date.getDate();m = date.getMonth() + 1;y = date.getFullYear();	 $("#CaseTableSubjectDob1").val(d+"-"+m+"-"+y);}});$("#save_case").click(function(e){$("#CaseTableCaseinfoForm").submit();e.preventDefault();});$("#CaseTableSubjectBackground").keyup(function(){$("#CaseTableSubjectBackground").val($("#CaseTableSubjectBackground").val().substring(0,1000)).focus();var psconsole = $("#CaseTableSubjectBackground");psconsole.scrollTop(				psconsole[0].scrollHeight - psconsole.height()			);					var charcount = parseInt(parseInt(1000) - parseInt($("#CaseTableSubjectBackground").val().length));						$("#subject_background_count").html("(You have <font style=\'color:red;\'>"+charcount+"</font> characters remaining.)");		});		 });
 </script>
  
-<<<<<<< HEAD
-=======
-<ul id="myTab" class="nav nav-tabs" style="margin-top: -34px;">
-<li>
-  <a href="/client/client/tracker" class="">Case Tracker</a></li>
-<li>
-	<a href="/client/client/notifications" class="">Notifications</a></li>
-
-<li class="active">
-  <a href="/client/client/caseedit" class="">Edit Case Data</a></li>
-
-</ul>
-<div id="myTabContent" class="tab-content">
-
->>>>>>> dd16642f9d02a32cff01363f5155a43e0c6a678a
 <div id="edit" class="tab-pane fade active in">
   <div class="content_box">
-<form action="/client/caseinfo/7934" class="form-inline" id="CaseTableCaseinfoForm" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div><input type="hidden" name="data[CaseTable][id]" value="7934" id="CaseTableId"><input type="hidden" name="data[CaseTable][is_submited]" value="0" id="CaseTableIsSubmited">	
-   <h1>Case Data<span>Center </span></h1>
+  <?=$breadcrumb ?>
+  <?=$form->create($case) ?>
     <div class="secure"> <span> Secure Contact</span> </div>
        <div class="clearfix"></div>
     <p>Your investigation is in progress and your case data is no longer editable.  Please contact your investigator if you need to make updates.</p>
@@ -54,21 +41,24 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
                 <label>Your First Name:<span class="error_class">*</span></label>
               </div>
               <div class="col-sm-8">
-                <input name="data[CaseTable][client_fname]" type="text" class="form-control" value="test4" id="CaseTableClientFname">              </div>
+              <?=$form->text('client_fname') ?>
+              </div>
             </div>
             <div class="row">
               <div class="col-sm-4">
                 <label>Your Last Name:<span class="error_class">*</span></label>
               </div>
               <div class="col-sm-8">
-               <input name="data[CaseTable][client_lname]" type="text" class="form-control" value="ds" id="CaseTableClientLname">              </div>
+                <?=$form->text('client_lname') ?>
+               </div>
             </div>
             <div class="row">
               <div class="col-sm-4">
                 <label>Your Email:<span class="error_class">*</span></label>
               </div>
               <div class="col-sm-8">
-               <input name="data[CaseTable][client_email]" type="text" class="form-control" value="test5@gmail.com" id="CaseTableClientEmail">              </div>
+                <?= $form->email('client_email') ?>
+               </div>
             </div>
           </div>
         </div>
@@ -82,28 +72,32 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
                 <label>Subject's Full Name:</label>
               </div>
               <div class="col-sm-8">
-                <input name="data[CaseTable][subject_fullname]" type="text" class="form-control" value="" id="CaseTableSubjectFullname">              </div>
+                  <?=$form->text('subject_fullname')?>
+                </div>
             </div>
             <div class="row">
               <div class="col-sm-4">
                 <label>Subject's Alias:</label>
               </div>
               <div class="col-sm-8">
-               <input name="data[CaseTable][subject_alias]" type="text" class="form-control" value="" id="CaseTableSubjectAlias">              </div>
+              <?=$form->text('subject_alias')?>
+               </div>
             </div>
             <div class="row">
               <div class="col-sm-4">
                 <label>Subject's Email:</label>
               </div>
               <div class="col-sm-8">
-               <input name="data[CaseTable][subject_email]" type="text" class="form-control" value="" id="CaseTableSubjectEmail">              </div>
+               <?=$form->text('subject_alias')?>
+               </div>
             </div>
             <div class="row">
               <div class="col-sm-4">
                 <label>Subject's Phone:</label>
               </div>
               <div class="col-sm-8">
-                <input name="data[CaseTable][subject_phone]" type="text" class="form-control" value="" id="CaseTableSubjectPhone">              </div>
+                <?=$form->text('subject_alias')?>
+                </div>
             </div>
            
             <div class="row">
@@ -111,14 +105,16 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
                 <label>Subject's Date of Birth:</label>
               </div>
               <div class="col-sm-8">
-               <input name="data[CaseTable][subject_dob1]" type="text" id="CaseTableSubjectDob" class="form-control hasDatepicker" value=""><input type="hidden" name="data[CaseTable][subject_dob]" id="CaseTableSubjectDob1" value="">                <small>*Leave blank and notify your investigator if unsure.</small> </div>
+               <?=$form->text('subject_alias')?>
+                <small>*Leave blank and notify your investigator if unsure.</small>
+                </div>
             </div>
             <div class="row">
               <div class="col-sm-4">
                 <label>Subject's Address:</label>
               </div>
               <div class="col-sm-8">
-			  <textarea name="data[CaseTable][subject_address]" class="form-control" rows="4" style="height:65px;" id="CaseTableSubjectAddress"></textarea>               
+			  <?=$form->textarea('subject_alias')?>              
               </div>
             </div>
             <div class="row">
@@ -126,14 +122,16 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
                 <label>Subject's Education:</label>
               </div>
               <div class="col-sm-8">
-               <textarea name="data[CaseTable][subject_education]" class="form-control" rows="3" id="CaseTableSubjectEducation"></textarea>              </div>
+               <?=$form->textarea('subject_alias')?>
+                </div>
             </div>
             <div class="row">
               <div class="col-sm-4">
                 <label>Subject's Employment::</label>
               </div>
               <div class="col-sm-8">
-              <textarea name="data[CaseTable][subject_employment]" class="form-control" rows="3" style="height:65px;" id="CaseTableSubjectEmployment"></textarea>              </div>
+              <?=$form->textarea('subject_alias')?>
+              </div>
             </div>
           </div>
         </div>
