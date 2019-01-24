@@ -28,12 +28,23 @@ class AdminController extends AppController
             'conditions' => [
                 'id' => $id
             ]
-        ])->contain(['CaseNotes'])->first();
+        ])->contain(['CaseNotes', 'CaseNotes.Users'])->first();
+        $investorList = $this->Users->find('all',[
+            'conditions' => [
+                'user_type_id'=>2
+            ]
+        ])->all()->toList();
+        $inverstors = array();
+        foreach($investorList as $key=>$investor){
+            $investors[$investor['id']]=$investor['fname'].' '.$investor['lname'];
+        }
+        //print_r($investors);die();
         $caseStatus = array();
         foreach ($case_status as $key => $status) {
             $caseStatus[$key]=$status['title'];
         }
-        $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus'));
+        //print_r($case);die();
+        $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus','investors'));
     }
 
     public function casenotes($id) {
