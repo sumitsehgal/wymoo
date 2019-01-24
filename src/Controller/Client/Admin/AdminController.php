@@ -73,7 +73,7 @@ class AdminController extends AppController
         $pages = $this->paginate($this->Cases);
         $this->set(compact('pages', 'caseIcons'));
     }
-
+    
     public function myaccount()
     {
         $this->viewBuilder()->setLayout('admin');

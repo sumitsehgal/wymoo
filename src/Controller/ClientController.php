@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Cake\Controller\Controller;
+use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -43,7 +43,8 @@ class ClientController extends AppController {
 		//echo "string";die();
 	}
 
-	public function casebegin(){
+	public function casebegin()
+	{
 		$timestamp = strftime("%Y%m%d%H%M%S");
 		mt_srand((double)microtime()*1000000);
 		$folderid = $timestamp."-".mt_rand(1, 999);
@@ -139,14 +140,16 @@ class ClientController extends AppController {
 					
 			$logindata['passwd'] = $userData['temppassword'] ;
 			$logindata['username'] = $userData['username'] ;
-			if($this->Auth->setUser($user)){
-				$this->Session->write('case_data_center', 'success');
-				//$this->_sendMail($user->email, Configure::read('title').' <'.Configure::read('default_email.email').'>', Configure::read('noreply_email.email'), Configure::read('title').' received your Case Data' ,'case_data',array('result' => $data ), "", 'html' );
-				$this->redirect(array('action' => 'casetracker'));
-				//$this->redirect('home');
-			}else{
-				$this->redirect('/');
-			}
+			$data['username'] = $userData['username'];
+			$data['password_token'] = $userData['password_token'];
+			$this->Auth->setUser($user);
+			$this->Flash->success('You are succesfully submitted case.', 'success');
+			//$this->_sendEmail('theprofessional1992@gmail.com', ['from@example.com'], 'theprofessional67@gmail.com', 'Subject is here', 'welcome');
+		
+			$this->_sendEmail($user->email, [Configure::read('default_email.email')], Configure::read('noreply_email.email'), Configure::read('title').' received your Case Data' ,'case_data', array('result' => $data ) );
+			// TODO Change URL
+			//$this->redirect(array('action' => 'casetracker'));
+			$this->redirect('/client/client/tracker');
 		}
 	}
 

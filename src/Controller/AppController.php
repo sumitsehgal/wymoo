@@ -17,6 +17,9 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Core\Configure;
+use Cake\Mailer\Email;
+
+use Cake\Mailer\TransportFactory;
 /**
  * Application Controller
  *
@@ -62,5 +65,32 @@ class AppController extends Controller
         */
         //$this->loadComponent('Security');
                     
+    }
+
+    public function _sendEmail($to, $from, $replyTo, $subject, $element , $parsingParams = array(),$attachments ="", $sendAs = 'html', $bcc = array())
+    {
+        $toAraay = array();
+		if ( !is_array($to) ) {
+			$toAraay[] = $to;
+		} else {
+			$toAraay = $to;
+        }
+        
+        $emailObj = new Email('default');
+		foreach ($toAraay as $email) {
+            $emailObj->setFrom($from);
+            $emailObj->setTo($email);
+            $emailObj->setSubject($subject);
+            $emailObj->setReplyTo($replyTo);
+            $emailObj->viewBuilder()->setTemplate($element);
+            $emailObj->setViewVars($parsingParams);
+            $emailObj->setEmailFormat($sendAs);
+            try{
+                $emailObj->send();
+            }catch(\Exception $ex)
+            {
+                dd($ex);
+            }
+		}
     }
 }

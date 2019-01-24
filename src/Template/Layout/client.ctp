@@ -28,55 +28,63 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->fetch('meta') ?>
     <?php
-    echo $this->Html->css(['all.in.one','style-new-01']);
+    echo $this->Html->css(['bootstrap','jquery-ui','style_new_02']);
     echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one','jquery_new_01']);
     ?>
-    <script type="text/javascript">
-    $(function() {
-        $( "#datepiCaseTableDueDatecker" ).datepicker();
-    })
-    </script>
- <script type="text/javascript">
-//<![CDATA[
-$(document).ready(function () {$("#forgot_password").click(function(e){e.preventDefault();$('#ui-dialog-title-forgot_password_dialog').replaceWith('Forget your  Password?'); $( "div#forgot_password_dialog").dialog("open");});$("div#forgot_password_dialog" ).dialog({autoOpen: false,width:450,modal:true});	$("div#forgot_password_dialog" ).find("#submit_password").click(function(e){$("div#forgot_password_dialog" ).find("#UserForgotpasswordForm").submit();e.preventDefault();});});
-//]]>
-</script><script>$(function(){$("img#close_flash").click(function(){var options = {};$("div#flash_message").hide("clip");});});</script><style media="screen" type="text/css">  html,body{height:100%;}#wrapper{position:relative;}#footer{height: 110px;position:relative;}.clearfooter{height:110px;clear:both;}</style><!--[if lt IE 7]><style media="screen" type="text/css">#container{height:100%;}</style><![endif]-->
+    
+ <script>$(function(){$("img#close_flash").click(function(){var options = {};$("div#flash_message").hide("clip");});});</script><style media="screen" type="text/css">  html,body{height:100%;}#wrapper{position:relative;}#footer{height: 110px;position:relative;}.clearfooter{height:110px;clear:both;}</style><!--[if lt IE 7]><style media="screen" type="text/css">#container{height:100%;}</style><![endif]-->
 </head>
 <body>
-    <div id="wrapper">
+    <!-- <div id="wrapper">
             <div id="header">
                 <div class="logo">
                     <a href="https://www.wymoo.com/client/"><span>Wymoo International</span></a>
                 </div>
-                <div class="admintxt">Administrator<span>CASE MANAGEMENT SYSTEM</span></div>
+                <div class="admintxt">Client<span>CASE MANAGEMENT SYSTEM</span></div>
                 <?php if(isset($Auth) && !empty($Auth->user())): ?>
                 <div class="logoutsec floatright">  
                     <span><img src="/img/user.png" width="30" height="25" alt=""></span>
                     <span class="pt10">Hello, <a href="/client/admin/myaccount" class="newlink"><?= $Auth->user('fname') ?></a>&nbsp;|&nbsp;<a href="/client/admin/users/logout" class="newlink">Logout</a>	  </span>
                 </div>
                 <?php endif; ?>
-                <div class="divfull pt30">
-                    <ul class="nav" style="height:28px;">
-                        <li></li>
-                        <?php if(isset($Auth) && !empty($Auth->user())): ?>
-                        <li>
-                            <a href="/client/admin/casebrowser" class="<?php echo $this->request->getParam('action') == 'casebrowser' ? 'active' : ''; ?>"><span><strong>Case Browser</strong></span></a>
-                        </li>
-                        <li>
-                            <a href="/client/admin/myaccount" class="<?php echo $this->request->getParam('action') == 'myaccount' ? 'active' : ''; ?>"><span><strong>Admin Details</strong></span></a>
-                        </li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
+                
                 
 
                 <div class="clear"></div>
 
+            </div> -->
+
+
+    <header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="logo">
+                    <a href="https://www.wymoo.com/client/"><span>Wymoo International</span></a>
+                </div>
             </div>
-        <div id="middle">
+            <div class="col-sm-6">
+                <div class="heading_client">
+                    <h2> Client Access<span>CASE MANAGEMENT SYSTEM</span></h2>
+                    <ul>
+                        <li><img src="https://www.wymoo.com/client/images/user_profile.png" alt="user"></li>
+                        <li>Hello,</li>
+                        <li><a href="/client/myaccount" class="newlink">Test4</a>&nbsp; | </li>
+                        <li><a href="/client/logout" class="newlink">Logout</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg_blue"></div>
+    <div class="gray_bg"></div>
+</header>
+
+       
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
-        </div>
+        
     </div>
     <footer class="clear">
         <div class="container">
