@@ -26,6 +26,21 @@
             <input type="hidden" name="_method" value="POST">
         </div>
         <input type="hidden" name="folderid" value="" id="CaseTableFolderid">
+        <?php if(isset($errors) && !empty($errors)): ?>
+                    <?php $len=count($errors); 
+                  // echo implode(" ",$errors);
+       // pr($errors);
+            // for($i=0; $i<$len ; $i++){
+            //     echo $errors[$i];
+            
+             foreach($errors as $err)
+                        foreach($err as $nest){
+                            echo "<p style='color:red'>".$nest."</p>";
+                            echo"<br>";
+                        }                
+                     ?>
+        <?php endif; ?>
+
         <div class="content_box">
             <h1>Case Data<span>Center </span></h1>
             <div class="secure"> <span> Secure Contact</span> </div>
