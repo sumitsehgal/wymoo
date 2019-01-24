@@ -18,9 +18,8 @@
             });
         });
     </script>
-   
-            
-                <div id="tracker" class="tab-pane fade active in">
+  <div id="myTabContent" class="tab-content">
+            <div id="tracker" class="tab-pane fade active in">
                     <div class="content_box">
                         <?=$breadcrumb ?>
                     </div>
