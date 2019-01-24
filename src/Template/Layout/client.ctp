@@ -80,12 +80,28 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <div class="bg_blue"></div>
     <div class="gray_bg"></div>
 </header>
+<div class="container">
 
-       
+      <div class="tab_case">
+        <div class="bs-example bs-example-tabs">  
+        <ul id="myTab" class="nav nav-tabs" style="margin-top: -34px;">
+                <li class="active">
+                    <a href="/client/client/tracker" class="">Case Tracker</a></li>
+                <li>
+                    <a href="/client/client/notifications" class="">Notifications</a></li>
+                <li >
+                    <a href="/client/client/caseedit" class="">Edit Case Data</a></li>
+
+            </ul>
+            <div id="myTabContent" class="tab-content">
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
-        
+            
     </div>
+    </div>
+
+        
+</div>
     <footer class="clear">
         <div class="container">
             <div class="footer_content">

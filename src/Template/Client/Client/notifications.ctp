@@ -1,23 +1,11 @@
-<div class="container">
+
 	<style>
 
 </style>
 
 
 
- <div class="tab_case">
-  <div class="bs-example bs-example-tabs">
-<ul id="myTab" class="nav nav-tabs" style="margin-top: -34px;">
-<li>
-  <a href="/client/casetracker" class="">Case Tracker</a></li>
-<li class="active">
-	<a href="/client/notifications" class="">Notifications</a></li>
-
-<li class=" ">
-  <a href="/client/caseinfo" class="">Edit Case Data</a></li>
-
-</ul>
-<div id="myTabContent" class="tab-content">
+ 
 <div id="Notifications" class="tab-pane fade active in">
   <div class="content_box">
     <h1>Case<span>Notification  </span></h1>
@@ -35,10 +23,7 @@ $(function(){$("#send_notification").click(function(e){$("#CaseTableNotification
 	 <div class="clearfix"></div>
 	   </form></div>
   </div>
-</div>
-</div>
-  
-</div>
+
 <style type="text/css">
 .chzn-container{width:100%!important;z-index:0!important;}
 .qq-upload-button{z-index:1!important;}

@@ -1,4 +1,4 @@
-<div class="container">
+
     <style type="text/css" id="page-css">
         /* Styles specific to this particular page */
         
@@ -18,18 +18,8 @@
             });
         });
     </script>
-    <div class="tab_case">
-        <div class="bs-example bs-example-tabs">
-            <ul id="myTab" class="nav nav-tabs" style="margin-top: -34px;">
-                <li class="active">
-                    <a href="/client/casetracker" class="">Case Tracker</a></li>
-                <li>
-                    <a href="/client/notifications" class="">Notifications</a></li>
-                <li class=" ">
-                    <a href="/client/caseinfo" class="">Edit Case Data</a></li>
-
-            </ul>
-            <div id="myTabContent" class="tab-content">
+   
+            
                 <div id="tracker" class="tab-pane fade active in">
                     <div class="content_box">
                         <h1>Case<span>Tracker  </span></h1>
@@ -151,7 +141,4 @@
 
                 </div>
             </div>
-        </div>
-
-    </div>
-</div>
+      

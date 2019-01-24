@@ -1,4 +1,4 @@
-<div class="container">
+
 	<script type="text/javascript">
 $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaultDate:new Date(1910,00,01),changeMonth:true,yearRange: "1910:c",changeYear:true,onClose: function() {
     $(this).data("datepicker").inline = false;
@@ -17,21 +17,7 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
 		
 	}, onSelect: function(dateText) {$(this).data("datepicker").inline = true;  var date = $("#CaseTableSubjectDob").datepicker("getDate");d = date.getDate();m = date.getMonth() + 1;y = date.getFullYear();	 $("#CaseTableSubjectDob1").val(d+"-"+m+"-"+y);}});$("#save_case").click(function(e){$("#CaseTableCaseinfoForm").submit();e.preventDefault();});$("#CaseTableSubjectBackground").keyup(function(){$("#CaseTableSubjectBackground").val($("#CaseTableSubjectBackground").val().substring(0,1000)).focus();var psconsole = $("#CaseTableSubjectBackground");psconsole.scrollTop(				psconsole[0].scrollHeight - psconsole.height()			);					var charcount = parseInt(parseInt(1000) - parseInt($("#CaseTableSubjectBackground").val().length));						$("#subject_background_count").html("(You have <font style=\'color:red;\'>"+charcount+"</font> characters remaining.)");		});		 });
 </script>
- <div class="tab_case">
-  <div class="bs-example bs-example-tabs">
  
-<ul id="myTab" class="nav nav-tabs" style="margin-top: -34px;">
-<li>
-  <a href="/client/casetracker" class="">Case Tracker</a></li>
-<li>
-	<a href="/client/notifications" class="">Notifications</a></li>
-
-<li class="active">
-  <a href="/client/caseinfo" class="">Edit Case Data</a></li>
-
-</ul>
-<div id="myTabContent" class="tab-content">
-
 <div id="edit" class="tab-pane fade active in">
   <div class="content_box">
 <form action="/client/caseinfo/7934" class="form-inline" id="CaseTableCaseinfoForm" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div><input type="hidden" name="data[CaseTable][id]" value="7934" id="CaseTableId"><input type="hidden" name="data[CaseTable][is_submited]" value="0" id="CaseTableIsSubmited">	
@@ -46,7 +32,7 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
         <div>
           <div class="form_content">
             <h2>Step 1: Your Data</h2>
-            <img src="images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
+            <img src="/images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
           <div class="form_box">
             <div class="row">
               <div class="col-sm-4">
@@ -74,7 +60,7 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
         <div>
           <div class="form_content">
             <h2>Step 2: About the subject</h2>
-            <img src="images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
+            <img src="/images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
           <div class="form_box">
             <div class="row">
               <div class="col-sm-4">
@@ -141,7 +127,7 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
         <div>
           <div class="form_content">
             <h2>Step 3: Some background</h2>
-            <img src="images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
+            <img src="/images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
           <div class="form_box">
             <label>How do or did you communicate with the subject? </label>
             <ul class="checkbox_list">
@@ -164,7 +150,7 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
         <div class="step4">
           <div class="form_content">
             <h2>Step 4: A Few Questions (if applicable)</h2>
-            <img src="images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
+            <img src="/images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
           <div class="form_box">
             <div class="row">
               <div class="col-sm-7">
@@ -202,7 +188,7 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
 			 	
           <div class="form_content">
             <h2>Step 5: Optional Documentation</h2>
-            <img src="images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
+            <img src="/images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
    <div class="form_box photo_add">
            <table width="100%" border="0" cellspacing="8" cellpadding="0"><tbody><tr><td>			
 			<div id="AjaxMultiUpload7934_photo"><div class="qq-uploader"><div class="qq-upload-drop-area well" style="display: none;"><span>Drop files here to attach</span></div><div class="qq-upload-button" style="position: relative; overflow: hidden; direction: ltr;"><span><strong>Photographs of subject</strong><a class="btn btn-default" href="#">Add</a></span><input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;"></div><ul class="qq-upload-list"></ul></div></div>
@@ -336,7 +322,3 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
 
 
 
-</div>
-</div>
-  
-</div>
