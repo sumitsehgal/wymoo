@@ -16,6 +16,26 @@ class AdminController extends AppController
 
     }
 
+    public function casetracker($id){
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('Cases');
+        $this->loadModel('Users');
+        $case_status = Configure::read('case_status');
+        $breadcrumb = '<h1 class="relative">Case <span>Tracker </span></h1>';
+        $caseIcons = Configure::read('case_icon');
+        $model = 'Cases';
+        $case = $this->Cases->find('all',[
+            'conditions' => [
+                'id' => $id
+            ]
+        ])->contain(['CaseNotes'])->first();
+        $caseStatus = array();
+        foreach ($case_status as $key => $status) {
+            $caseStatus[$key]=$status['title'];
+        }
+        $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus'));
+    }
+
     public function casenotes($id) {
         $this->viewBuilder()->setLayout('fancybox');
         $this->loadModel('Cases');
