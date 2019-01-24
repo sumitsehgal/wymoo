@@ -79,7 +79,7 @@
 
                                                     <tr>
                                                         <td width="40%">Assigned To:</td>
-                                                        <td width="60%"><?=$investor['fname'].' '.$investor['lname']?></td>
+                    <td width="60%"><?php if(!empty($investor)): ?><?=$investor['fname'].' '.$investor['lname']?><<?php endif; ?></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

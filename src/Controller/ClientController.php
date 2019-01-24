@@ -149,7 +149,7 @@ class ClientController extends AppController {
 			$this->_sendEmail($user->email, [Configure::read('default_email.email')], Configure::read('noreply_email.email'), Configure::read('title').' received your Case Data' ,'case_data', array('result' => $data ) );
 			// TODO Change URL
 			//$this->redirect(array('action' => 'casetracker'));
-			$this->redirect('/client/client/tracker');
+			$this->redirect('/client/client/tracker/'.$case_id);
 		}
 	}
 
