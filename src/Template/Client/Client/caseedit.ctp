@@ -18,6 +18,21 @@ $(function() {$("#CaseTableSubjectDob").datepicker({dateFormat:"dd-MM-yy",defaul
 	}, onSelect: function(dateText) {$(this).data("datepicker").inline = true;  var date = $("#CaseTableSubjectDob").datepicker("getDate");d = date.getDate();m = date.getMonth() + 1;y = date.getFullYear();	 $("#CaseTableSubjectDob1").val(d+"-"+m+"-"+y);}});$("#save_case").click(function(e){$("#CaseTableCaseinfoForm").submit();e.preventDefault();});$("#CaseTableSubjectBackground").keyup(function(){$("#CaseTableSubjectBackground").val($("#CaseTableSubjectBackground").val().substring(0,1000)).focus();var psconsole = $("#CaseTableSubjectBackground");psconsole.scrollTop(				psconsole[0].scrollHeight - psconsole.height()			);					var charcount = parseInt(parseInt(1000) - parseInt($("#CaseTableSubjectBackground").val().length));						$("#subject_background_count").html("(You have <font style=\'color:red;\'>"+charcount+"</font> characters remaining.)");		});		 });
 </script>
  
+<<<<<<< HEAD
+=======
+<ul id="myTab" class="nav nav-tabs" style="margin-top: -34px;">
+<li>
+  <a href="/client/client/tracker" class="">Case Tracker</a></li>
+<li>
+	<a href="/client/client/notifications" class="">Notifications</a></li>
+
+<li class="active">
+  <a href="/client/client/caseedit" class="">Edit Case Data</a></li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+>>>>>>> dd16642f9d02a32cff01363f5155a43e0c6a678a
 <div id="edit" class="tab-pane fade active in">
   <div class="content_box">
 <form action="/client/caseinfo/7934" class="form-inline" id="CaseTableCaseinfoForm" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div><input type="hidden" name="data[CaseTable][id]" value="7934" id="CaseTableId"><input type="hidden" name="data[CaseTable][is_submited]" value="0" id="CaseTableIsSubmited">	

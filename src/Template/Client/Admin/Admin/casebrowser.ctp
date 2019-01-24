@@ -130,7 +130,7 @@
                                             <td width="12%"><?php echo ($page['is_submited']==0) ? '' : floor((time()-(floor($page['submited_date']/86400)*86400))/86400);?><!-- TODO --></td>
                                             <td nowrap="nowrap"> <!-- TODO -->
                                                 <span class="floatleft">
-                                                    <a href="/client/admin/casetracker/7911" class="newlink"><?= $page['case_status'] ?></a></span><span class="statusicon">
+                                                    <a href="/client/admin/casetracker/<?=$page['id'] ?>" class="newlink"><?= $page['case_status'] ?></a></span><span class="statusicon">
                                                         <?php 
 
                                                         echo $this->Html->image($caseIcons[$page['case_status_id']], [
