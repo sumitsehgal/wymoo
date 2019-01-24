@@ -14,9 +14,30 @@ class ClientController extends AppController
 		$this->Auth->allow(['logout']); // Temporary Allow
     }
 
-    public function tracker()
+    public function tracker($id)
     {
         $this->viewBuilder()->setLayout('client');
+        $this->loadModel('Cases');
+        $this->loadModel('Users');
+        $user_id = $this->Auth->User('id');
+        $case_status = Configure::read('case_status');
+        $breadcrumb = '<h1 class="relative">Case <span>Tracker </span></h1>';
+        $caseIcons = Configure::read('case_icon');
+        $model = 'Cases';
+        $case = $this->Cases->find('all',[
+            'conditions' => [
+                'id' => $id
+            ]
+        ])->contain(['CaseNotes', 'CaseNotes.Users'])->first();
+        if($case['assigned_to']!='')
+        $investor = $this->Users->find('all',[
+            'conditions' => [
+                'id'=>$case['assigned_to']
+            ]
+        ])->first();
+        
+        $caseStatus = array();
+        $this->set(compact('id','breadcrumb','caseIcons','model','case','investor'));
     }
 
     public function notifications()
