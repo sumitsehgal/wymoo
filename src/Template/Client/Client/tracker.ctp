@@ -23,6 +23,19 @@
                     <div class="content_box">
                         <?=$breadcrumb ?>
                     </div>
+                    <div class="case_info">
+                        <div class="left_info"><img src="/images/info_img.png" alt="img" class="info_ques" />
+                        <img src="/images/info_arrow.png" alt="left_arrow" class="left_arrow" />
+                        </div>
+                    <div class="info_right">
+                    <h2>Your case has been saved.</h2>
+                    <p>An email was sent to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="afdbcadcdbefdbcadcdb81ccc0c2">[email&#160;protected]</a> with instruction on how to view your case.</p>
+                    <p>Your user id has been set to <span><a href="#" class="red"><span class="__cf_email__" data-cfemail="681c0d1b1c281c0d1b1c460b0705">[email&#160;protected]</span></a>
+                     </span> and your password is <span> 6FWZ3N.</span></p>
+                     <strong>Please finalize and submit your case within 24 hours</strong>
+                    </div>
+                    <div class="clearfix"></div>
+                    </div>
 
                     <div class="form_content">
                         <h2>Client Info</h2>

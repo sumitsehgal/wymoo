@@ -59,20 +59,33 @@ class ClientController extends AppController {
 		if($isPost)
 		{
 			$this->loadModel('Users');
+			//validation
 			$validator = new Validator();
-			/*$validator
+			$validator
 					->requirePresence('client_fname')
 					->notEmpty('client_fname','Enter Your Name')
-					->add('client_fname', 'custom', [
-						'regex' => '/^[a-zA-Z\s]+$/',
-						'message' => ' Use Only letters '
+					->add('client_fname', 'validFormat', [
+						'rule' =>array('custom' ,'/^[a-zA-Z ]*$/'),
+						'message' => ' Firstname should be letters only '
+					])
+			         ->add('client_fname', [
+						'length' => [
+							'rule' => ['minLength', 3],
+							'message' => ' Firstname length must be minimum  3.',
+						]
 					])
 
                     ->requirePresence('client_lname')
 					->notEmpty('client_lname','Enter your Last name')
-					->add('client_lname', 'custom', [
-						'regex' => '/^[a-zA-Z\s]+$/',
-						'message' => ' Use Only letters '
+					->add('client_lname', 'validFormat', [
+						'rule' =>array('custom','/^[a-zA-Z ]*$/'),
+						'message' => ' LastName should be letters only'
+					])
+                    ->add('client_lname', [
+						'length' => [
+							'rule' => ['minLength', 3],
+							'message' => ' LastName  length must be minimum 3.',
+						]
 					])
 
 					->requirePresence('client_email')
@@ -80,11 +93,14 @@ class ClientController extends AppController {
 					->add('client_email', 'validFormat', [
 						'rule' => 'email',
 						'message' => 'E-mail must be valid'
-					]);*/
+					]);
+
 			$errors = $validator->errors($this->request->getData());
 			if(!empty($errors))
 			{
 				$this->set(compact('errors'));
+
+			      //dd($errors);
 			}
 			else
 			{

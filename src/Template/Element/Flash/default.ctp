@@ -8,6 +8,7 @@ if (!isset($params['escape']) || $params['escape'] !== false) {
 }
 ?>
 <div id="flash_message">
+sda
 	<div>
         <img width="1" height="10" alt="" src="/img/dot.png">
     </div>

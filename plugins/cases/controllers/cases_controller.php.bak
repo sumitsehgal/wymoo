@@ -148,7 +148,7 @@ class CasesController extends CasesAppController {
  * @return void
  */		
 	function caseinfo() {
-		$this->set('breadcrumb','<h1 class="relative">Case Data <span>Center </span> 
+		$this->set('breadcrumb','<h1 class="relative">Case Dataa <span>Center </span> 
    	  <div class="secureicon">Secure Contact</div></h1>');
 	  	$this->{$this->modelClass}->recursive = 1;
 	   $result = $this->{$this->modelClass}->find('first',array('contain'=>null,'conditions'=>array($this->modelClass.'.user_id'=>$this->Auth->User('id'))));

@@ -26,27 +26,48 @@
             <input type="hidden" name="_method" value="POST">
         </div>
         <input type="hidden" name="folderid" value="" id="CaseTableFolderid">
-        <?php if(isset($errors) && !empty($errors)): ?>
-                    <?php $len=count($errors); 
-                  // echo implode(" ",$errors);
-       // pr($errors);
-            // for($i=0; $i<$len ; $i++){
-            //     echo $errors[$i];
-            
-             foreach($errors as $err)
-                        foreach($err as $nest){
-                            echo "<p style='color:red'>".$nest."</p>";
-                            echo"<br>";
-                        }                
-                     ?>
-        <?php endif; ?>
+        
 
         <div class="content_box">
             <h1>Case Data<span>Center </span></h1>
             <div class="secure"> <span> Secure Contact</span> </div>
             <div class="clearfix"></div>
             <p>Please enter your case data below. Not all fields are required, but the more data you can provide, the more our investigators can verify and investigate. </p>
-            <div> </div>
+            <div>
+            <?php if(isset($errors) && !empty($errors)): ?>
+            <div class="alert_box">
+                <div class="alert alert-danger fade in" role="alert">
+                    <button class="close" data-dismiss="alert" type="button">
+                        <span aria-hidden="true">x</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <figure>
+                        <a href="#"><img src="https://www.wymoo.com/client/img/close.png" height="14" width="14" alt="close"></a>
+                    </figure>
+                        <strong>Please see the below error messages. Complete the form and submit again.</strong>
+                </div>
+            </div>
+           
+                    
+               <?php
+           
+              foreach($errors as $err){
+                         foreach($err as $nest){ ?>
+                            <small style="color:#FF0000;"> 
+                            <div class="error-message">
+                             <?php   echo $nest; ?>
+                            </div> 
+                            </small>
+                         <?php 
+                         }         
+                        }
+                        
+                            ?>   
+                    
+
+         <?php endif; ?>
+            
+             </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div>
@@ -60,6 +81,7 @@
                                 <div class="col-sm-8">
                                     <input name="client_fname" type="text" class="form-control" id="CaseTableClientFname"> </div>
                             </div>
+                            <small style="color:#FF0000;"> <div class="error-message"><?php  ?></div> </small>
                             <div class="row">
                                 <div class="col-sm-4">
                                     <label>Your Last Name:<span class="error_class">*</span></label>
@@ -67,6 +89,7 @@
                                 <div class="col-sm-8">
                                     <input name="client_lname" type="text" class="form-control" id="CaseTableClientLname"> </div>
                             </div>
+                            <small style="color:#FF0000;"> <div class="error-message"></div> </small>
                             <div class="row">
                                 <div class="col-sm-4">
                                     <label>Your Email:<span class="error_class">*</span></label>
@@ -74,9 +97,11 @@
                                 <div class="col-sm-8">
                                     <input name="client_email" type="text" class="form-control" id="CaseTableClientEmail"> </div>
                             </div>
+                            <small style="color:#FF0000;"> <div class="error-message"><?php  ?></div> </small>
                         </div>
                     </div>
                     <div>
+           
                         <div class="form_content">
                             <h2>Step 2: About the subject</h2> <img src="<?php echo WEBSITE_URL;?>images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
                         <div class="form_box">
