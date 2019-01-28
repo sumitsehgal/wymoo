@@ -21,8 +21,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
+    Wymoo® International - Background Checks &amp; Private Investigators
     </title>
     <?= $this->Html->meta('icon') ?>
 
@@ -69,7 +68,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <ul>
                         <li><img src="https://www.wymoo.com/client/images/user_profile.png" alt="user"></li>
                         <li>Hello,</li>
-                        <li><a href="/client/myaccount" class="newlink">Test4</a>&nbsp; | </li>
+                        <li><a href="/client/myaccount" class="newlink"><?= $Auth->user('fname') ?></a>&nbsp; | </li>
                         <li><a href="/users/logout" class="newlink">Logout</a></li>
                     </ul>
 
@@ -85,15 +84,15 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
       <div class="tab_case">
         <div class="bs-example bs-example-tabs">  
         <ul id="myTab" class="nav nav-tabs" style="margin-top: -34px;">
-                <li class="active">
+                <li class="<?php echo $this->request->getParam('action') == 'tracker' ? 'active' : ''; ?>">
                     <a href="/client/client/tracker" class="">Case Tracker</a></li>
-                <li>
+                <li class="<?php echo $this->request->getParam('action') == 'notifications' ? 'active' : ''; ?>">
                     <a href="/client/client/notifications" class="">Notifications</a></li>
-                <li >
+                <li class="<?php echo $this->request->getParam('action') == 'caseedit' ? 'active' : ''; ?>">
                     <a href="/client/client/caseedit" class="">Edit Case Data</a></li>
 
             </ul>
-            <?= $this->Flash->render() ?>
+            
             <?= $this->fetch('content') ?>
             
     </div>
