@@ -23,6 +23,7 @@
                     <div class="content_box">
                         <?=$breadcrumb ?>
                     </div>
+                    <?= $this->Flash->render() ?>
 
                     <div class="form_content">
                         <h2>Client Info</h2>

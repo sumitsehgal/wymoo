@@ -40,7 +40,7 @@ echo $form->hidden($model . '.folderid');
 ?>
 
  <div class="content_box">
-    <h1>Case Data<span>Center </span></h1>
+    <h1>Case Data1<span>Center </span></h1>
     <div class="secure"> <span> Secure Contact</span> </div>
     <div class="clearfix"></div>
     <p>Please enter your case data below. Not all fields are required, but the more data you can provide, the more our investigators can verify and investigate. </p>
