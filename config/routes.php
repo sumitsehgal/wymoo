@@ -106,6 +106,7 @@ Router::prefix('client', function ($routes) {
     $routes->prefix('admin', function($routes)
     {
         $routes->connect('/myaccount', ['controller' => 'Admin', 'action' => 'myaccount']);
+        $routes->connect('/caseedit/*', ['controller' => 'Admin', 'action' => 'caseedit']);
         $routes->connect('/casebrowser', ['controller' => 'Admin', 'action' => 'casebrowser']);
         $routes->connect('/casenotes/*', ['controller' => 'Admin', 'action' => 'casenotes']);
         $routes->connect('/casetracker/*', ['controller' => 'Admin', 'action' => 'casetracker']);

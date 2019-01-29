@@ -46,6 +46,20 @@ class AdminController extends AppController
         $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus','investors'));
     }
 
+    public function caseedit($id){
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('Cases');
+        $caseIcons = Configure::read('case_icon');
+        $case = $this->Cases->find('all',[
+            'conditions' => [
+                'id' => $id
+            ]
+        ])->first();
+        $this->set(compact('caseIcons','model','case'));
+
+        // To Do Save entries
+    }
+
     public function casenotes($id) {
         $this->viewBuilder()->setLayout('fancybox');
         $this->loadModel('Cases');

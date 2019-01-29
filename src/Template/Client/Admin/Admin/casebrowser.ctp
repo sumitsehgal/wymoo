@@ -200,3 +200,14 @@
                 });
             });
         </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                jQuery('#edit_case').click(function(e){
+                    e.preventDefault();
+                    if(jQuery('input[name="id"]:checked').val()){
+                        var url = '/client/admin/caseedit/'+jQuery('input[name="id"]:checked').val();
+                        window.location.href=url;
+                    }
+                });
+            });
+        </script>

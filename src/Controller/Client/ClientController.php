@@ -10,7 +10,7 @@ class ClientController extends AppController
 {
 
     public function beforeFilter(Event $event) {
-		parent::beforeFilter($event);
+      parent::beforeFilter($event);
 		$this->Auth->allow(['logout']); // Temporary Allow
     }
 
@@ -28,7 +28,7 @@ class ClientController extends AppController
             ])->first();
             $id = $firstCase['id'];
         }
-            
+
         $this->viewBuilder()->setLayout('client');
         $case_status = Configure::read('case_status');
         $breadcrumb = '<h1 class="relative">Case <span>Tracker </span></h1>';
@@ -40,11 +40,11 @@ class ClientController extends AppController
             ]
         ])->contain(['CaseNotes', 'CaseNotes.Users'])->first();
         if($case['assigned_to']!='')
-        $investor = $this->Users->find('all',[
-            'conditions' => [
-                'id'=>$case['assigned_to']
-            ]
-        ])->first();
+            $investor = $this->Users->find('all',[
+                'conditions' => [
+                    'id'=>$case['assigned_to']
+                ]
+            ])->first();
         
         $caseStatus = array();
         $this->set(compact('id','breadcrumb','caseIcons','model','case','investor'));
@@ -54,14 +54,14 @@ class ClientController extends AppController
     {
         $this->loadModel('Cases');
         $this->loadModel('CaseNotifications');
-		$this->CaseNotifications->updateAll(array('is_new'=>0),array('user_id'=>$this->Auth->User('id')));
+        $this->CaseNotifications->updateAll(array('is_new'=>0),array('user_id'=>$this->Auth->User('id')));
 
-		$result = $this->Cases->find('all',array('conditions'=>array('Cases.user_id'=>$this->Auth->User('id'))))->first();
+        $result = $this->Cases->find('all',array('conditions'=>array('Cases.user_id'=>$this->Auth->User('id'))))->first();
         if(!empty($result) && $result->is_exported==1)
         {
             $this->Flash->error('Your case is in progress and notifications are now closed.  Contact your investigator for assistance.');
         }
-    
+
         $this->set('result', $result);
 
         $isPost = $this->request->is('post');
@@ -72,22 +72,22 @@ class ClientController extends AppController
             {
                 if ($this->referer() != '/') 
                 {
-					$this->redirect($this->referer());
-                } 
-                else 
-                {
-					$this->redirect(array('action' => 'casetracker'));
-				}
-            }
-            
-            $data = $this->request->getData();
-            $data['notify'] = '';
+                   $this->redirect($this->referer());
+               } 
+               else 
+               {
+                   $this->redirect(array('action' => 'casetracker'));
+               }
+           }
+
+           $data = $this->request->getData();
+           $data['notify'] = '';
 
             // TODO: Validation Pending
-            $cases= TableRegistry::get('Cases');
+           $cases= TableRegistry::get('Cases');
             $case = $cases->get($result->id); // Return article with id = $id (primary_key of row which need to get updated)
             $case->is_notifications = '';
-        
+
 
             $case_notification = $this->CaseNotifications->newEntity();
             $caseNdata['user_id'] = $result->user_id;
@@ -100,11 +100,11 @@ class ClientController extends AppController
             $case_notification = $this->CaseNotifications->patchEntity($case_notification, $caseNdata);
             $this->CaseNotifications->save($case_notification);
             $this->Flash->success('Notification sent successfully.');
-			
+
         }
         $notifications = $this->CaseNotifications->find('all', [
             'conditions' => [
-                        'case_id' => $result->id,
+                'case_id' => $result->id,
             ]
         ])->all();
 
@@ -117,6 +117,58 @@ class ClientController extends AppController
     public function caseedit()
     {
         $this->viewBuilder()->setLayout('client');
+        $this->loadModel('Cases');
+        $user_id = $this->Auth->User('id');
+        $breadcrumb = '<h1>Case Data<span>Center </span></h1>';
+        $caseIcons = Configure::read('case_icon');
+        $model = 'Cases';
+        $case = $this->Cases->find('all', [
+            'conditions' => [
+                'user_id' => $user_id
+            ]
+        ])->first();
+        if($this->request->is('post')){
+            $this->Cases->save($this->request->getData());
+            $this->Flash->success('Case updated successfully.');
+            return $this->redirect(['action' => 'tracker']);
+        }
+        $this->set(compact('breadcrumb','caseIcons','model','case'));
+        //echo "here";die();
+    }
+
+    public function myaccount()
+    {
+        $this->viewBuilder()->setLayout('client');
+        $this->loadModel('Users');
+        $user = $this->Users->find('all',[
+            'conditions' => [
+                'username' => $this->Auth->user('username')
+            ]
+        ])->first();
+        
+        if ($this->request->is(['post', 'put'])) {
+            $data = $this->request->getData();
+            if(!empty($data['password']) && ((new DefaultPasswordHasher)->check($data['password'], $user->passwd)))
+            {
+                if(!empty($data['newpassword']))
+                {
+                    $data['password'] = $data['newpassword'];
+                }
+                $this->Users->patchEntity($user, $data);
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('Your user has been updated.'));
+                }
+                else
+                {
+                    $this->Flash->error(__('Unable to update your user.'));
+                }
+            }
+            else
+            {
+                $this->Flash->error(__('Please Enter Correct Current Password.'));
+            }
+        }
+        $this->set('user', $user);
     }
 
 }
