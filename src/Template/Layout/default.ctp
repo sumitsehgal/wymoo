@@ -36,7 +36,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
       <div class="container">
         <div class="row">
           <div class="col-sm-6">
-            <div class="logo"><a href="<?php echo WEBSITE_URL;?>"><img src="<?php echo WEBSITE_URL;?>images/logo_image.jpg" alt="waymoo"/></a></div>
+            <div class="logo"><a href="<?php echo WEBSITE_URL;?>"></a></div>
         </div>
         <div class="col-sm-6">
             <div class="heading_client">
