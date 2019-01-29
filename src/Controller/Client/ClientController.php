@@ -39,13 +39,14 @@ class ClientController extends AppController
                 'id' => $id
             ]
         ])->contain(['CaseNotes', 'CaseNotes.Users'])->first();
-        if($case['assigned_to']!='')
+        $investor = null;
+        if($case['assigned_to']!=''){
             $investor = $this->Users->find('all',[
                 'conditions' => [
                     'id'=>$case['assigned_to']
                 ]
             ])->first();
-        
+        }
         $caseStatus = array();
         $this->set(compact('id','breadcrumb','caseIcons','model','case','investor'));
     }
