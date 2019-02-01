@@ -28,7 +28,7 @@
                             <input type="image" src="<?php echo WEBSITE_URL; ?>img/goicon.png">
                         </div>
                     </div>
-                    <div class="divfull pt10"> <a href=<?php echo WEBSITE_URL; ?>admin/users/users/forgot_password" id="forgot_password" class="newlink">Forgot your password?</a> </div>
+                    <div class="divfull pt10"> <a href=<?php echo WEBSITE_URL; ?>admin/users/forgot_password" id="forgot_password" class="newlink">Forgot your password?</a> </div>
                 </div>
             </form>
         </div>

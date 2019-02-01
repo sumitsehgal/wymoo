@@ -10,7 +10,7 @@ class UsersController extends AppController
 {
     public function beforeFilter(Event $event) {
 		parent::beforeFilter($event);
-		$this->Auth->allow(['logout']); // Temporary Allow
+		$this->Auth->allow(['logout','forgotpassword']); // Temporary Allow
     }
     
     public function index()
@@ -111,5 +111,21 @@ class UsersController extends AppController
     public function logout()
     {
         return $this->redirect($this->Auth->logout());
+    }
+    public function forgotpassword(){
+        $data = $this->request->getData();
+        print_r($data['data']['User']);
+        $user = $this->Users->find('all',[
+            'conditions' => [
+                'email'=>$data['data']['User']['client_email']
+            ]
+        ])->first();
+        print_r($user);
+        die();
+        // $user = $this->Users->find('all',[
+        //     'conditions' => [
+        //         'email'=>2
+        //     ]
+        // ])->all()->toList();
     }
 }
