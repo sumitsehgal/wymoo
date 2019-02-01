@@ -1,4 +1,7 @@
 <?php 
+$model = $result['model'];
+$id = $result['id'];
+$caseIcons = $result['caseIcons'];
 $case = $result[$model];
 $quote = (isset($result[$model]['quotes'])&&!empty($result[$model]['quotes']))?$result[$model]['quotes'][0]:array();
 $notes = $result[$model]['case_notes'];
@@ -204,13 +207,9 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                 <td>
                   <span class="floatleft pr10"><?= $case['case_status']?> </span>
                   <span class="statusicon" style="padding:2px 0 0;">
-                    <?=$this->Html->image($caseIcons[$case['case_status_id']], [
-                      "alt" => $case['case_status'],
-                      "value" => $case['case_status_id'],
-                      "id" => $case['id'],
-                      "class" => 'chage_stateus',
-                      "style" => 'cursor:pointer'
-                    ]); ?>                  
+                  <img src="<?php echo '/img/'.$caseIcons[$case['case_status_id']];  ?>" alt="<?php echo $case['case_status']; ?>"
+                            class="chage_stateus" style="cursor:pointer" id="<?php echo $case['id']; ?>" value="<?php echo $case['case_status_id']; ?>" />
+                                      
                   </span>
                 </td>
               </tr>
