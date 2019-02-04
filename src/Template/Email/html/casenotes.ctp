@@ -372,28 +372,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
           <div class="btnrt"></div>
         </div>
       <?php endif; ?>
-      <div class="floatleft pr10">
-        <div class="btnlt"></div>
-        <div class="btnmid"><?php echo $this->Html->link( 'Email Case',array('controller'=>'cases','action'=> 'caseemail','admin'=>true,$id),array('id'=>'email_case'));?></div>
-        <div class="btnrt"></div>
-      </div>
-      <div class="floatleft pr10">
-        <div class="btnlt"></div>
-        <div class="btnmid"> <?php echo $this->Html->link( 'Edit Case',array('controller'=>'cases','action'=> 'caseinfo','admin'=>true,$id),array('id'=>'edit_case'));?></div>
-        <div class="btnrt"></div>
-      </div>
-      <div class="floatleft pr10">
-        <div class="btnlt"></div>
-        <div class="btnmid"><?php echo $this->Html->link( 'Case Status',array('controller'=>'cases','action'=> 'casetracker','admin'=>true,$id),array('id'=>'status_case'));?></div>
-        <div class="btnrt"></div>
-      </div>
-      <div class="floatleft pr10">
-        <div class="btnlt"></div>
-        <div class="btnmid">
-          <?php         echo $this->Html->link( 'Export Case',array('controller'=>'cases','action'=> 'caseexport','admin'=>true,$id),array('id'=>'export_case','style'=>'color:#FFFFFF'));?>
-        </div>
-        <div class="btnrt"></div>
-      </div>
+      
       <div class="floatleft pr10"<?php if(!$disabled)?> style="display:none" id="unlockbtndiv">
         <div class="btnlt"></div>
         <div class="btnmid">
@@ -414,6 +393,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
       <tr>
         <td valign="top" >
           <div>
+          <br/><br/><br/><br/><br/><br/><br/>
             <div class="bxheadlt"></div>
             <div class="bxheadmid">Investigator Notes </div>
             <div class="bxheadrt"></div>
@@ -436,12 +416,12 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
           </div>
         </div>
         <div class="floatleft pd20">
-          <div class="pl20"><?= $this->Form->textarea($model.'.notes',array('class'=>'wid345 floatleft', 'rows'=>6,'disabled'=>$disabled));?><br />
+          <br/>
             <small  style="color:#FF0000;"><?php echo $this->Form->error($model.'.notes');?> </small></div>
             <div class="clr"></div>
             <div class="floatright pt15">
               <div class="btnlt"></div>
-              <div class="btnmid" ><a href="#"  <?php if($disabled==false){ ?>id="investigator_notes"  <?php } ?>>Save</a></div>
+              
               <div class="btnrt"></div>
             </div>
           </div>
@@ -452,39 +432,3 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
   </table>
 </div>
 <?php $this->Form->end(); ?>
-
-<div id="email_case_dialog" title="Enter Email Address">
-			<table width="100%" cellspacing="0" cellpadding="0" border="0">
-			<tbody>
-			<tr>
-				<td colspan="2">&nbsp;</td>
-			</tr>
-			<tr>
-				<td>Email Address:</td>
-				<td>
-				<div class="inputover floatleft">
-					<div class="inputlt"></div>
-					<div class="inputmid">
-					<input type="text" class="wid243" placeholder="Enter Email Address" value="" id="email_address">
-					</div>
-					<div class="inputrt"></div>
-				</div>
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-				<div class="floatleft">
-					<div class="btnlt"></div>
-					<div class="btnmid"><a href="javascript:void(0);" style="color:#FFFFFF" id="send_email">Email Case</a></div>
-					<div class="btnrt"></div>
-				</div>
-				</td>
-			</tr>
-			</tbody>
-		</table>
-	</div>
