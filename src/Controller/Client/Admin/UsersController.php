@@ -120,6 +120,8 @@ class UsersController extends AppController
                 'email'=>$data['data']['User']['client_email']
             ]
         ])->first();
+        // $this->_sendMail($data['data']['User']['client_email'], Configure::read('title').' <'.Configure::read('default_email.email').'>', Configure::read('noreply_email.email'), 'Forgot your password?' ,'forgot_password',array('result' => $user ), "", 'html' );
+        $this->_sendEmail($data['data']['User']['client_email'], [Configure::read('default_email.email')], Configure::read('noreply_email.email'), 'Forgot Passowrd?','casenotes', array('result' => $user ) );
         print_r($user);
         die();
         // $user = $this->Users->find('all',[
