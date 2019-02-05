@@ -118,8 +118,37 @@ class AdminController extends AppController
             $result['caseIcons']=$caseIcons;
             $result['id']=$id;
 
+            $attachments = [];
+            // Check Uploaded Files  // TODO: Need to Upload
+            $filePath = Configure::read('AMU')['directory'];
+            $directory = $filePath.'/'.$id.'_photo';
+            if(is_dir($directory))
+            {
+                $files = glob ("$directory/*");
+                if(!empty($files))
+                {
+                    foreach($files as $file)
+                    {
+                        $attachments[] = $file;
+                    }
+                }
+            }
 
-            $this->_sendEmail($mail, [Configure::read('default_email.email')], Configure::read('noreply_email.email'), 'Wymoo International #'.$id ,'casenotes', array('result' => $result ) );
+            $directory = $filePath.'/'.$id.'_document';
+            if(is_dir($directory))
+            {
+                $files = glob ("$directory/*");
+                if(!empty($files))
+                {
+                    foreach($files as $file)
+                    {
+                        $attachments[] = $file;
+                    }
+                }
+            }
+
+
+            $this->_sendEmail($mail, [Configure::read('default_email.email')], Configure::read('noreply_email.email'), 'Wymoo International #'.$id ,'casenotes', array('result' => $result ), $attachments );
             echo "success";
             exit;
         }

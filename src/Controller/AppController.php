@@ -85,6 +85,12 @@ class AppController extends Controller
             $emailObj->viewBuilder()->setTemplate($element);
             $emailObj->setViewVars($parsingParams);
             $emailObj->setEmailFormat($sendAs);
+            if(!empty($attachments))
+            {
+                // TODO: Need to make it More Intelligent
+                $emailObj->setAttachments($attachments);
+
+            }
             try{
                 $emailObj->send();
             }catch(\Exception $ex)

@@ -98,7 +98,9 @@ if(array_key_exists($_SERVER['HTTP_HOST'],$config['sites']))
 								5 =>  array('title' => 'Case Cancelled', 'description' => 'Case cancelled.  Payment not received.'),
 								6 =>  array('title' => 'Case Closed', 'description' => 'Investigation complete.  Report emailed to client.'),
 								7 =>  array('title' => 'Case On Hold' , 'description' => 'Case on hold.  Full payment required to proceed.')
-								);
+                                );
+                                
+$config['AMU'] = array('directory'=> '/var/www/html/wymooGit/wymoo/webroot/Php_data'. DS.'uploads'. DS.'files','filesizeMB'=>'10');
 
 
 return $config;

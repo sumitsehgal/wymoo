@@ -22,125 +22,138 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
 ?>
 <input type="hidden" id="caseid" value="<?php echo $case['id']; ?>" />
 <div class="divfull pt15">
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <table width="50%" border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td valign="top" width="47%">
         <div>
           <div class="bxheadlt"></div>
-          <div class="bxheadmid">Client: <?php echo $case['client_fname'].' '.$case['client_lname']; ?> </div>
+          <div class="bxheadmid" style="background:#bfb9b9;float: left;line-height: 32px;
+     font-size: 12px;
+    font-weight: 700;
+    color: #464330;
+    position: relative;
+    text-transform: uppercase;
+    padding: 0 10px;border-top: 1px solid #ffffff;;">Client: <?php echo $case['client_fname'].' '.$case['client_lname']; ?> </div>
           <div class="bxheadrt"></div>
           <div class="clr"></div>
         </div>
         <div class="gridbxover1">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
-            <tr class="odd">
-              <td width="150">Case#:</td>
-              <td><?php echo $case['id']; ?></td>
+          <table width="100%"  cellspacing="0" cellpadding="0" class="tblcaselist">
+          <tr class="odd">
+              <td width="150" style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;border-top: 4px solid #ffffff;">Case#:</td>
+              <td style="padding-left:5px;"><?php echo $case['id']; ?></td>
             </tr>
             <tr class="even">
-              <td>Login Name:</td>
-              <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3f1dcdcd1d6d2c1d1d9f3d2dcdf9dd0dcde"><?php echo $case['client_login_id']; ?></a> </td>
+              <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Login Name:</td>
+              <td style="padding-left:5px;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3f1dcdcd1d6d2c1d1d9f3d2dcdf9dd0dcde"><?php echo $case['client_login_id']; ?></a> </td>
             </tr>
             <tr class="odd">
-              <td>First Name:</td>
-              <td><?php echo $case['client_fname']; ?></td>
+              <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">First Name:</td>
+              <td style="padding-left:5px;"><?php echo $case['client_fname']; ?></td>
             </tr>
             <tr class="even">
-              <td>Last Name:</td>
-              <td><?php echo $case['client_lname']; ?></td>
+              <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Last Name:</td>
+              <td style="padding-left:5px;"><?php echo $case['client_lname']; ?></td>
             </tr>
             <tr class="odd">
-              <td>Site:</td>
-              <td><?php echo $case['site_name']; ?></td>
+              <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Site:</td>
+              <td style="padding-left:5px;"><?php echo $case['site_name']; ?></td>
             </tr>
             <tr class="even">
-              <td>Email</td>
-              <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8eac7c7cacdc9dacac2e8c9c7c486cbc7c5"><?php echo $case['client_email']; ?></a> </td>
+              <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Email</td>
+              <td style="padding-left:5px;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8eac7c7cacdc9dacac2e8c9c7c486cbc7c5"><?php echo $case['client_email']; ?></a> </td>
             </tr>
             <tr class="odd">
-              <td>Due Date:</td>
-              <td><?php if($case['due_date']=="Pending") echo "Pending"; else echo date('Y-m-d',$case['due_date']); ?> </td>
+              <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Due Date:</td>
+              <td style="padding-left:5px;"><?php if($case['due_date']=="Pending") echo "Pending"; else echo date('Y-m-d',$case['due_date']); ?> </td>
             </tr>
             <tr class="even">
-              <td>Assigned To:</td>
-              <td></td>
+              <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Assigned To:</td>
+              <td style="padding-left:5px;"></td>
             </tr>
           </table>
         </div>
         <?php if(!empty($quote)): ?>
-          <div class="pt15">
+        <div class="pt15">
             <div class="bxheadlt"></div>
-            <div class="bxheadmid"><?= (strtolower($quote['quote_title'])=='contactus')? 'contact us':$quote['quote_title'] ?></div>
+            <div class="bxheadmid" style="background:#bfb9b9;float: left;line-height: 32px;
+     font-size: 12px;
+    font-weight: 700;
+    color: #464330;
+    position: relative;
+    text-transform: uppercase;
+    padding: 0 10px; border-top: 5px solid #ffffff;;"><?= (strtolower($quote['quote_title'])=='contactus')? 'Contact us':$quote['quote_title'] ?></div>
             <div class="bxheadrt"></div>
             <div class="clr"></div>
-          </div>
-          <div class="gridbxover1">
+        
+        </div> 
+        <div class="gridbxover1">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
-              <tr class="odd">
-                <td width="150">First Name:</td>
-                <td><?= $quote['first_name'] ?></td>
+            <tr class="odd">
+                <td  style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;border-top: 4px solid #ffffff;" width="150">First Name:</td>
+                <td style="padding-left:5px;"><?= $quote['first_name'] ?></td>
               </tr>
               <tr class="even">
-                <td>Last Name:</td>
-                <td><?= $quote['last_name'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Last Name:</td>
+                <td style="padding-left:5px;"><?= $quote['last_name'] ?></td>
               </tr>
               <tr class="odd">
-                <td>Phone:</td>
-                <td><?= $quote['phone'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Phone:</td>
+                <td style="padding-left:5px;"><?= $quote['phone'] ?></td>
               </tr>
               <tr class="even">
-                <td>City, State:</td>
-                <td><?= $quote['city'] ?><?= ($quote['state'])?','.$quote['state']:'' ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">City, State:</td>
+                <td style="padding-left:5px;"><?= $quote['city'] ?><?= ($quote['state'])?','.$quote['state']:'' ?></td>
               </tr>
               <tr class="odd">
-                <td>Country:</td>
-                <td><?= $quote['country'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Country:</td>
+                <td style="padding-left:5px;"><?= $quote['country'] ?></td>
               </tr>
               <tr class="even">
-                <td>Site:</td>
-                <td><?= $quote['site'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Site:</td>
+                <td style="padding-left:5px;"><?= $quote['site'] ?></td>
               </tr>
               <tr class="odd">
-                <td>Referral Type:<br />
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Referral Type:<br />
                 </td>
-                <td><?= $quote['referral'] ?></td>
+                <td style="padding-left:5px;"><?= $quote['referral'] ?></td>
               </tr>
               <tr class="even">
-                <td>Fraud:</td>
-                <td><?= $quote['fraud'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Fraud:</td>
+                <td style="padding-left:5px;"><?= $quote['fraud'] ?></td>
               </tr>
               <tr class="odd">
-                <td>Infidelity:</td>
-                <td><?= $quote['infidelity'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Infidelity:</td>
+                <td style="padding-left:5px;"><?= $quote['infidelity'] ?></td>
               </tr>
               <tr class="even">
-                <td>Finacial Loss:</td>
-                <td><?= $quote['loss'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Finacial Loss:</td>
+                <td style="padding-left:5px;"><?= $quote['loss'] ?></td>
               </tr>
               <?php if(count($server)): $cls = 'even'; foreach($server as $key=>$info): $data = explode('=', $info); $cls = ($cls=='odd')?'even':'odd'; ?>
                 <tr class="<?= $cls ?>">
-                  <td><?= @$data[0] ?>:</td>
-                  <td><?= @str_replace('KHTML--', 'KHTML,', $data[1]) ?></td>
+                  <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;"><?= @$data[0] ?>:</td>
+                  <td style="padding-left:5px;"><?= @str_replace('KHTML--', 'KHTML,', $data[1]) ?></td>
                 </tr>
               <?php endforeach; endif; ?>
               <tr class="odd">
-                <td>Description:</td>
-                <td style="padding-right:0px;">
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Description:</td>
+                <td style="padding-left:5px;">
                   <div class="scroll-pane" style="height:300px;">
                     <div style="width:100%"><?= $quote['description'] ?></div>
                   </div>
                 </td>
               </tr>
             </table>
-          </div>
-          <?php else: ?>
-            <div class="pt15">
+        </div>
+        <?php else: ?>
+        <div class="pt15">
               <div class="bxheadlt"></div>
               <div class="bxheadmid">Attachments</div>
               <div class="bxheadrt"></div>
               <div class="clr"></div>
-            </div>
-            <div class="gridbxover1">
+        </div>
+        <div class="gridbxover1">
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
                 <tr class="odd">
                   <td width="150">Pictures:</td>
@@ -159,16 +172,15 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                   </td>
                 </tr>
               </table>
-            </div>
-            <div class="pt15">
+        </div>
+        <div class="pt15">
               <div class="bxheadlt"></div>
               <div class="bxheadmid">Communication</div>
               <div class="bxheadrt"></div>
               <div class="clr"></div>
-            </div>
-            <div class="gridbxover1">
-              <div class="scroll-pane" style="height:150px;">
-                <div style="width:100%">
+        </div>
+        <div class="gridbxover1">
+              
                   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
                     <?php $class = 'even';
                     foreach($notifications as $Communication):
@@ -187,24 +199,25 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                       </tr>
                     <?php endforeach; ?>
                   </table>
-                </div>
               </div>
-            </div>
           <?php endif; ?>
-        </td>
-        <td width="3%"><img src="/client/img/dot.png" width="1" height="1" alt="" /></td>
-        <td valign="top" width="47%">
           <div>
             <div class="bxheadlt"></div>
-            <div class="bxheadmid">Case Data</div>
+            <div class="bxheadmid" style="background:#bfb9b9;float: left;line-height: 32px;
+     font-size: 12px;
+    font-weight: 700;
+    color: #464330;
+    position: relative;
+    text-transform: uppercase;
+    padding: 0 10px; border-top: 5px solid #ffffff;;">Case Data</div>
             <div class="bxheadrt"></div>
             <div class="clr"></div>
           </div>
           <div class="gridbxover1">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
-              <tr class="odd">
-                <td width="150">Status:</td>
-                <td>
+            <tr class="odd">
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;border-top: 4px solid #ffffff;" width="150">Status:</td>
+                <td style="padding-left:5px;">
                   <span class="floatleft pr10"><?= $case['case_status']?> </span>
                   <span class="statusicon" style="padding:2px 0 0;">
                   <img src="<?php echo '/img/'.$caseIcons[$case['case_status_id']];  ?>" alt="<?php echo $case['case_status']; ?>"
@@ -214,8 +227,8 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                 </td>
               </tr>
               <tr class="even">
-                <td>Contact Methods:</td>
-                <td >
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8; ">Contact Methods:</td>
+                <td style="padding-left:5px;">
                   <?php 
                   $ContactMethods = array();
                   if ( $case['subject_communication_email'] == 1) {
@@ -238,65 +251,65 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                 </td>
               </tr>
               <tr class="odd">
-                <td>Subject's Name:</td>
-                <td><?= $case['subject_fullname'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Subject's Name:</td>
+                <td style="padding-left:5px;"><?= $case['subject_fullname'] ?></td>
               </tr>
               <tr class="even">
-                <td>Subject's Alias:</td>
-                <td><?= $case['subject_alias'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Subject's Alias:</td>
+                <td style="padding-left:5px;"><?= $case['subject_alias'] ?></td>
               </tr>
               <tr class="odd">
-                <td>Subject's Email:<br />
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Subject's Email:<br />
                 </td>
-                <td><?= $case['subject_email'] ?></td>
+                <td style="padding-left:5px;"><?= $case['subject_email'] ?></td>
               </tr>
               <tr class="even">
-                <td>Subject's DOB:</td>
-                <td><?=($case['subject_dob']==0) ? 'Not Provided' : date('d-M-Y',$case['subject_dob']) ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Subject's DOB:</td>
+                <td style="padding-left:5px;"><?=($case['subject_dob']==0) ? 'Not Provided' : date('d-M-Y',$case['subject_dob']) ?></td>
               </tr>
               <tr class="odd">
-                <td>Subject's Phone:</td>
-                <td><?= $case['subject_phone'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Subject's Phone:</td>
+                <td style="padding-left:5px;"><?= $case['subject_phone'] ?></td>
               </tr>
               <tr class="even">
-                <td>Address:</td>
-                <td><?= $case['subject_address'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Address:</td>
+                <td style="padding-left:5px;"><?= $case['subject_address'] ?></td>
               </tr>
               <tr class="odd">
-                <td>Employment:</td>
-                <td><?= $case['subject_employment'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Employment:</td>
+                <td style="padding-left:5px;"><?= $case['subject_employment'] ?></td>
               </tr>
               <tr class="even">
-                <td>Education:</td>
-                <td><?= $case['subject_education'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Education:</td>
+                <td style="padding-left:5px;"><?= $case['subject_education'] ?></td>
               </tr>
               <tr class="odd">
-                <td>Background:</td>
-                <td style="padding-right:0px; margin-right:0px;">
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Background:</td>
+                <td style="padding-left:5px;">
                   <div class="scroll-pane">
                     <div style="width:100%"><?= $case['subject_background'] ?></div>
                   </div>
                 </td>
               </tr>
               <tr class="even">
-                <td>Any ID or documents?</td>
-                <td><?= $case['subject_id'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Any ID or documents?</td>
+                <td style="padding-left:5px;"><?= $case['subject_id'] ?></td>
               </tr>
               <tr class="odd">
-                <td>How long have you known?</td>
-                <td><?= $case['subject_how_long'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">How long have you known?</td>
+                <td style="padding-left:5px;"><?= $case['subject_how_long'] ?></td>
               </tr>
               <tr class="even">
-                <td>Met on which website?</td>
-                <td><?= $case['subject_website_met'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Met on which website?</td>
+                <td style="padding-left:5px;"><?= $case['subject_website_met'] ?></td>
               </tr>
               <tr class="odd">
-                <td>Sent anything to address?</td>
-                <td><?= $case['subject_sent_address'] ?></td>
+                <td style="padding-left:5px;background-color:#c6d9f1;border-bottom: 1px solid #e8e8e8;">Sent anything to address?</td>
+                <td style="padding-left:5px;"><?= $case['subject_sent_address'] ?></td>
               </tr>
-            </table>
+              </table>
           </div>
-          <?php if(!empty($quote)): ?>
+              <?php if(!empty($quote)): ?>
             <div class="pt15">
               <div class="bxheadlt"></div>
               <div class="bxheadmid">Attachments</div>
@@ -313,17 +326,10 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                     </div>
                   </td>
                 </tr>
-                <tr class="even">
-                  <td>Documents:</td>
-                  <td style="padding-right:0px; margin-right:0px;">
-                    <div class="scroll-pane" style="height:72px;">
-                      <div style="width:100%"><?php //TO DO Documents    ?></div>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <div class="pt15">
+                </table>
+              </div>
+
+              <div class="pt15">
               <div class="bxheadlt"></div>
               <div class="bxheadmid">Communication</div>
               <div class="bxheadrt"></div>
@@ -351,13 +357,12 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                     <?php endforeach; ?>
                   </table>
                 </div>
-              </div>
-            </div>
-          <?php endif; ?>
-        </td>
+                <?php endif; ?>
+                </td>
       </tr>
-    </table>
+      </table>
   </div>
+
   <div class="divfull pt15">
     <div class="floatright" id="floatright_btns">
       <?php if(!$disabled): ?>
@@ -367,28 +372,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
           <div class="btnrt"></div>
         </div>
       <?php endif; ?>
-      <div class="floatleft pr10">
-        <div class="btnlt"></div>
-        <div class="btnmid"><?php echo $this->Html->link( 'Email Case',array('controller'=>'cases','action'=> 'caseemail','admin'=>true,$id),array('id'=>'email_case'));?></div>
-        <div class="btnrt"></div>
-      </div>
-      <div class="floatleft pr10">
-        <div class="btnlt"></div>
-        <div class="btnmid"> <?php echo $this->Html->link( 'Edit Case',array('controller'=>'cases','action'=> 'caseinfo','admin'=>true,$id),array('id'=>'edit_case'));?></div>
-        <div class="btnrt"></div>
-      </div>
-      <div class="floatleft pr10">
-        <div class="btnlt"></div>
-        <div class="btnmid"><?php echo $this->Html->link( 'Case Status',array('controller'=>'cases','action'=> 'casetracker','admin'=>true,$id),array('id'=>'status_case'));?></div>
-        <div class="btnrt"></div>
-      </div>
-      <div class="floatleft pr10">
-        <div class="btnlt"></div>
-        <div class="btnmid">
-          <?php         echo $this->Html->link( 'Export Case',array('controller'=>'cases','action'=> 'caseexport','admin'=>true,$id),array('id'=>'export_case','style'=>'color:#FFFFFF'));?>
-        </div>
-        <div class="btnrt"></div>
-      </div>
+      
       <div class="floatleft pr10"<?php if(!$disabled)?> style="display:none" id="unlockbtndiv">
         <div class="btnlt"></div>
         <div class="btnmid">
@@ -409,6 +393,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
       <tr>
         <td valign="top" >
           <div>
+          <br/><br/><br/><br/><br/><br/><br/>
             <div class="bxheadlt"></div>
             <div class="bxheadmid">Investigator Notes </div>
             <div class="bxheadrt"></div>
@@ -431,12 +416,12 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
           </div>
         </div>
         <div class="floatleft pd20">
-          <div class="pl20"><?= $this->Form->textarea($model.'.notes',array('class'=>'wid345 floatleft', 'rows'=>6,'disabled'=>$disabled));?><br />
+          <br/>
             <small  style="color:#FF0000;"><?php echo $this->Form->error($model.'.notes');?> </small></div>
             <div class="clr"></div>
             <div class="floatright pt15">
               <div class="btnlt"></div>
-              <div class="btnmid" ><a href="#"  <?php if($disabled==false){ ?>id="investigator_notes"  <?php } ?>>Save</a></div>
+              
               <div class="btnrt"></div>
             </div>
           </div>
@@ -447,39 +432,3 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
   </table>
 </div>
 <?php $this->Form->end(); ?>
-
-<div id="email_case_dialog" title="Enter Email Address">
-			<table width="100%" cellspacing="0" cellpadding="0" border="0">
-			<tbody>
-			<tr>
-				<td colspan="2">&nbsp;</td>
-			</tr>
-			<tr>
-				<td>Email Address:</td>
-				<td>
-				<div class="inputover floatleft">
-					<div class="inputlt"></div>
-					<div class="inputmid">
-					<input type="text" class="wid243" placeholder="Enter Email Address" value="" id="email_address">
-					</div>
-					<div class="inputrt"></div>
-				</div>
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-				<div class="floatleft">
-					<div class="btnlt"></div>
-					<div class="btnmid"><a href="javascript:void(0);" style="color:#FFFFFF" id="send_email">Email Case</a></div>
-					<div class="btnrt"></div>
-				</div>
-				</td>
-			</tr>
-			</tbody>
-		</table>
-	</div>
