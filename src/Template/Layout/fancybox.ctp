@@ -56,7 +56,10 @@
 						data: {email: email},
 						success: function(response)
 						{
-							console.log(response);
+							if(response == "success")
+							{
+								$('#email_case_dialog').dialog('close');
+							}
 						}
 					});
 				});

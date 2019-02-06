@@ -11,6 +11,14 @@ use Cake\Auth\DefaultPasswordHasher;
 class AdminController extends AppController
 {
 
+
+	public function initialize()
+	{
+		parent::initialize();
+		$this->Auth->allow(['casenotes2']);
+	}
+
+
     public function index()
     {
 
@@ -61,6 +69,33 @@ class AdminController extends AppController
     }
 
     public function casenotes($id) {
+        $this->viewBuilder()->setLayout('fancybox');
+        $this->loadModel('Cases');
+        $this->loadModel('Users');
+
+
+        $role = $this->Auth->User('role');
+        $breadcumb = '<h1 class="relative">Case <span>Notes </span></h1>';
+        $caseIcons = Configure::read('case_icon');
+
+        $case = $this->Cases->find('all',[
+            'conditions' => [
+                'id' => $id
+            ]
+        ])->contain(['Quotes','CaseNotes','CaseNotifications'])->first();
+        $model = 'Cases';
+        $user = $this->Users->find('all',[
+            'conditions' => [
+                'id' => $case['user_id']
+            ]
+        ])->first();
+        $result[$model]=$case;
+        $result['User']=$user;
+        //print_r($result);die();
+        $this->set(compact('id','role','breadcumb','caseIcons','model','result'));
+    }
+
+    public function casenotes2($id) {
         $this->viewBuilder()->setLayout('fancybox');
         $this->loadModel('Cases');
         $this->loadModel('Users');
@@ -147,12 +182,66 @@ class AdminController extends AppController
                 }
             }
 
+            // Notes
+            $directory = $filePath."/Notes-" . $result['User']['lname'] . ".doc";
 
+            $fp = fopen($directory, 'w+');
+                
+            $baseUrl =  $_SERVER['HTTP_HOST'];
+            $htmlString = @file_get_contents('http://'.$baseUrl.'/client/admin/casenotes2/'.$id);
+            fwrite($fp, $htmlString);
+            fclose($fp);
+            $attachments[] = Configure::read('AMU.directory'). DS . "Notes-" . $result['User']['lname'] . ".doc";
+               
             $this->_sendEmail($mail, [Configure::read('default_email.email')], Configure::read('noreply_email.email'), 'Wymoo International #'.$id ,'casenotes', array('result' => $result ), $attachments );
             echo "success";
             exit;
         }
     }
+
+    public function exportcase($id)
+    {
+
+        if(!empty($_GET['email']))
+        {
+            $mail = $_GET['email'];
+
+            $this->loadModel('Cases');
+            $this->loadModel('Users');
+
+
+            $role = $this->Auth->User('role');
+            $breadcumb = '<h1 class="relative">Case <span>Notes </span></h1>';
+            $caseIcons = Configure::read('case_icon');
+
+            $case = $this->Cases->find('all',[
+                'conditions' => [
+                    'id' => $id
+                ]
+            ])->contain(['Quotes','CaseNotes','CaseNotifications'])->first();
+            $model = 'Cases';
+            $user = $this->Users->find('all',[
+                'conditions' => [
+                    'id' => $case['user_id']
+                ]
+            ])->first();
+            $result[$model]=$case;
+            $result['User']=$user;
+            $result['model']=$model;
+            $result['caseIcons']=$caseIcons;
+            $result['id']=$id;
+
+            $this->viewBuilder()->setLayout('fancybox');
+            $this->set(compact('result'));
+
+
+        
+        
+        
+        }
+
+    }
+    
     public function casebrowser()
     {
         $this->viewBuilder()->setLayout('admin');
