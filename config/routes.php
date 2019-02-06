@@ -112,7 +112,7 @@ Router::prefix('client', function ($routes) {
         $routes->connect('/casetracker/*', ['controller' => 'Admin', 'action' => 'casetracker']);
         $routes->connect('/casesend/*', ['controller' => 'Admin', 'action' => 'casesend']);
         $routes->connect('/client/casetracker/*', ['controller' => 'Client', 'action' => 'casetracker']);
-        $routes->connect('/', ['controller' => 'Admin', 'action' => 'casebrowser']);
+        $routes->connect('/', ['controller' => 'client/Admin', 'action' => 'casebrowser']);
         $routes->fallbacks(DashedRoute::class);    
     });
     $routes->fallbacks(DashedRoute::class);
