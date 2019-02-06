@@ -25,12 +25,26 @@
 
 
 	echo $this->Html->css('all.in.one');
-	echo $this->Html->script('all.in.one.js');
+	//echo $this->Html->script('all.in.one.js');
 	?>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <style>
+  .ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable {
+    width: 400px !important;}
+	button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close{
+		font-size:0px;
+	
+	}
+    .ui-button-icon-only .ui-icon {
+    position: absolute;
+    top: 0% !important;
+    left: 0% !important;
+	color:#080808 !important;
+	}
+</style>
   <script>
 		$( function() {
 			$( "#email_case_dialog" ).dialog({

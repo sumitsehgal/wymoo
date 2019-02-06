@@ -36,7 +36,7 @@ class ClientController extends AppController {
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['casebeginPost', 'casebegin']);
+		$this->Auth->allow(['casebeginPost', 'casebegin', 'ajaxUpload']);
 	}
 
 
@@ -246,5 +246,9 @@ class ClientController extends AppController {
 		//$this->layout = 'fancybox';
 	}
 
+	public function ajaxUpload()
+	{
+		echo "test";exit;
+	}
 
 }
