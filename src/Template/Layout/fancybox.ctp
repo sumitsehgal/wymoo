@@ -72,6 +72,7 @@
 						{
 							if(response == "success")
 							{
+								alert("Email Successfully Sent.");
 								$('#email_case_dialog').dialog('close');
 							}
 						}
