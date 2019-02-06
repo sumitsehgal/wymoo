@@ -97,7 +97,8 @@
 								<div class="inputover floatleft pr20">
 									<div class="inputlt"></div>
 									<div class="inputmid">
-										<?= $form->date('due_date',['class'=>'wid243']) ?>
+										<input type="text" class="wid243 datepicker" value="<?=($case['due_date']==0) ? 'Pending' : date('D, F j',$case['due_date'])?>">
+										<?=$form->control('due_date', ['type' => 'hidden','id'=>'due_date','value'=> date('d-m-Y',$case['due_date'])])?>
 									</div>
 									<div class="inputrt"></div>
 								</div>
@@ -156,12 +157,12 @@
 								</div>
 								<div class="floatleft pr10">
 									<div class="btnlt"></div>
-									<div class="btnmid"><a href="/client/admin/caseinfo/7938">Edit Case</a></div>
+									<div class="btnmid"><a href="/client/admin/caseedit/<?=$id?>">Edit Case</a></div>
 									<div class="btnrt"></div>
 								</div>
 								<div class="floatleft pr10">
 									<div class="btnlt"></div>
-									<div class="btnmid"><a href="https://www.wymoo.com/client/admin/casenotes/7938?iframe" class="lightbox iframe" id="lightbox">View Case</a></div>
+									<div class="btnmid"><a href="/client/admin/casenotes/<?=$id?>?iframe" class="lightbox iframe" id="lightbox">View Case</a></div>
 									<div class="btnrt"></div>
 								</div>
 							</td>
@@ -212,3 +213,23 @@
 	</div>
 </div>
 <?= $form->end() ?>
+
+<script type="text/javascript">
+	$(".datepicker").datepicker({
+		dateFormat:"D, MM dd", 
+		onSelect: function(dateText) {
+			var date = $(".datepicker").datepicker("getDate");
+			d = date.getDate(); 
+			m = date.getMonth() + 1; 
+			y = date.getFullYear(); 
+			$('#due_date').val(d+"-"+m+"-"+y); 
+		}
+	});
+	jQuery(document).ready(function(){
+		$(".lightbox.iframe").fancybox({
+			'width'             : '100%',
+			'height'            : '75%',
+			'autoScale'         : true,
+		});
+	});
+</script>
