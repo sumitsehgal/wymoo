@@ -65,7 +65,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Client', 'action' => 'casebegin']);
     $routes->connect('/client/casebegin', ['controller' => 'Client', 'action' => 'casebegin']);
     $routes->connect('/client/post-casebegin', ['controller' => 'Client', 'action' => 'casebeginPost']);
-
+    $routes->connect('/client/ajax-upload', ['controller' => 'Client', 'action' => 'ajaxUpload']);
+    
     // $routes->connect('/admin/login', ['controller' => 'Client', 'action' => 'adminLogin']);
     // $routes->connect('/admin/casebrowser', ['controller' => 'Client', 'action' => 'adminCasebrowser']);
     
@@ -109,8 +110,10 @@ Router::prefix('client', function ($routes) {
         $routes->connect('/caseedit/*', ['controller' => 'Admin', 'action' => 'caseedit']);
         $routes->connect('/casebrowser', ['controller' => 'Admin', 'action' => 'casebrowser']);
         $routes->connect('/casenotes/*', ['controller' => 'Admin', 'action' => 'casenotes']);
+        $routes->connect('/casenotes2/*', ['controller' => 'Admin', 'action' => 'casenotes2']);
         $routes->connect('/casetracker/*', ['controller' => 'Admin', 'action' => 'casetracker']);
         $routes->connect('/casesend/*', ['controller' => 'Admin', 'action' => 'casesend']);
+        $routes->connect('/exportcase/*', ['controller' => 'Admin', 'action' => 'exportcase']);
         $routes->connect('/client/casetracker/*', ['controller' => 'Client', 'action' => 'casetracker']);
         $routes->connect('/', ['controller' => 'Admin', 'action' => 'casebrowser']);
         $routes->fallbacks(DashedRoute::class);    

@@ -70,7 +70,11 @@
 						data: {email: email},
 						success: function(response)
 						{
-							console.log(response);
+							if(response == "success")
+							{
+								alert("Email Successfully Sent.");
+								$('#email_case_dialog').dialog('close');
+							}
 						}
 					});
 				});

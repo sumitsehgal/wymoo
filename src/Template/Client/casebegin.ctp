@@ -238,38 +238,60 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <div id="AjaxMultiUpload20190108062506-849_photo">
-                                                <div class="qq-uploader">
-                                                    <div class="qq-upload-drop-area well" style="display: none;"><span>Drop files here to attach</span></div>
-                                                    <div class="qq-upload-button" style="position: relative; overflow: hidden; direction: ltr;"><span><strong>Photographs of subject</strong><a class="btn btn-default" href="#">Add</a></span>
-                                                        <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
-                                                    </div>
-                                                    <ul class="qq-upload-list"></ul>
-                                                </div>
-                                            </div>
-                                            <script>
-                                                $(function() {
-                                                            var uploader1 = new qq.FileUploader({
-                                                                element: document.getElementById('AjaxMultiUpload20190108062506-849_photo'),
-                                                                action: '/client/ajax-upload/CaseTable___20190108062506-849_photo/4',
-                                                                debug: true,
-                                                                allowedExtensions: ["jpg", "gif", "png", "jpeg"],
-                                                                template: '<div class="qq-uploader"><div class="qq-upload-drop-area well"><span>Drop files here to attach</span></div><div class="qq-upload-button"><span><strong>Photographs of subject</strong><a class="btn btn-default" href="#">Add</a></span></div><ul class="qq-upload-list"></ul></div>',
-                                                                onComplete: function(id, fileName, responseJSON) {
-                                                                    if (responseJSON.success) {
-                                                                        if ($('#' + 'CaseTable' + '20190108062506-849_photo' + ' option[value="' + fileName + '"]').length == 0) {
-                                                                            $('#' + 'CaseTable' + '20190108062506-849_photo').append('<option selected="selected" title="' + '//uploads/download/' + responseJSON.file + '" value="' + fileName + '">' + fileName + '</option>');
-                                                                            $('#' + 'CaseTable' + '20190108062506-849_photo').trigger("liszt:updated");
-                                                                        }
-                                                                    }
-                                                                    if (responseJSON.error) {
-                                                                        $('.qq-upload-fail').hide();
-                                                                    }
-                                                                }
-                                                            });
-                                                            $('#' + 'CaseTable' + '20190108062506-849_photo').chosen().change(function() { //$('#'+ 'CaseTable' + '20190108062506-849_photo' +' option:not(:selected)').remove(); 
-                                                            	if('/client/ajax-delete' !=''){ $('#'+ 'CaseTable' + '20190108062506-849_photo' +' option:not(:selected)').each(function(){ deleteurl = $(this).attr('title').replace("//uploads/download","/client/ajax-delete"); var self = this; $.ajax({url:deleteurl,success:function(){ $(self).remove(); }}); });$('#'+ 'CaseTable' + '20190108062506-849_photo' ).trigger("liszt:updated"); } else{ alert('You have no privilege to delete'); $('#'+ 'CaseTable' + '20190108062506-849_photo').find("option").attr("selected", true); return false; } } ); });
-                                            </script>
+                                            <div id="AjaxMultiUpload20190108062506-849">
+                                        </div>
+                <script>    
+			
+				
+				$(function(){
+					            
+					var uploader1 = new qq.FileUploader({
+                        element: document.getElementById('AjaxMultiUpload20190108062506-849'),
+                        // path to server-side upload script
+						action: '/client/ajax-upload/',
+						debug: true,
+						allowedExtensions: ["jpg","gif","png","jpeg"],
+						template: '<div class="qq-uploader"><div class="qq-upload-drop-area well"><span>Drop files here to attach</span></div><div class="qq-upload-button"><span><strong>Photographs of subject</strong><a class="btn btn-default" href="#">Add</a></span></div><ul class="qq-upload-list"></ul></div>',
+						onComplete: function(id, fileName, responseJSON){
+							
+							if (responseJSON.success){
+                                
+							
+								if($('#'+ 'CaseTable' + '20190206100852-105_photo' +' option[value="' +fileName + '"]').length==0){
+									$('#'+ 'CaseTable' + '20190206100852-105_photo' ).append( '<option selected="selected" title="'+ '/client/ajax_multi_upload/uploads/download/' + responseJSON.file +'" value="' +fileName + '">'+fileName+'</option>' );
+									$('#'+ 'CaseTable' + '20190206100852-105_photo' ).trigger("liszt:updated");
+								}
+							}
+							if (responseJSON.error){
+								$('.qq-upload-fail').hide();
+							}
+						}
+					});           
+				
+					$('#'+ 'CaseTable' + '20190206100852-105_photo' ).chosen().change(function(){
+						//$('#'+ 'CaseTable' + '20190206100852-105_photo' +' option:not(:selected)').remove();
+						if('/client/ajax-delete' !=''){
+						$('#'+ 'CaseTable' + '20190206100852-105_photo' +' option:not(:selected)').each(function(){
+							deleteurl = $(this).attr('title').replace("/client/ajax_multi_upload/uploads/download","/client/ajax-delete");
+							var self = this;
+							$.ajax({url:deleteurl,success:function(){
+								$(self).remove();
+							}});
+							
+						});$('#'+ 'CaseTable' + '20190206100852-105_photo' ).trigger("liszt:updated");
+						} else{
+							alert('You have no privilege to delete');
+							$('#'+ 'CaseTable' + '20190206100852-105_photo').find("option").attr("selected", true);
+							 return false;
+						}
+						
+					} );
+					
+				});
+				
+				  
+			
+			    </script>
                                             <select id="CaseTable20190108062506-849_photo" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" name="data[CaseTable][20190108062506-849_photo][]"></select>
                                             <div id="CaseTable20190108062506_849_photo_chzn" class="chzn-container chzn-container-multi" style="width: 450px;">
                                                 <ul class="chzn-choices">
