@@ -197,7 +197,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
             </div>
           <?php endif; ?>
         </td>
-        <td width="3%"><img src="/client/img/dot.png" width="1" height="1" alt="" /></td>
+        <td width="3%"><?=$this->Html->image("dot.png",['height'=>'1','width'=>'1']); ?></td>
         <td valign="top" width="47%">
           <div>
             <div class="bxheadlt"></div>

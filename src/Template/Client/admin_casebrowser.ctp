@@ -75,3 +75,22 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	function formatTitle(title, currentArray, currentIndex, currentOpts) {  
+		return "<div id=\"tip7-title\"><span><a href=\"javascript:;\" onclick=\"$.fancybox.close();\"><?=addslashes($this->Html->Image('fancybox/cross.png'))?></a></span><?=addslashes( $this->Html->Image('fancybox/casenotes_head.png') )?></div>";
+	}
+	$(".lightbox").fancybox({
+		"transitionIn"		: "elastic",
+		"transitionOut"		: "elastic",				
+		"titlePosition" 	: "outside",
+		"width"				: "80%",				
+		"height"			: "200%",				
+		"titleFormat"		: formatTitle,				
+		"onStart"			: function() {						
+			$("#fancybox-outer").hide();					
+		},				
+		"onComplete"		: function() {						
+			$("#fancybox-outer").show();					
+		}
+	});
+</script>

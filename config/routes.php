@@ -112,6 +112,7 @@ Router::prefix('client', function ($routes) {
         $routes->connect('/casenotes/*', ['controller' => 'Admin', 'action' => 'casenotes']);
         $routes->connect('/casenotes2/*', ['controller' => 'Admin', 'action' => 'casenotes2']);
         $routes->connect('/casetracker/*', ['controller' => 'Admin', 'action' => 'casetracker']);
+        $routes->connect('/casedelete/*', ['controller' => 'Admin', 'action' => 'casedelete']);
         $routes->connect('/casesend/*', ['controller' => 'Admin', 'action' => 'casesend']);
         $routes->connect('/exportcase/*', ['controller' => 'Admin', 'action' => 'exportcase']);
         $routes->connect('/client/casetracker/*', ['controller' => 'Client', 'action' => 'casetracker']);

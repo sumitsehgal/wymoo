@@ -112,6 +112,8 @@ class AdminController extends AppController
     public function casenotes($id) {
         $this->viewBuilder()->setLayout('fancybox');
         $this->loadModel('Cases');
+        $this->loadModel('CaseNotes');
+        $this->loadModel('CaseNotifications');
         $this->loadModel('Users');
 
 
@@ -130,9 +132,34 @@ class AdminController extends AppController
                 'id' => $case['user_id']
             ]
         ])->first();
+        foreach ($case['case_notifications'] as $key => $caseNote) {
+            $creator = $this->Users->find('all',[
+                'conditions' => [
+                    'id' => $caseNote['creator_id']
+                ]
+            ])->first();
+            $case['case_notifications'][$key]['creator_name'] = $creator['fname'].' '.$creator['lname'];
+        }
+        //echo"<pre>";print_r($case);echo "</pre>";die();
         $result[$model]=$case;
         $result['User']=$user;
         //print_r($result);die();
+        if($this->request->is('post')){
+            $data = $this->request->getData();
+            $case_notifications = $this->CaseNotifications->newEntity();
+            $caseNdata['case_id']=$id;
+            $caseNdata['user_id']=$case['user_id'];
+            $caseNdata['comments']=$data['Cases']['notes'];
+            $caseNdata['creator_id']=$this->Auth->User('id');
+            $caseNdata['notification_type']=$role;
+            $caseNdata['created']=time();
+            $caseNdata['modified']=time();
+            $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
+            $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
+            $this->CaseNotifications->save($case_notifications);
+            return $this->redirect(['action' => 'casenotes',$id]);
+            //echo"<pre>";print_r($data);echo "</pre>";die();
+        }
         $this->set(compact('id','role','breadcumb','caseIcons','model','result'));
     }
 
@@ -162,6 +189,18 @@ class AdminController extends AppController
         //print_r($result);die();
         $this->set(compact('id','role','breadcumb','caseIcons','model','result'));
     }
+
+    public function casedelete($id){
+        $this->loadModel('Cases');
+        $this->loadModel('CaseNotes');
+        $this->loadModel('CaseNotifications');
+        $this->loadModel('Users');
+        $entity = $this->Cases->get($id);
+        $result = $this->Cases->delete($entity);
+        $this->Flash->success(__('Case is successfully deleted.'));
+        return $this->redirect(['action' => 'casebrowser']);
+    }
+
 
     public function casesend($id)
     {
@@ -227,13 +266,13 @@ class AdminController extends AppController
             $directory = $filePath."/Notes-" . $result['User']['lname'] . ".doc";
 
             $fp = fopen($directory, 'w+');
-                
+
             $baseUrl =  $_SERVER['HTTP_HOST'];
             $htmlString = @file_get_contents('http://'.$baseUrl.'/client/admin/casenotes2/'.$id);
             fwrite($fp, $htmlString);
             fclose($fp);
             $attachments[] = Configure::read('AMU.directory'). DS . "Notes-" . $result['User']['lname'] . ".doc";
-               
+
             $this->_sendEmail($mail, [Configure::read('default_email.email')], Configure::read('noreply_email.email'), 'Wymoo International #'.$id ,'casenotes', array('result' => $result ), $attachments );
             echo "success";
             exit;
@@ -274,11 +313,6 @@ class AdminController extends AppController
 
             $this->viewBuilder()->setLayout('fancybox');
             $this->set(compact('result'));
-
-
-        
-        
-        
         }
 
     }

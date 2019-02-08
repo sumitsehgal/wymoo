@@ -25,12 +25,13 @@
 
 
 	echo $this->Html->css('all.in.one');
-	//echo $this->Html->script('all.in.one.js');
+	
 	?>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <?=$this->Html->script('all.in.one.js');?>
   <style>
   .ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable {
     width: 400px !important;}
@@ -54,13 +55,13 @@
 
 		$(document).ready(function(){
 
-				$('#email_case').on('click', function()
+				$('#email_case').click(function()
 				{
 					$('#email_case_dialog').dialog('open');
 					return false;
 				});
 
-				$('#send_email').on('click', function()
+				$('#send_email').click(function()
 				{
 					var email = $('#email_address').val();
 					var caseNo = $('#caseid').val();

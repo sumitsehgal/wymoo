@@ -8,15 +8,81 @@ if(!empty($quote)):
   $server = explode(',', $serverS);
 endif;
 $width = (!empty($quote)) ? '1300px' : '950px';
-//$autoOpen = ($form->error($model.'.notification')) ? 'true' : 'false';
+$autoOpen = ($this->Form->error($model.'.notification')) ? 'true' : 'false';
 $email_caseurl = $this->Html->link(array('controller'=>'cases','action'=>'caseemail',$case['id']));
 
 $disabled = true;
 if( $case['is_exported']==0 ){
   $disabled = false;
 }
-$this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenotesForm']);
+
 ?>
+<style type="text/css" id="page-css">
+/* Styles specific to this particular page */.scroll-pane {
+  width: 100%;
+  height: 200px;
+  overflow: auto;
+  font:12px/20px Arial, Helvetica, sans-serif;
+  color:#333;
+}
+</style>
+<script type="text/javascript" >$(function(){
+  $(document).ready(function () {$("#fancybox-outer",window.parent.document).mousewheel(function(event, delta) { event.stopPropagation();$("#fancybox-wrap",window.parent.document).trigger("mousewheel.fb", delta);});$("#fancybox-content" , window.parent.document).css("height", $("body").height() - 50 );$("#fancybox-frame" , window.parent.document).css("height", $("body").height() - 50);$("#fancybox-content" , window.parent.document).css("width", "990px");$("#fancybox-outer" , window.parent.document).css("width", "1000px");$("#fancybox-wrap" , window.parent.document).css("width", "1010px");$("#edit_case").click(function(e){window.parent.location.href = $(this).attr("href");  e.preventDefault();});$("#status_case").click(function(e){window.parent.location.href = $(this).attr("href");  e.preventDefault();});$("#notify_client").click(function(e){$( "div#notify_client_dialog").dialog("open");e.preventDefault();});$("div#notify_client_dialog" ).dialog({autoOpen: '. $autoOpen  .',width:450,modal:true});  $("div#notify_client_dialog" ).find("#save_notify").click(function(e){$("#CaseTableNotification").val( $("div#notify_client_dialog" ).find("#CaseTableNotification1").val());$("#CaseTableNotificationType").val("Admin");$("#CaseTableAdminCasenotesForm").submit();e.preventDefault();});$("#email_case").click(function(e){$("div#email_case_dialog" ).dialog("open");e.preventDefault();});$("div#email_case_dialog" ).dialog({autoOpen: false,width:400,modal:true});  $("div#no_email_case_dialog" ).dialog({autoOpen: false,modal:true       }); $("div#email_case_dialog" ).find("#send_email").click(function(e){if($("#email_address").val()=="" ){ $("#no_case").empty().html(" <br />Please enter email address to send email.");$( "div#no_email_case_dialog").dialog({title:"Send Email Case"});$( "div#no_email_case_dialog").dialog("open");return false;}if(!(emailregs . test($("#email_address").val())) ){$("#no_case").empty().html(" <br />Please enter valid email address to send email.");$( "div#no_email_case_dialog").dialog({title:"Send Email Case"});$( "div#no_email_case_dialog").dialog("open");return false;}window.location.href = "' . $email_caseurl. '" + "/" + $("#email_address").val();e.preventDefault();});$("a.ttt").mouseover(function() {$("div#preview_dialog_info").load($(this).attr("href") + "/1",function(){dlginfo.dialog("open");}); }).mousemove(function(event) {dlginfo.dialog("option", "position", {my: "left top",at: "right bottom",of: event,offset: "20 20"});}).mouseleave(function() {dlginfo.dialog("close");});var dlginfo = $("#preview_dialog_info").dialog({ autoOpen: false,  draggable: false,  resizable: false});});''
+  $("#export_case").click(function(e){
+    $("div#export_case_dialog" ).dialog("open");e.preventDefault();
+  });
+  $("#unlock_case_dialog").dialog({
+    show:'slide',
+    hide:'slide', 
+    width: 350,
+    height: 150,
+    autoOpen: false,
+    resizable: true,
+    draggable: false,
+    modal: true,
+  });
+  $("#close_dialog").click(function(e){
+    $("div#unlock_case_dialog").dialog("close");
+    e.preventDefault();
+  });
+  $("#export_case1").click(function(e){
+    $("div#unlock_case_dialog").dialog("open");
+    e.preventDefault();
+  });
+  $("#export_case_lnk").click(function(e){
+    $("#unlockbtndiv").show();
+    $("div#export_case_dialog" ).dialog("close");
+    <?php if($disabled==false){ ?>
+      $("div#export_case_dialog" ).html('<div style="color: #535353;font-family: Arial,Helvetica,sans-serif;font-size: 12px;padding:5px;"><div id="msg" style="text-align:justify;">The case has been locked, you cannnot change anything.');
+      <?php if($role=='Administrator'){ ?>
+        $("div#msg" ).append('To unlock this case click on "<b>Unlock Case</b>" button.');
+      <?php } ?>
+      $("#notify_client_btn").remove();
+      <?php if($role=='Administrator'){ ?>
+        $("#export_case1").click(function(e){
+          $("div#unlock_case_dialog").dialog("open");
+          e.preventDefault();
+        });
+        <?php 
+      } 
+    }?>
+  });
+  $("div#export_case_dialog" ).dialog({
+    autoOpen: false,
+    width:400,
+    modal:true
+  });  
+  $("#investigator_notes").click(function(e){
+    <?php if($disabled){?>
+      $("div#export_case_dialog" ).dialog("open");
+    <?php } else { ?> 
+      $("#CaseTableNotificationType").val("Investigator");
+      $("#CaseTableAdminCasenotesForm").submit();
+    <?php } ?>
+    e.preventDefault();
+  });
+});
+</script>
 <input type="hidden" id="caseid" value="<?php echo $case['id']; ?>" />
 <div class="divfull pt15">
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -36,7 +102,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
             </tr>
             <tr class="even">
               <td>Login Name:</td>
-              <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3f1dcdcd1d6d2c1d1d9f3d2dcdf9dd0dcde"><?php echo $case['client_login_id']; ?></a> </td>
+              <td><?php echo $case['client_login_id']; ?></td>
             </tr>
             <tr class="odd">
               <td>First Name:</td>
@@ -52,7 +118,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
             </tr>
             <tr class="even">
               <td>Email</td>
-              <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8eac7c7cacdc9dacac2e8c9c7c486cbc7c5"><?php echo $case['client_email']; ?></a> </td>
+              <td><?php echo $case['client_email']; ?></td>
             </tr>
             <tr class="odd">
               <td>Due Date:</td>
@@ -189,7 +255,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
             </div>
           <?php endif; ?>
         </td>
-        <td width="3%"><img src="/client/img/dot.png" width="1" height="1" alt="" /></td>
+        <td width="3%"><?=$this->Html->image("dot.png",['height'=>'1','width'=>'1']); ?></td>
         <td valign="top" width="47%">
           <div>
             <div class="bxheadlt"></div>
@@ -375,7 +441,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
       </div>
       <div class="floatleft pr10">
         <div class="btnlt"></div>
-        <div class="btnmid"> <?php echo $this->Html->link( 'Edit Case',array('controller'=>'cases','action'=> 'caseinfo','admin'=>true,$id),array('id'=>'edit_case'));?></div>
+        <div class="btnmid"> <?php echo $this->Html->link( 'Edit Case',array('controller'=>'Admin','action'=> 'caseedit','admin'=>true,$id),array('id'=>'edit_case'));?></div>
         <div class="btnrt"></div>
       </div>
       <div class="floatleft pr10">
@@ -405,6 +471,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
       </div>
     </div>
   </div>
+  <?=$this->Form->create('casenotes',['class'=>'form-inline','id'=>'CaseTableAdminCasenotesForm']);?>
   <div class="divfull pt15">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
@@ -420,12 +487,12 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
               <div class="scroll-pane" >
                 <div style="width:100%">
                   <table width="100%" style="width:550px" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
-                    <?php $class = 'even'; foreach($notifications as $InvestigatorNote): $class = ($class=='even')? 'odd' : 'even'; if($Communication['notification_type']=='Investigator'): ?>
+                    <?php $class = 'even'; foreach($notifications as $InvestigatorNote): $class = ($class=='even')? 'odd' : 'even'; ?>
                     <tr class="<?php echo $class;?>" >
-                      <td width="150"><?php echo $InvestigatorNote['created_by'];?>: (<?php echo  date('d-m-Y',$InvestigatorNote['created']);?>):</td>
-                      <td><?php echo nl2br($InvestigatorNote['comments'])  ;?> </td>
+                      <td width="150"><?=$InvestigatorNote['creator_name'];?>: (<?=date('d-m-Y',$InvestigatorNote['created']);?>):</td>
+                      <td><?=nl2br($InvestigatorNote['comments'])  ;?> </td>
                     </tr>
-                  <?php endif; endforeach; ?>
+                  <?php endforeach; ?>
                 </table>
               </div>
             </div>
@@ -443,44 +510,84 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
           </div>
           <div class="clr"></div>
         </div>
+        <?php $this->Form->end(); ?>
       </td>
     </tr>
   </table>
 </div>
-<?php $this->Form->end(); ?>
 
 <div id="email_case_dialog" title="Enter Email Address">
-			<table width="100%" cellspacing="0" cellpadding="0" border="0">
-			<tbody>
-			<tr>
-				<td colspan="2">&nbsp;</td>
-			</tr>
-			<tr>
-				<td>Email Address:</td>
-				<td>
-				<div class="inputover floatleft">
-					<div class="inputlt"></div>
-					<div class="inputmid">
-					<input type="text" class="wid243" placeholder="Enter Email Address" value="" id="email_address">
-					</div>
-					<div class="inputrt"></div>
-				</div>
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-				<div class="floatleft">
-					<div class="btnlt"></div>
-					<div class="btnmid"><a href="javascript:void(0);" style="color:#FFFFFF" id="send_email">Email Case</a></div>
-					<div class="btnrt"></div>
-				</div>
-				</td>
-			</tr>
-			</tbody>
-		</table>
-	</div>
+ <table width="100%" cellspacing="0" cellpadding="0" border="0">
+   <tbody>
+     <tr>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td>Email Address:</td>
+      <td>
+        <div class="inputover floatleft">
+         <div class="inputlt"></div>
+         <div class="inputmid">
+           <input type="text" class="wid243" placeholder="Enter Email Address" value="" id="email_address">
+         </div>
+         <div class="inputrt"></div>
+       </div>
+     </td>
+   </tr>
+   <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <div class="floatleft">
+       <div class="btnlt"></div>
+       <div class="btnmid"><a href="javascript:void(0);" style="color:#FFFFFF" id="send_email">Email Case</a></div>
+       <div class="btnrt"></div>
+     </div>
+   </td>
+ </tr>
+</tbody>
+</table>
+</div>
+
+<div id="preview_dialog_info" title="Preview" ></div>
+<div id="unlock_case_dialog" title="Unlock Case" ><br/>
+  <?php if($role=='Administrator'){ ?>
+    Are you sure you want to unlock the case?
+    <div class="floatright pt15" id="floatrightbtn" style="padding-top:20px;">
+      <div class="btnlt"></div>
+      <div class="btnmid"><?php echo $this->Html->link( 'Yes',array('controller'=>'cases','action'=> 'unlocked','admin'=>true,$id),array('id'=>'export_case_lnk','style'=>'color:#FFFFFF'));?></div>
+      <div class="btnrt" style="padding-right:2px;"></div>
+      <div class="btnlt"></div>
+      <div class="btnmid"><?php echo $this->Html->link( 'No',array(),array('id'=>'close_dialog','style'=>'color:#FFFFFF'));?></div>
+      <div class="btnrt"></div>
+    </div>
+  <?php } else {
+    echo 'You do not have access to unlock this case.'; 
+  } ?>
+</div>
+<div id="export_case_dialog" title="Case Locked" >
+  <div style="color: #535353;font-family: Arial,Helvetica,sans-serif;font-size: 12px;padding:5px;">
+    <div style="text-align:justify;">
+      <?php if($disabled) { echo 'The case has been locked, you cannnot change anything.'; 
+      if($role=='Administrator'){ 
+        echo 'To unlock this case click on "<b>Unlock Case</b>" button.'; 
+      } 
+    } else {
+      echo 'This case will be locked and notes page will no longer be editable.';
+    } ?>
+    <br>
+    <br>
+  </div>
+  <div class="floatright pt15" id="floatrightbtn">
+    <?php if($disabled) {
+    } else { ?>
+      <div class="btnlt"></div>
+      <div class="btnmid"><?php echo $this->Html->link( 'Export Case',array('controller'=>'cases','action'=> 'caseexport','admin'=>true,$id),array('id'=>'export_case_lnk','style'=>'color:#FFFFFF'));?></div>
+      <div class="btnrt"></div>
+    <?php }?>
+  </div>
+</div>
+</div>
