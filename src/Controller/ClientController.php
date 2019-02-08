@@ -165,6 +165,43 @@ class ClientController extends AppController {
 				$this->Cases->save($case);
 				$case_id = $case->id;
 
+				$folderPath = Configure::read('AMU')['directory'];
+				if(!empty($_FILES))
+				{
+					if(!empty($_FILES['photoes']))
+					{
+						// TODO : create folder
+						$directory = $folderPath.'/'.$case_id.'_photo';
+						@mkdir($directory, 0777, true);
+						
+						for($i=0; $i<count($_FILES['photoes']['name']); $i++)
+						{
+							$filename = $_FILES['photoes']['name'][$i];
+							$tmp_name = $_FILES['photoes']['tmp_name'][$i];
+							$filePath = $directory.'/'.$filename;
+							@move_uploaded_file($tmp_name, $filePath);
+						}
+					}
+					
+					if(!empty($_FILES['docs']))
+					{
+						// TODO : create folder
+						$directory = $folderPath.'/'.$case_id.'_document';
+						@mkdir($directory, 0777, true);
+
+						for($i=0; $i<count($_FILES['docs']['name']); $i++)
+						{
+							$filename = $_FILES['docs']['name'][$i];
+							$tmp_name = $_FILES['docs']['tmp_name'][$i];
+							$filePath = $directory.'/'.$filename;
+							@move_uploaded_file($tmp_name, $filePath);
+
+						}
+					}
+				}
+
+
+
 				$this->loadModel('CaseNotes');
 				$caseNotes = $this->CaseNotes->newEntity();
 				$fields_values = array();
