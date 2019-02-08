@@ -1,4 +1,4 @@
-<?php $delete_caseurl = $this->Html->url(array('controller'=>'Admin','action'=>'casedelete')); ?>
+<?php //$delete_caseurl = $this->Html->url(array('controller'=>'Admin','action'=>'casedelete')); ?>
 <div id="middle">
     <h1>Case <span>Browser </span></h1>
     <?= $this->Flash->render() ?>
@@ -7,7 +7,10 @@
         $(document).ready(function () {
             $("#delete_case").click(function(e){
                 if ($('input[type="checkbox"][id!="selectall"]:checked:first').length!=0) {
-                    $( "div#submit_case_dialog").dialog("open");
+                    r=confirm('Do you want to delete this case?');
+                    if(r==true){
+                        window.location.href="/client/admin/casedelete/"+$('input[type="checkbox"][id!="selectall"]:checked:first').val();
+                    }
                 } else {
                     $("#no_case").empty().html(" <br />No case selected. Please select at least one case to delete case.");
                     $( "div#no_email_case_dialog").dialog({title:"Delete Case"});
@@ -135,7 +138,10 @@
                                     <td width="12%"><?= $page['client_fname'] ?> </td>
                                     <td width="12%"><?= $page['client_lname'] ?></td>
                                     <td width="25%">
-                                        <?=$this->Html->image("dot.png",['height'=>'13','width'=>'10']); ?>&nbsp;&nbsp;<a href="/client/admin/casenotes/<?= $page['id'] ?>?iframe" class="newlink lightbox iframe" style=""><?= $page['client_email'] ?></a>	
+                                    <?php if($page['is_exported']==1){ echo $this->Html->image('lock-sm.png'); }else{ echo $this->Html->image("dot.png",['height'=>'13','width'=>'10']); } ?>&nbsp;&nbsp;
+                                    <a href="/client/admin/casenotes/<?= $page['id'] ?>?iframe" class="newlink lightbox iframe" style="">
+                                    <?= $page['client_email'] ?>
+                                    </a>	
                                     </td>
                                     <td width="10%"><?= $page['site_name'] ?></td>
                                     <td width="10%"><?php echo ($page['due_date']==0) ? 'Pending' : date('D, M j',$page['due_date']);?> </td>
@@ -229,65 +235,3 @@
                 });
             });
         </script>
-        <div id="submit_case_dialog" title="Delete Case" style="display:none;" >
-            <div style="color: #535353;font-family: Arial,Helvetica,sans-serif;font-size: 12px;padding:5px;">
-                <div style="text-align:justify;">
-                    Are you sure you want to delete selected case?If you are sure, click "<b>Delete Case</b>". After this step, selected case information and attachments will no longer be viewable.
-                </div>
-                <div class="floatright pt15">
-                    <div class="btnlt"></div>
-                    <div class="btnmid">
-                        <a href="javascript:void(0);" style="color:#FFFFFF" id="save_notify">Delete Case</a>
-                    </div>
-                    <div class="btnrt"></div>
-                </div>
-            </div>
-        </div> 
-        <div id="no_email_case_dialog" title="Email Case" style="display:none;"  >
-            <div style="color: #535353;font-family: Arial,Helvetica,sans-serif;font-size: 12px;">
-                <div id="no_case" style="text-align:justify;padding:5px;">
-                    <br />No case selected.Please select one case to email case.
-                </div>
-            </div>
-        </div>  
-        <div id="email_case_dialog" title="Enter Email Address" style="display:none;" >
-            <table width="100%" cellspacing="0" cellpadding="0" border="0">
-                <tbody>
-                    <tr>
-                        <td colspan="2">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>Email Address:</td>
-                        <td>
-                            <div class="inputover floatleft">
-                                <div class="inputlt"></div>
-                                <div class="inputmid">
-                                    <input type="text" class="wid243" placeholder="Enter Email Address" value=""  id="email_address">
-                                </div>
-                                <div class="inputrt"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>
-                            <div class="floatleft">
-                                <div class="btnlt"></div>
-                                <div class="btnmid">
-                                    <a href="#"  style="color:#FFFFFF" id="send_email">Email Case</a>
-                                </div>
-                                <div class="btnrt"></div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <?php echo $this->Form->create('aaa', array('class'=>'form-inline','id'=>'CaseTableAdminChangeCaseStatusForm','url'=>array('controller'=>'cases','action'=>'change_case_status')));
-        echo $this->Form->hidden('case_id');
-        echo $this->Form->hidden('case_status');
-        echo $this->Form->end();?>
