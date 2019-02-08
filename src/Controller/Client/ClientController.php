@@ -18,6 +18,7 @@ class ClientController extends AppController
     {
         $this->loadModel('Cases');
         $this->loadModel('Users');
+        $this->loadModel('CaseNotes');
         $user_id = $this->Auth->User('id');
         if(empty($id))
         {
@@ -28,7 +29,6 @@ class ClientController extends AppController
             ])->first();
             $id = $firstCase['id'];
         }
-
         $this->viewBuilder()->setLayout('client');
         $case_status = Configure::read('case_status');
         $breadcrumb = '<h1 class="relative">Case <span>Tracker </span></h1>';
@@ -46,6 +46,30 @@ class ClientController extends AppController
                     'id'=>$case['assigned_to']
                 ]
             ])->first();
+        }
+        if($this->request->is(['post', 'put'])) {
+            $data = $this->request->getData();
+            if($data['request']=="submit"){
+                $caseTable = TableRegistry::get('Cases');
+                $caseUp = $caseTable->get($id);
+                $caseUp->case_status=$case_status[$data['case_status_id']]['title'];
+                $caseUp->case_status_id=$data['case_status_id'];
+                $caseTable->save($caseUp);
+                $case_notes = $this->CaseNotes->newEntity();
+                $caseNdata['case_id']=$id;
+                $caseNdata['user_id']=$case['user_id'];
+                $caseNdata['case_notes']=$case_status[$data['case_status_id']]['description'];
+                $caseNdata['creator_id']=$this->Auth->User('id');
+                $caseNdata['case_status_id']=$data['case_status_id'];
+                $caseNdata['case_status']=$case_status[$data['case_status_id']]['title'];
+                $caseNdata['created']=time();
+                $caseNdata['modified']=time();
+                $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+                $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+                $this->CaseNotes->save($case_notes);
+                $this->Flash->success('Case submitted successfully.');
+                return $this->redirect(['action' => 'tracker']);
+            }
         }
         $caseStatus = array();
         $this->set(compact('id','breadcrumb','caseIcons','model','case','investor'));
@@ -73,19 +97,19 @@ class ClientController extends AppController
             {
                 if ($this->referer() != '/') 
                 {
-                   $this->redirect($this->referer());
-               } 
-               else 
-               {
-                   $this->redirect(array('action' => 'casetracker'));
-               }
-           }
+                 $this->redirect($this->referer());
+             } 
+             else 
+             {
+                 $this->redirect(array('action' => 'casetracker'));
+             }
+         }
 
-           $data = $this->request->getData();
-           $data['notify'] = '';
+         $data = $this->request->getData();
+         $data['notify'] = '';
 
             // TODO: Validation Pending
-           $cases= TableRegistry::get('Cases');
+         $cases= TableRegistry::get('Cases');
             $case = $cases->get($result->id); // Return article with id = $id (primary_key of row which need to get updated)
             $case->is_notifications = '';
 

@@ -1,7 +1,7 @@
 <div id="middle">
     <h1>Case <span>Browser </span></h1>
     <?= $this->Flash->render() ?>
-    <style type="text/css" id="page-css">.scroll-pane{width: 970px;height: 350px;overflow: auto;font:12px/20px Arial, Helvetica, sans-serif;color:#333;}</style><script type="text/javascript">$(function(){var api = $('.scroll-pane').jScrollPane({showArrows:true,maintainPosition: false});});</script><script>var emailregs = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i;$(function(){var caseid =0;$("img.chage_stateus").click(function(){caseid = $(this).attr("id");$("div#change_status_dialog" ).find("input#casestatus_"+$(this).attr("value")).attr("checked","checked");$("div#change_status_dialog" ).dialog("open");});$("div#change_status_dialog" ).dialog({autoOpen: false, width:250, modal:true, resizable:false });	$("div#change_status_dialog" ).find("#change_status").click(function(e){$("#CaseTableCaseStatus").val( $("div#change_status_dialog" ).find("input[type=radio]:checked").val());$("#CaseTableCaseId").val(caseid);$("#CaseTableAdminChangeCaseStatusForm").submit();e.preventDefault();});});</script><style>.ui-dialog .ui-dialog-content { padding:0px !important;}</style>
+    <style type="text/css" id="page-css">/* Styles specific to this particular page */.scroll-pane{width: 970px;height: 350px;overflow: auto;font:12px/20px Arial, Helvetica, sans-serif;color:#333;}</style><script type="text/javascript" >$(function(){var api = $('.scroll-pane').jScrollPane({showArrows:true,maintainPosition: false});});</script><script>var emailregs = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i;$(function(){var caseid =0;$("img.chage_stateus").click(function(){caseid = $(this).attr("id");$("div#change_status_dialog" ).find("input#casestatus_"+$(this).attr("value")).attr("checked","checked");$("div#change_status_dialog" ).dialog("open");});$("div#change_status_dialog" ).dialog({autoOpen: false, width:250, modal:true, resizable:false });	$("div#change_status_dialog" ).find("#change_status").click(function(e){$("#CaseTableCaseStatus").val( $("div#change_status_dialog" ).find("input[type=radio]:checked").val());$("#CaseTableCaseId").val(caseid);$("#CaseTableAdminChangeCaseStatusForm").submit();e.preventDefault();});});</script><style>.ui-dialog .ui-dialog-content { padding:0px !important;}</style>
 
     <form action="/client/admin/casebrowser" class="form-inline" id="CaseTableAdminCasebrowserForm" method="post" accept-charset="utf-8">
         <div style="display:none;">
@@ -109,47 +109,43 @@
                     </tbody>
                 </table>
 
-                <div class="scroll-pane" style="height: 100% !important; overflow: hidden; padding: 0px; width: 970px;">
-                    <div class="jspContainer" style="width: 970px; height: 162px;">
-                        <div class="jspPane" style="padding: 0px; top: 0px; width: 970px;">
-                            <table width="100%" style="width:970px;" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
-                                <tbody>
-                                    <?php $count = 1; if(!empty($pages)): ?>
-                                    <?php foreach($pages as $page): ?>
-                                        <tr class="<?php echo $count % 2 == 0 ? 'even' : 'odd'; ?>">
-                                            <td width="3%">
-                                                <input type="checkbox" name="id" value="<?= $page['id'] ?>">
-                                            </td>
-                                            <td width="12%"><?= $page['client_fname'] ?> </td>
-                                            <td width="12%"><?= $page['client_lname'] ?></td>
-                                            <td width="25%"> 
-                                                <img src="/client/img/dot.png" height="13" width="10" alt="">&nbsp;&nbsp;<a href="/client/admin/casenotes/<?= $page['id'] ?>?iframe" class="newlink lightbox iframe" onclick="$(this).parents(&quot;tr&quot;).css(&quot;font-weight&quot;,&quot;normal&quot;);" style=""><?= $page['client_email'] ?></a>	
-                                            </td>
-                                            <td width="10%"><?= $page['site_name'] ?></td>
-                                            <td width="10%"><?php echo ($page['due_date']==0) ? 'Pending' : date('D, M j',$page['due_date']);?> </td>
-                                            <td width="12%"><?php echo ($page['is_submited']==0) ? '' : floor((time()-(floor($page['submited_date']/86400)*86400))/86400);?><!-- TODO --></td>
-                                            <td nowrap="nowrap"> <!-- TODO -->
-                                                <span class="floatleft">
-                                                    <a href="/client/admin/casetracker/<?=$page['id'] ?>" class="newlink"><?= $page['case_status'] ?></a></span><span class="statusicon">
-                                                        <?php 
+                <div class="scroll-pane">
+                    <table width="100%" style="width:970px;" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
+                        <tbody>
+                            <?php $count = 1; if(!empty($pages)): ?>
+                            <?php foreach($pages as $page): ?>
+                                <tr class="<?php echo $count % 2 == 0 ? 'even' : 'odd'; ?>">
+                                    <td width="3%">
+                                        <input type="checkbox" name="id" value="<?= $page['id'] ?>">
+                                    </td>
+                                    <td width="12%"><?= $page['client_fname'] ?> </td>
+                                    <td width="12%"><?= $page['client_lname'] ?></td>
+                                    <td width="25%"> 
+                                        <img src="/client/img/dot.png" height="13" width="10" alt="">&nbsp;&nbsp;<a href="/client/admin/casenotes/<?= $page['id'] ?>?iframe" class="newlink lightbox iframe" onclick="$(this).parents(&quot;tr&quot;).css(&quot;font-weight&quot;,&quot;normal&quot;);" style=""><?= $page['client_email'] ?></a>	
+                                    </td>
+                                    <td width="10%"><?= $page['site_name'] ?></td>
+                                    <td width="10%"><?php echo ($page['due_date']==0) ? 'Pending' : date('D, M j',$page['due_date']);?> </td>
+                                    <td width="12%"><?php echo ($page['is_submited']==0) ? '' : floor((time()-(floor($page['submited_date']/86400)*86400))/86400);?><!-- TODO --></td>
+                                    <td nowrap="nowrap"> <!-- TODO -->
+                                        <span class="floatleft">
+                                            <a href="/client/admin/casetracker/<?=$page['id'] ?>" class="newlink"><?= $page['case_status'] ?></a></span><span class="statusicon">
+                                                <?php 
 
-                                                        echo $this->Html->image($caseIcons[$page['case_status_id']], [
-                                                            "alt" => $page['case_status'],
-                                                            "value" => $page['case_status_id'],
-                                                            "id" => $page['id'],
-                                                            "class" => 'chage_stateus',
-                                                            "style" => 'cursor:pointer'
-                                                        ]); 
-                                                        ?>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <?php $count++; endforeach; ?>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                                echo $this->Html->image($caseIcons[$page['case_status_id']], [
+                                                    "alt" => $page['case_status'],
+                                                    "value" => $page['case_status_id'],
+                                                    "id" => $page['id'],
+                                                    "class" => 'chage_stateus',
+                                                    "style" => 'cursor:pointer'
+                                                ]); 
+                                                ?>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <?php $count++; endforeach; ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
