@@ -68,7 +68,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <ul>
                         <li><img src="https://www.wymoo.com/client/images/user_profile.png" alt="user"></li>
                         <li>Hello,</li>
-                        <li><a href="/client/myaccount" class="newlink"><?= $Auth->user('fname') ?></a>&nbsp; | </li>
+                        <li><a href="/client/client/myaccount" class="newlink"><?= $Auth->user('fname') ?></a>&nbsp; | </li>
                         <li><a href="/users/logout" class="newlink">Logout</a></li>
                     </ul>
 

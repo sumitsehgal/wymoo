@@ -30,11 +30,14 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     echo $this->Html->css(['all.in.one','style-new-01']);
     echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one','jquery_new_01']);
     ?>
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
     <script type="text/javascript">
     $(function() {
         $( "#datepiCaseTableDueDatecker" ).datepicker();
     })
     </script>
+
  <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function () {$("#forgot_password").click(function(e){e.preventDefault();$('#ui-dialog-title-forgot_password_dialog').replaceWith('Forget your  Password?'); $( "div#forgot_password_dialog").dialog("open");});$("div#forgot_password_dialog" ).dialog({autoOpen: false,width:450,modal:true});	$("div#forgot_password_dialog" ).find("#submit_password").click(function(e){$("div#forgot_password_dialog" ).find("#UserForgotpasswordForm").submit();e.preventDefault();});});
@@ -137,6 +140,92 @@ $(document).ready(function () {$("#forgot_password").click(function(e){e.prevent
             </div>
         </div>
     </footer>
+
+    <div id="email_case_dialog" title="Enter Email Address">
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tbody>
+			<tr>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Email Address:</td>
+				<td>
+				<div class="inputover floatleft">
+					<div class="inputlt"></div>
+					<div class="inputmid">
+					<input type="text" class="wid243" placeholder="Enter Email Address" value="" id="email_address">
+					</div>
+					<div class="inputrt"></div>
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+				<div class="floatleft">
+					<div class="btnlt"></div>
+					<div class="btnmid"><a href="javascript:void(0);" style="color:#FFFFFF" id="send_email">Email Case</a></div>
+					<div class="btnrt"></div>
+				</div>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+
+    
+    <script>
+    
+         $( function() {
+			$( "#email_case_dialog" ).dialog({
+				autoOpen: false,
+			});
+		} );
+
+		$(document).ready(function(){
+
+				$('#email_case').click( function()
+				{
+					$('#email_case_dialog').dialog('open');
+					return false;
+				});
+
+				$('#send_email').click( function()
+				{
+					var email = $('#email_address').val();
+                    $('input[type=checkbox]:checked').each(function()
+                    {
+                        var caseNo = $(this).val();
+                        $.ajax({
+                            url: '/client/admin/casesend/'+caseNo,
+                            type: 'get',
+                            data: {email: email},
+                            beforeSend: function(){
+                                
+                            },
+                            success: function(response)
+                            {
+                                if(response == "success")
+                                {
+                                    $('#email_case_dialog').dialog('close');
+                                }
+                            }
+                        });
+
+
+                    });
+                    return false;
+
+				});
+
+		});
+    
+    
+    </script>
     
 </body>
 </html>
