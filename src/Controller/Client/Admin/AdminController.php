@@ -27,6 +27,7 @@ class AdminController extends AppController
     public function casetracker($id){
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Cases');
+        $this->loadModel('CaseNotes');
         $this->loadModel('Users');
         $case_status = Configure::read('case_status');
         $breadcrumb = '<h1 class="relative">Case <span>Tracker </span></h1>';
@@ -36,7 +37,16 @@ class AdminController extends AppController
             'conditions' => [
                 'id' => $id
             ]
-        ])->contain(['CaseNotes', 'CaseNotes.Users'])->first();
+        ])->contain(['CaseNotes'])->first();
+        foreach ($case['case_notes'] as $key => $note) {
+            $note_creator = $this->Users->find('all',[
+                'conditions' => [
+                    'id'=>$note['creator_id']
+                ]
+            ])->first();
+            $case['case_notes'][$key]['creator_user']=$note_creator;
+        }
+        //dd($case);
         $investorList = $this->Users->find('all',[
             'conditions' => [
                 'user_type_id'=>2
@@ -50,7 +60,38 @@ class AdminController extends AppController
         foreach ($case_status as $key => $status) {
             $caseStatus[$key]=$status['title'];
         }
-        //to do case update and add notes
+        //TO DO Select fields values aren't updating
+        if ($this->request->is(['post', 'put'])) {
+            //print_r($this->request->getData());die();
+            $data = $this->request->getData();
+            // dd($data);
+            $caseTable = TableRegistry::get('Cases');
+            $caseUp = $caseTable->get($id);
+            $caseUp->case_status=$case_status[$data['case_status_id']]['title'];
+            $caseUp->case_status_id=$data['case_status_id'];
+            $caseUp->assigned_to=$data['assigned_to'];
+            $caseUp->due_date=(($data['due_date']==0)?$data['due_date']:strtotime($data['due_date']));
+            $caseUp->service_level=$data['service_level'];
+            $caseUp->discount=$data['discount'];
+            $caseUp->fee=$data['fee'];
+            $caseTable->save($caseUp);
+            if($data['notes']!=''){
+                $case_notes = $this->CaseNotes->newEntity();
+                $caseNdata['case_id']=$id;
+                $caseNdata['user_id']=$case['user_id'];
+                $caseNdata['case_notes']=$data['notes'];
+                $caseNdata['creator_id']=$this->Auth->User('id');
+                $caseNdata['case_status_id']=$data['case_status_id'];
+                $caseNdata['case_status']=$case_status[$data['case_status_id']]['title'];
+                $caseNdata['created']=time();
+                $caseNdata['modified']=time();
+                $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+                $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+                $this->CaseNotes->save($case_notes);
+            }
+            $this->Flash->success('Case status updated.');
+            return $this->redirect(['action' => 'casetracker',$id]);
+        }
         $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus','investors'));
     }
 

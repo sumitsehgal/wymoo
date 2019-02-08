@@ -2,7 +2,6 @@
 <?php $form = $this->Form; ?>
 <?= $breadcrumb ?>
 <style type="text/css" id="page-css">.scroll-pane{width: 100%;height: 200px;overflow: auto;font:12px/20px Arial, Helvetica, sans-serif;color:#333;}</style>
-<script type="text/javascript" >$(function(){var api = $('.scroll-pane').jScrollPane({showArrows:true,maintainPosition: false});});</script>
 <?= $form->create($case,['class'=>'form-inline','id'=>'CaseTableAdminCasetrackerForm']) ?>
 <div class="divfull">
 	<div class="gradbox">
@@ -66,7 +65,6 @@
 									<div class="inputmid select244">
 										<?= $form->control('case_status_id',['options'=>$caseStatus,'class'=>'select','
 										id'=>'CaseTableCaseStatusId','label'=>false]) ?>
-										<div class="newListSelected"></div>
 									</div>
 									<div class="inputrt"></div>
 								</div>
@@ -80,7 +78,6 @@
 									<div class="inputmid select244">
 										<?= $form->control('assigned_to',['options'=>$investors,'class'=>'select','
 										id'=>'CaseTableAssignedTo','label'=>false]) ?>
-										<div class="newListSelected"></div>
 									</div>
 									<div class="inputrt"></div>
 								</div>
@@ -193,7 +190,7 @@
 							<tr class="<?=$class ?>">
 								<td style="width:502px;"><?=$note['case_notes']?></td>
 								<td width="15%"><?=date('D, M j',$note['created'])?></td>
-								<td width="15%"><?=$note['user']['fname'].' '.$note['user']['lname']?></td>
+								<td width="15%"><?=$note['creator_user']['fname'].' '.$note['creator_user']['lname']?></td>
 								<td width="" style="border-right:none;">
 									<span class="floatleft"><?=$note['case_status']?></span> 
 									<span class="statusicon"><?=$this->Html->image($caseIcons[$note['case_status_id']], [
@@ -215,21 +212,55 @@
 <?= $form->end() ?>
 
 <script type="text/javascript">
-	$(".datepicker").datepicker({
-		dateFormat:"D, MM dd", 
-		onSelect: function(dateText) {
-			var date = $(".datepicker").datepicker("getDate");
-			d = date.getDate(); 
-			m = date.getMonth() + 1; 
-			y = date.getFullYear(); 
-			$('#due_date').val(d+"-"+m+"-"+y); 
-		}
-	});
-	jQuery(document).ready(function(){
-		$(".lightbox.iframe").fancybox({
-			'width'             : '100%',
-			'height'            : '75%',
-			'autoScale'         : true,
+	function formatTitle(title, currentArray, currentIndex, currentOpts) {  
+		return "<div id=\"tip7-title\"><span><a href=\"javascript:;\" onclick=\"$.fancybox.close();\"><?=addslashes($this->Html->Image('fancybox/cross.png'))?></a></span><?=addslashes( $this->Html->Image('fancybox/casenotes_head.png') )?></div>";
+	}
+	$(document).ready(function () {
+		$(".datepicker").datepicker({
+			dateFormat:"D, MM dd", 
+			onSelect: function(dateText) {
+				var date = $(".datepicker").datepicker("getDate");
+				d = date.getDate(); 
+				m = date.getMonth() + 1; 
+				y = date.getFullYear(); 
+				$('#due_date').val(d+"-"+m+"-"+y); 
+			}
+		});
+		$(".select").sSelect({ ddMaxHeight: "300px"});
+		$('#update_case').click(function(e){
+			e.preventDefault();
+			$('#CaseTableAdminCasetrackerForm').submit();
+		});
+		$("#due_date").datepicker({
+			dateFormat:"D, MM dd", onSelect: function(dateText) {
+				var date = $("#due_date").datepicker("getDate");
+				d = date.getDate(); 
+				m = date.getMonth() + 1; 
+				y = date.getFullYear(); 
+				$("#due_date1").val(d+"-"+m+"-"+y); 
+			}
+		});
+		// $("#CaseTableServiceLevel, #CaseTableDiscount").change(function(){
+		// 	var f = fees[$("#CaseTableServiceLevel").val()];
+		// 	var d = discount[$("#CaseTableDiscount").val()];
+		// 	f = typeof f =="undefined" ? 0 : f;
+		// 	d = typeof d =="undefined" ? 0 : d;
+		// 	var fee = (f - (f*d)/100);$("#fee").val(fee);
+		// });
+		$(".lightbox").fancybox({
+			"transitionIn"		: "elastic",
+			"transitionOut"		: "elastic",				
+			"titlePosition" 	: "outside",
+			"width"				: "80%",				
+			"height"			: "200%",				
+			"titleFormat"		: formatTitle,				
+			"onStart"			: function() {						
+				$("#fancybox-outer").hide();					
+			},				
+			"onComplete"		: function() {						
+				$("#fancybox-outer").show();					
+			}
 		});
 	});
 </script>
+<script type="text/javascript" >$(function(){var api = $('.scroll-pane').jScrollPane({showArrows:true,maintainPosition: false});});</script>
