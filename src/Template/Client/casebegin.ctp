@@ -238,54 +238,103 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <div id="AjaxMultiUpload20190108062506-849">
-                                        </div>
+                                            <div id="fileupload-photo"> <input name="photoes[]" multiple type="file"  class="file photoes"  />  </div>
                 <script>    
-			
+            
+            
+
+            $(document).ready(function()
+            {
+
+                /*$('.file').change(function()
+                {
+                    var filedata = document.getElementsByClassName("photoes"),
+                            formdata = false;
+                    if (window.FormData) {
+                        formdata = new FormData();
+                    }
+                        var i = 0, len = filedata.files.length, img, reader, file;
+
+                        for (; i < len; i++) {
+                            file = filedata.files[i];
+
+                            if (window.FileReader) {
+                                reader = new FileReader();
+                                reader.onloadend = function(e) {
+                                    showUploadedItem(e.target.result, file.fileName);
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                            if (formdata) {
+                                formdata.append("file", file);
+                            }
+                    }
+
+
+                    if (formdata) {
+                        $.ajax({
+                            url: "/client/ajax-upload",
+                            type: "POST",
+                            data: formdata,
+                            processData: false,
+                            contentType: false,
+                            success: function(res) {
+
+                            },       
+                            error: function(res) {
+
+                            }       
+                        });
+                    }
+            });*/
+        });
+            
+
+
 				
 				$(function(){
 					            
-					var uploader1 = new qq.FileUploader({
-                        element: document.getElementById('AjaxMultiUpload20190108062506-849'),
-                        // path to server-side upload script
-						action: '/client/ajax-upload/',
-						debug: true,
-						allowedExtensions: ["jpg","gif","png","jpeg"],
-						template: '<div class="qq-uploader"><div class="qq-upload-drop-area well"><span>Drop files here to attach</span></div><div class="qq-upload-button"><span><strong>Photographs of subject</strong><a class="btn btn-default" href="#">Add</a></span></div><ul class="qq-upload-list"></ul></div>',
-						onComplete: function(id, fileName, responseJSON){
+					// var uploader1 = new qq.FileUploader({
+                    //     element: document.getElementById('fileupload-photo'),
+                    //     // path to server-side upload script
+					// 	action: '/client/ajax-upload/',
+					// 	debug: true,
+					// 	allowedExtensions: ["jpg","gif","png","jpeg"],
+					// 	template: '<div class="qq-uploader"><div class="qq-upload-drop-area well"><span>Drop files here to attach</span></div><div class="qq-upload-button"><span><strong>Photographs of subject</strong><a class="btn btn-default" href="#">Add</a></span></div><ul class="qq-upload-list"></ul></div>',
+					// 	onComplete: function(id, fileName, responseJSON){
 							
-							if (responseJSON.success){
+					// 		// if (responseJSON.success){
                                 
 							
-								if($('#'+ 'CaseTable' + '20190206100852-105_photo' +' option[value="' +fileName + '"]').length==0){
-									$('#'+ 'CaseTable' + '20190206100852-105_photo' ).append( '<option selected="selected" title="'+ '/client/ajax_multi_upload/uploads/download/' + responseJSON.file +'" value="' +fileName + '">'+fileName+'</option>' );
-									$('#'+ 'CaseTable' + '20190206100852-105_photo' ).trigger("liszt:updated");
-								}
-							}
-							if (responseJSON.error){
-								$('.qq-upload-fail').hide();
-							}
-						}
-					});           
+					// 		// 	if($('#'+ 'CaseTable' + '20190206100852-105_photo' +' option[value="' +fileName + '"]').length==0){
+					// 		// 		$('#'+ 'CaseTable' + '20190206100852-105_photo' ).append( '<option selected="selected" title="'+ '/client/ajax_multi_upload/uploads/download/' + responseJSON.file +'" value="' +fileName + '">'+fileName+'</option>' );
+					// 		// 		$('#'+ 'CaseTable' + '20190206100852-105_photo' ).trigger("liszt:updated");
+					// 		// 	}
+					// 		// }
+					// 		// if (responseJSON.error){
+					// 		// 	$('.qq-upload-fail').hide();
+					// 		// }
+					// 	}
+					// });           
 				
-					$('#'+ 'CaseTable' + '20190206100852-105_photo' ).chosen().change(function(){
-						//$('#'+ 'CaseTable' + '20190206100852-105_photo' +' option:not(:selected)').remove();
-						if('/client/ajax-delete' !=''){
-						$('#'+ 'CaseTable' + '20190206100852-105_photo' +' option:not(:selected)').each(function(){
-							deleteurl = $(this).attr('title').replace("/client/ajax_multi_upload/uploads/download","/client/ajax-delete");
-							var self = this;
-							$.ajax({url:deleteurl,success:function(){
-								$(self).remove();
-							}});
+					// $('#'+ 'CaseTable' + '20190206100852-105_photo' ).chosen().change(function(){
+					// 	//$('#'+ 'CaseTable' + '20190206100852-105_photo' +' option:not(:selected)').remove();
+					// 	if('/client/ajax-delete' !=''){
+					// 	$('#'+ 'CaseTable' + '20190206100852-105_photo' +' option:not(:selected)').each(function(){
+					// 		deleteurl = $(this).attr('title').replace("/client/ajax_multi_upload/uploads/download","/client/ajax-delete");
+					// 		var self = this;
+					// 		$.ajax({url:deleteurl,success:function(){
+					// 			$(self).remove();
+					// 		}});
 							
-						});$('#'+ 'CaseTable' + '20190206100852-105_photo' ).trigger("liszt:updated");
-						} else{
-							alert('You have no privilege to delete');
-							$('#'+ 'CaseTable' + '20190206100852-105_photo').find("option").attr("selected", true);
-							 return false;
-						}
+					// 	});$('#'+ 'CaseTable' + '20190206100852-105_photo' ).trigger("liszt:updated");
+					// 	} else{
+					// 		alert('You have no privilege to delete');
+					// 		$('#'+ 'CaseTable' + '20190206100852-105_photo').find("option").attr("selected", true);
+					// 		 return false;
+					// 	}
 						
-					} );
+					// } );
 					
 				});
 				
@@ -312,17 +361,11 @@
                                             <script src="<?php echo WEBSITE_URL;?>/js/fileuploader.js" type="text/javascript"></script>
                                             <script src="<?php echo WEBSITE_URL;?>/js/chosen.jquery.js" type="text/javascript"></script>
                                             <div id="AjaxMultiUpload20190108062506-849_document">
-                                                <div class="qq-uploader">
-                                                    <div class="qq-upload-drop-area well" style="display: none;"><span>Drop files here to attach</span></div>
-                                                    <div class="qq-upload-button" style="position: relative; overflow: hidden; direction: ltr;"><span><strong>Additional documentation (ID, passport, visa, records, etc.)&nbsp;</strong><a class="btn btn-default" href="#">Add</a></span>
-                                                        <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
-                                                    </div>
-                                                    <ul class="qq-upload-list"></ul>
-                                                </div>
+                                                <input name="docs[]" multiple type="file"  class="file photoes"  />
                                             </div>
                                             <script src="<?php echo WEBSITE_URL;?>/js/fileuploader.js" type="text/javascript"></script>
                                             <script>
-                                                var WEBSITE_URL = 'https://www.wymoo.com/client/';
+                                                /*var WEBSITE_URL = 'https://www.wymoo.com/client/';
                                                 var dlg = $("#preview_dialog").dialog({
                                                     autoOpen: false,
                                                     draggable: false,
@@ -332,7 +375,7 @@
                                                 var uploader2 = new qq.FileUploader({ element: document.getElementById('AjaxMultiUpload20190108062506-849_document'), action: '/client/ajax-upload/CaseTable___20190108062506-849_document/4', debug: true, allowedExtensions: ["jpg","gif","png","jpeg","pdf","doc","docx","xls","xlsx"], template: '<div class="qq-uploader"><div class="qq-upload-drop-area well"><span>Drop files here to attach</span></div><div class="qq-upload-button"><span><strong>Additional documentation (ID, passport, visa, records, etc.)&nbsp;</strong><a class="btn btn-default" href="#">Add</a></span></div><ul class="qq-upload-list"></ul></div>', onComplete: function(id, fileName, responseJSON){ if (responseJSON.success){ if($('#'+ 'CaseTable' + '20190108062506-849_document' +' option[value="' +fileName + '"]').length==0){ $('#'+ 'CaseTable' + '20190108062506-849_document' ).append( '<option selected="selected" title="'+ '//uploads/download/' + responseJSON.file +'" value="' +fileName + '">'+fileName+'</option>' ); $('#'+ 'CaseTable' + '20190108062506-849_document' ).trigger("liszt:updated"); } } if (responseJSON.error){ $('.qq-upload-fail').hide(); } } }); $('#'+ 'CaseTable' + '20190108062506-849_document' ).chosen({disabled:true}).change(function(){ if('/client/ajax-delete' !=''){ $('#'+ 'CaseTable' + '20190108062506-849_document' +' option:not(:selected)').each(function(){ deleteurl = $(this).attr('title').replace("//uploads/download","/client/ajax-delete"); var self = this; $.ajax({url:deleteurl,success:function(){ $(self).remove(); }}); });$('#'+ 'CaseTable' + '20190108062506-849_document' ).trigger("liszt:updated"); } else{ $('#'+ 'CaseTable' + '20190108062506-849_document').find("option").attr("selected", true); alert('You have no privilege to delete'); return false; } 
                                                 //remove();
                                                  }); 
-                                            });
+                                            });*/
                                             </script>
                                             <select id="CaseTable20190108062506-849_document" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" name="data[CaseTable][20190108062506-849_document][]"></select>
                                             <div id="CaseTable20190108062506_849_document_chzn" class="chzn-container chzn-container-multi" style="width: 450px;">
