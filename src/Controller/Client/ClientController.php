@@ -31,7 +31,7 @@ class ClientController extends AppController
         }
         $this->viewBuilder()->setLayout('client');
         $case_status = Configure::read('case_status');
-        $breadcrumb = '<h1 class="relative">Case <span>Tracker </span></h1>';
+        $breadcrumb = '<h1 class="relative">Case<span>Tracker</span></h1>';
         $caseIcons = Configure::read('case_icon');
         $model = 'Cases';
         $case = $this->Cases->find('all',[

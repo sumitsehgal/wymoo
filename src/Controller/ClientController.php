@@ -231,7 +231,7 @@ class ClientController extends AppController {
 				$this->Flash->clientsuccess('You are succesfully submitted case.',[ 'params' => $logindata ]);
 				//$this->_sendEmail('theprofessional1992@gmail.com', ['from@example.com'], 'theprofessional67@gmail.com', 'Subject is here', 'welcome');
 				$this->_sendEmail($user->email, [Configure::read('default_email.email')], Configure::read('noreply_email.email'), Configure::read('title').' received your Case Data' ,'case_data', array('result' => $data ) );
-				$this->redirect('/client/client/tracker/'.$case_id);
+				$this->redirect('/client/client/tracker/');
 			}
 		}
 	}

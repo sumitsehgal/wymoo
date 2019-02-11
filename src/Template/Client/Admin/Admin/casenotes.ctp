@@ -452,7 +452,7 @@ if( $case['is_exported']==0 ){
       <div class="floatleft pr10">
         <div class="btnlt"></div>
         <div class="btnmid">
-          <?php         echo $this->Html->link( 'Export Case',array('controller'=>'cases','action'=> 'caseexport','admin'=>true,$id),array('id'=>'export_case','style'=>'color:#FFFFFF'));?>
+          <?php         echo $this->Html->link( 'Export Case',array('controller'=>'Admin','action'=> 'caseexport','admin'=>true,$id),array('id'=>'export_case','style'=>'color:#FFFFFF'));?>
         </div>
         <div class="btnrt"></div>
       </div>

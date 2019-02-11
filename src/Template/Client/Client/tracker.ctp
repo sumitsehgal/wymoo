@@ -24,7 +24,6 @@
             <?=$breadcrumb ?>
         </div>
         <?= $this->Flash->render() ?>
-
         <div class="form_content">
             <h2>Client Info</h2>
         </div>
@@ -75,7 +74,7 @@
                                         </tr>
                                         <tr class="bg_box">
                                             <td width="40%">Service Type:</td>
-                                            <td width="60%"><?php //to do service type ?></td>
+                                            <td width="60%">Investigation</td>
                                         </tr>
 
                                         <tr>
