@@ -50,8 +50,8 @@
 
 
                         <?php
-
-                        foreach($errors as $err){
+                        
+                       /* foreach($errors as $err){
                          foreach($err as $nest){ ?>
                             <small style="color:#FF0000;"> 
                                 <div class="error-message">
@@ -60,7 +60,7 @@
                          </small>
                          <?php 
                      }         
-                 }
+                 }*/
 
                  ?>   
 
@@ -79,21 +79,46 @@
                                     <label>Your First Name:<span class="error_class">*</span></label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <input name="client_fname" type="text" class="form-control" id="CaseTableClientFname"> </div>
+                                    <input name="client_fname" type="text" class="form-control" id="CaseTableClientFname" value="<?php echo @$oldData['client_fname']; ?>" > 
+                                    <?php if(isset($errors) && isset($errors['client_fname'])): ?>
+                                    <small style="color:#FF0000;">
+                                        <?php foreach( $errors['client_fname'] as $err ): ?>
+                                             <div class="error-message"><?php echo $err; ?></div> 
+                                        <?php endforeach; ?>
+                                    </small>
+                                    <?php endif; ?>
                                 </div>
+                            </div>
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <label>Your Last Name:<span class="error_class">*</span></label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input name="client_lname" type="text" class="form-control" id="CaseTableClientLname"> </div>
+                                        <input name="client_lname" type="text" class="form-control" id="CaseTableClientLname" value="<?php echo @$oldData['client_lname']; ?>" > 
+                                        <?php if(isset($errors) && isset($errors['client_lname'])): ?>
+                                        <small style="color:#FF0000;">
+                                            <?php foreach( $errors['client_lname'] as $err ): ?>
+                                                <div class="error-message"><?php echo $err; ?></div> 
+                                            <?php endforeach; ?>
+                                        </small>
+                                        <?php endif; ?>
+                                    
+                                    </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <label>Your Email:<span class="error_class">*</span></label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input name="client_email" type="text" class="form-control" id="CaseTableClientEmail"> </div>
+                                            <input name="client_email" type="text" class="form-control" id="CaseTableClientEmail" value="<?php echo @$oldData['client_email']; ?>"> 
+                                            <?php if(isset($errors) && isset($errors['client_email'])): ?>
+                                            <small style="color:#FF0000;">
+                                                <?php foreach( $errors['client_email'] as $err ): ?>
+                                                    <div class="error-message"><?php echo $err; ?></div> 
+                                                <?php endforeach; ?>
+                                            </small>
+                                            <?php endif; ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -107,35 +132,51 @@
                                                     <label>Subject's Full Name:</label>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <input name="subject_fullname" type="text" class="form-control" id="CaseTableSubjectFullname"> </div>
+                                                    <input name="subject_fullname" type="text" class="form-control" id="CaseTableSubjectFullname" value="<?php echo @$oldData['subject_fullname']; ?>"> </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <label>Subject's Alias:</label>
                                                     </div>
                                                     <div class="col-sm-8">
-                                                        <input name="subject_alias" type="text" class="form-control" id="CaseTableSubjectAlias"> </div>
+                                                        <input name="subject_alias" type="text" class="form-control" id="CaseTableSubjectAlias" value="<?php echo @$oldData['subject_alias']; ?>"> </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <label>Subject's Email:</label>
                                                         </div>
                                                         <div class="col-sm-8">
-                                                            <input name="subject_email" type="text" class="form-control" id="CaseTableSubjectEmail"> </div>
+                                                            <input name="subject_email" type="text" class="form-control" id="CaseTableSubjectEmail" value="<?php echo @$oldData['subject_email']; ?>" > 
+                                                            <?php if(isset($errors) && isset($errors['subject_email'])): ?>
+                                                            <small style="color:#FF0000;">
+                                                                <?php foreach( $errors['subject_email'] as $err ): ?>
+                                                                    <div class="error-message"><?php echo $err; ?></div> 
+                                                                <?php endforeach; ?>
+                                                            </small>
+                                                            <?php endif; ?>
+                                                            </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-4">
                                                                 <label>Subject's Phone:</label>
                                                             </div>
                                                             <div class="col-sm-8">
-                                                                <input name="subject_phone" type="text" class="form-control" id="CaseTableSubjectPhone"> </div>
+                                                                <input name="subject_phone" type="text" class="form-control" id="CaseTableSubjectPhone"  value="<?php echo @$oldData['subject_phone']; ?>" > 
+                                                                <?php if(isset($errors) && isset($errors['subject_phone'])): ?>
+                                                                <small style="color:#FF0000;">
+                                                                    <?php foreach( $errors['subject_phone'] as $err ): ?>
+                                                                        <div class="error-message"><?php echo $err; ?></div> 
+                                                                    <?php endforeach; ?>
+                                                                </small>
+                                                                <?php endif; ?>    
+                                                            </div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-sm-4">
                                                                     <label>Subject's Date of Birth:</label>
                                                                 </div>
                                                                 <div class="col-sm-8">
-                                                                    <input name="subject_dob1" type="text" id="CaseTableSubjectDob" class="form-control hasDatepicker datepicker">
+                                                                    <input name="subject_dob1" type="text" id="CaseTableSubjectDob" class="form-control" autocomplete="off" value="<?php echo @$oldData['subject_dob1']; ?>">
                                                                     <input type="hidden" name="subject_dob" id="CaseTableSubjectDob1"> <small>*Leave blank and notify your investigator if unsure.</small> </div>
                                                                 </div>
                                                                 <div class="row">
@@ -143,7 +184,7 @@
                                                                         <label>Subject's Address:</label>
                                                                     </div>
                                                                     <div class="col-sm-8">
-                                                                        <textarea name="subject_address" class="form-control" rows="4" style="height:65px;" id="CaseTableSubjectAddress"></textarea>
+                                                                        <textarea name="subject_address" class="form-control" rows="4" style="height:65px;" id="CaseTableSubjectAddress"><?php echo @$oldData['subject_address']; ?></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -151,7 +192,7 @@
                                                                         <label>Subject's Education:</label>
                                                                     </div>
                                                                     <div class="col-sm-8">
-                                                                        <textarea name="subject_education" class="form-control" rows="3" id="CaseTableSubjectEducation"></textarea>
+                                                                        <textarea name="subject_education" class="form-control" rows="3" id="CaseTableSubjectEducation"><?php echo @$oldData['subject_education']; ?></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -159,7 +200,7 @@
                                                                         <label>Subject's Employment::</label>
                                                                     </div>
                                                                     <div class="col-sm-8">
-                                                                        <textarea name="subject_employment" class="form-control" rows="3" style="height:65px;" id="CaseTableSubjectEmployment"></textarea>
+                                                                        <textarea name="subject_employment" class="form-control" rows="3" style="height:65px;" id="CaseTableSubjectEmployment"><?php echo @$oldData['subject_employment']; ?></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -173,24 +214,24 @@
                                                                     <label>How do or did you communicate with the subject? </label>
                                                                     <ul class="checkbox_list">
                                                                         <li>
-                                                                            <input type="hidden" name="subject_communication_email" id="CaseTableSubjectCommunicationEmail_" value="0">
-                                                                            <input type="checkbox" name="subject_communication_email" value="1" id="CaseTableSubjectCommunicationEmail"> Email</li>
+                                                                            <input type="hidden" name="subject_communication_email" id="CaseTableSubjectCommunicationEmail_" value="<?php echo @$oldData['subject_communication_email']; ?>">
+                                                                            <input type="checkbox" name="subject_communication_email" value="<?php echo @$oldData['subject_communication_email']; ?>" id="CaseTableSubjectCommunicationEmail"> Email</li>
                                                                             <li>
-                                                                                <input type="hidden" name="subject_communication_messenger" id="CaseTableSubjectCommunicationMessenger_" value="0">
-                                                                                <input type="checkbox" name="subject_communication_messenger" value="1" id="CaseTableSubjectCommunicationMessenger"> Messenger</li>
+                                                                                <input type="hidden" name="subject_communication_messenger" value="0"  id="CaseTableSubjectCommunicationMessenger_" value="0">
+                                                                                <input type="checkbox" name="subject_communication_messenger" value="<?php echo @$oldData['subject_communication_messenger']; ?>" id="CaseTableSubjectCommunicationMessenger"> Messenger</li>
                                                                                 <li>
                                                                                     <input type="hidden" name="subject_communication_phone" id="CaseTableSubjectCommunicationPhone_" value="0">
-                                                                                    <input type="checkbox" name="subject_communication_phone" value="1" id="CaseTableSubjectCommunicationPhone"> Phone</li>
+                                                                                    <input type="checkbox" name="subject_communication_phone" value="<?php echo @$oldData['subject_communication_phone']; ?>" id="CaseTableSubjectCommunicationPhone"> Phone</li>
                                                                                     <li>
                                                                                         <input type="hidden" name="subject_communication_webcam" id="CaseTableSubjectCommunicationWebcam_" value="0">
-                                                                                        <input type="checkbox" name="subject_communication_webcam" value="1" id="CaseTableSubjectCommunicationWebcam"> Webcam</li>
+                                                                                        <input type="checkbox" name="subject_communication_webcam" value="<?php echo @$oldData['subject_communication_webcam']; ?>" id="CaseTableSubjectCommunicationWebcam"> Webcam</li>
                                                                                         <li>
                                                                                             <input type="hidden" name="subject_communication_inperson" id="CaseTableSubjectCommunicationInperson_" value="0">
-                                                                                            <input type="checkbox" name="subject_communication_inperson" value="1" id="CaseTableSubjectCommunicationInperson"> In Person</li>
+                                                                                            <input type="checkbox" name="subject_communication_inperson" value="<?php echo @$oldData['subject_communication_inperson']; ?>" id="CaseTableSubjectCommunicationInperson"> In Person</li>
                                                                                         </ul>
                                                                                         <label>Please provide a brief summary of your case and how we can help. </label>
                                                                                         <div class="text_area">
-                                                                                            <textarea name="subject_background" class="form-control" rows="4" id="CaseTableSubjectBackground"></textarea> <span id="subject_background_count">(1000 character maximum)</span> </div>
+                                                                                            <textarea name="subject_background" class="form-control" rows="4" id="CaseTableSubjectBackground"><?php echo @$oldData['subject_background']; ?></textarea> <span id="subject_background_count">(1000 character maximum)</span> </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="step4">
@@ -202,28 +243,28 @@
                                                                                                         <label>Has the subject sent any ID or documents?</label>
                                                                                                     </div>
                                                                                                     <div class="col-sm-5">
-                                                                                                        <input name="subject_id" type="text" class="form-control" id="CaseTableSubjectId"> </div>
+                                                                                                        <input name="subject_id" value="<?php echo @$oldData['subject_id']; ?>" type="text" class="form-control" id="CaseTableSubjectId"> </div>
                                                                                                     </div>
                                                                                                     <div class="row">
                                                                                                         <div class="col-sm-7">
                                                                                                             <label>How long have you known the subject?</label>
                                                                                                         </div>
                                                                                                         <div class="col-sm-5">
-                                                                                                            <input name="subject_how_long" type="text" class="form-control" id="CaseTableSubjectHowLong"> </div>
+                                                                                                            <input name="subject_how_long" value="<?php echo @$oldData['subject_how_long']; ?>" type="text" class="form-control" id="CaseTableSubjectHowLong"> </div>
                                                                                                         </div>
                                                                                                         <div class="row">
                                                                                                             <div class="col-sm-7">
                                                                                                                 <label>If you met the subject via the internet, please specify on which website.</label>
                                                                                                             </div>
                                                                                                             <div class="col-sm-5">
-                                                                                                                <input name="subject_website_met" type="text" class="form-control" id="CaseTableSubjectWebsiteMet"> </div>
+                                                                                                                <input name="subject_website_met" value="<?php echo @$oldData['subject_website_met']; ?>" type="text" class="form-control" id="CaseTableSubjectWebsiteMet"> </div>
                                                                                                             </div>
                                                                                                             <div class="row">
                                                                                                                 <div class="col-sm-7">
                                                                                                                     <label>Have you sent anything to the subject's address? If so, was it received?</label>
                                                                                                                 </div>
                                                                                                                 <div class="col-sm-5">
-                                                                                                                    <input name="subject_sent_address" type="text" class="form-control" id="CaseTableSubjectSentAddress"> </div>
+                                                                                                                    <input name="subject_sent_address" value="<?php echo @$oldData['subject_sent_address']; ?>" type="text" class="form-control" id="CaseTableSubjectSentAddress"> </div>
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                         </div>

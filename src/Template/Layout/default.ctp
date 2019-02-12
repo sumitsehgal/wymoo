@@ -26,6 +26,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->fetch('meta') ?>
+    <meta name="robots" content="noindex" />
     <?php
     echo $this->Html->css(array('bootstrap.css','jquery-ui'));
     echo $this->Html->script(array('jquery.min','bootstrap.min','all.in.one'));
@@ -131,7 +132,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     </div>
                 </div>
             </div>
-            <div class="copy_rite">
+            <div class="copy_rite"  style="float:left; width:100%;">
                 <p>Copyright &copy; Wymoo International, LLC All Rights Reserved | A Global Partner of  <a href="http://www.philippinepi.com/" target="_blank" class="custom_anchor" >Philippine PI™</a> and <a href="http://www.russiapi.com/" target="_blank" class="custom_anchor">Russia PI™</a></p>
             </div>
         </div>

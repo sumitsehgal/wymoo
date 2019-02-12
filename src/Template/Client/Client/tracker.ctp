@@ -46,15 +46,17 @@
                 });
             });
         </script>
+        <div id="submit_case_dialog" title="Submit Case" ><div style="color: #535353;font-family: Arial,Helvetica,sans-serif;font-size: 12px;"><div style="text-align:justify">Please make sure you have reviewed your case and attachments. If you are sure you have included all information needed by your investigator, click "<b>Submit Case</b>". After this step, your case information will no longer be editable.</div><div class="floatright pt15"><div class="btnlt"></div><div class="btnmid"><a href="javascript:void(0);" style="color:#FFFFFF;float:right;"  class="btn btn-default" id="save_notify">Submit Case</a></div><div class="btnrt"></div></div></div></div>
         <?php if($case['case_status_id']==1): ?>
-            <?= $this->Form->create($case) ?>
+            <?= $this->Form->create($case, ['id'=>'CaseTableCasetrackerForm']) ?>
             <div style="display:none;">
                 <input type="hidden" name="request" value="submit">
-                <input type="hidden" name="case_status_id" value="2">
+                <input type="hidden" name="case_status_id" value="3">
             </div>
             <div class="information_end">
                 <span>(When you finish adding information and attachments) </span>
-                <button type="submit" class="btn btn-default">Submit Case</button>
+                <!-- <button type="submit" class="btn btn-default">Submit Case</button> -->
+                <a class="btn btn-default" href="#" id="submit_case">Submit Case</a>
             </div>
             <div class="clearfix"></div>
             <?= $this->Form->end() ?>

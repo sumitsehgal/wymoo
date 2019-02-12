@@ -63,10 +63,10 @@ class ClientController extends AppController {
 			$validator = new Validator();
 			$validator
 					->requirePresence('client_fname')
-					->notEmpty('client_fname','Enter Your Name')
+					->notEmpty('client_fname','This field cannot be left blank, please try again.')
 					->add('client_fname', 'validFormat', [
 						'rule' =>array('custom' ,'/^[a-zA-Z ]*$/'),
-						'message' => ' Firstname should be letters only '
+						'message' => ' First name should be letters only '
 					])
 			         ->add('client_fname', [
 						'length' => [
@@ -76,7 +76,7 @@ class ClientController extends AppController {
 					])
 
                     ->requirePresence('client_lname')
-					->notEmpty('client_lname','Enter your Last name')
+					->notEmpty('client_lname','This field cannot be left blank, please try again.')
 					->add('client_lname', 'validFormat', [
 						'rule' =>array('custom','/^[a-zA-Z ]*$/'),
 						'message' => ' LastName should be letters only'
@@ -89,23 +89,69 @@ class ClientController extends AppController {
 					])
 
 					->requirePresence('client_email')
-					->notEmpty('client_email','Enter Email')
+					->notEmpty('client_email','This field cannot be left blank, please try again.')
 					->add('client_email', 'validFormat', [
 						'rule' => 'email',
-						'message' => 'E-mail must be valid'
+						'message' => 'Must be a valid email address.'
+					])
+					->allowEmptyString('subject_email')
+					->add('subject_email', 'validFormat', [
+						'rule' => 'email',
+						'message' => 'Must be a valid email address.'
 					]);
 
+					
 			$errors = $validator->errors($this->request->getData());
+
+			$oldData = $this->request->getData();
+			if(!empty($oldData['subject_phone']))
+			{
+				if(!preg_match("/^\d+\.?\d*$/",$oldData['subject_phone']))
+				{
+					$errors['subject_phone'][] = 'Must be a valid Phone Number';
+				}
+			}
+
+			if(!empty($oldData['client_email']))
+			{
+				$user = $this->Users->find('all',[
+					'conditions' => [
+						'email' => $oldData['client_email']
+					]
+				])->first();
+
+				if($user)
+				{
+					$errors['client_email'][] = 'Email already has been used.';
+				}
+			}
+
+
 			if(!empty($errors))
 			{
-				$this->set(compact('errors'));
-
+				$this->set(compact('errors', 'oldData'));
 			      //dd($errors);
 			}
 			else
 			{
 
 				$data = $this->request->getData();
+
+
+				$duedate =  explode('-',$data['subject_dob']);
+				$duedate1 =  explode('-',$data['subject_dob1']);
+
+				if(count($duedate)==3 && $data['subject_dob1']!='' && (isset($duedate1[2]) && $duedate1[2]!=date('Y')))
+				{
+					$data['subject_dob'] =  mktime(23,59,59,$duedate[1]*1,$duedate[0]*1,$duedate[2]);	
+				} 
+				else 
+				{
+					$data['subject_dob'] = 0;
+				}
+
+
+
 
 				$userData['fname'] = $data['client_fname'];
 				$userData['lname'] = $data['client_lname'];
@@ -119,17 +165,7 @@ class ClientController extends AppController {
 
 				// TODO validation for both User and Case Model
 
-				$duedate =  explode('-',$data['subject_dob']);
-				$duedate1 =  explode('-',$data['subject_dob1']);
-
-				if(count($duedate)==3 && $data['subject_dob1']!='' && (isset($duedate1[2]) && $duedate1[2]!=date('Y')))
-				{
-					$data['subject_dob'] =  mktime(23,59,59,$duedate[1]*1,$duedate[0]*1,$duedate[2]);	
-				} 
-				else 
-				{
-					$data['subject_dob'] = 0;
-				}
+				
 
 				$userData['passwd'] = $userData['password'];
 				$userData['user_type_id'] = 1;

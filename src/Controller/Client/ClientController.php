@@ -52,23 +52,34 @@ class ClientController extends AppController
             if($data['request']=="submit"){
                 $caseTable = TableRegistry::get('Cases');
                 $caseUp = $caseTable->get($id);
-                $caseUp->case_status=$case_status[$data['case_status_id']]['title'];
-                $caseUp->case_status_id=$data['case_status_id'];
-                $caseTable->save($caseUp);
-                $case_notes = $this->CaseNotes->newEntity();
-                $caseNdata['case_id']=$id;
-                $caseNdata['user_id']=$case['user_id'];
-                $caseNdata['case_notes']=$case_status[$data['case_status_id']]['description'];
-                $caseNdata['creator_id']=$this->Auth->User('id');
-                $caseNdata['case_status_id']=$data['case_status_id'];
-                $caseNdata['case_status']=$case_status[$data['case_status_id']]['title'];
-                $caseNdata['created']=time();
-                $caseNdata['modified']=time();
-                $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
-                $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
-                $this->CaseNotes->save($case_notes);
-                $this->Flash->success('Case submitted successfully.');
-                return $this->redirect(['action' => 'tracker']);
+                if($caseUp->is_submited == 0)
+                {
+                    $caseUp->case_status=$case_status[$data['case_status_id']]['title'];
+                    $caseUp->case_status_id=$data['case_status_id'];
+                    $caseUp->submited_date = mktime(0,0,0,date('n'),date('j'),date('Y'));
+                    $caseUp->is_submited = 1;
+                    $caseTable->save($caseUp);
+                    $case_notes = $this->CaseNotes->newEntity();
+                    $caseNdata['case_id']=$id;
+                    $caseNdata['user_id']=$case['user_id'];
+                    $caseNdata['case_notes']=$case_status[$data['case_status_id']]['description'];
+                    $caseNdata['creator_id']=$this->Auth->User('id');
+                    $caseNdata['case_status_id']=$data['case_status_id'];
+                    $caseNdata['case_status']=$case_status[$data['case_status_id']]['title'];
+                    $caseNdata['created']=time();
+                    $caseNdata['modified']=time();
+                    $caseNdata['fields_values']="[]";
+                    $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+                    $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+                    $this->CaseNotes->save($case_notes);
+                    $this->Flash->success(__('Your case data has been submitted successfully.'));
+                    return $this->redirect(['action' => 'tracker']);
+                }
+                else
+                {
+                    $this->Flash->success(__('Invalid case id'));
+                    return $this->redirect(['action' => 'tracker']);
+                }
             }
         }
         $caseStatus = array();

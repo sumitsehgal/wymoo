@@ -26,6 +26,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->fetch('meta') ?>
+    <meta name="robots" content="noindex" />
     <?php
     echo $this->Html->css(['bootstrap','jquery-ui','style_new_02']);
     echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one','jquery_new_01']);
@@ -154,7 +155,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <?php echo '<a target="_blank" href="http://www.youtube.com/user/wymoo">'.$this->Html->image('you_tube.png').'</a>'; ?>
                     <?php echo '<a target="_blank" href="http://www.linkedin.com/company/wymoo-international">'.$this->Html->image('link_in.png').'</a>'; ?>
                 </div>
-                <div class="copy_rite clear">
+                <div class="copy_rite clear" style="float:left; width:100%;">
                     <p>Copyright &copy; Wymoo International, LLC All Rights Reserved | A Global Partner of  <a href="http://www.philippinepi.com/" target="_blank" class="custom_anchor" >Philippine PI™</a> and <a href="http://www.russiapi.com/" target="_blank" class="custom_anchor">Russia PI™</a></p>
                 </div>
             </div>
