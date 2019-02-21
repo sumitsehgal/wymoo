@@ -65,7 +65,9 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Client', 'action' => 'casebegin']);
     $routes->connect('/client/casebegin', ['controller' => 'Client', 'action' => 'casebegin']);
     $routes->connect('/client/post-casebegin', ['controller' => 'Client', 'action' => 'casebeginPost']);
-    $routes->connect('/client/ajax-upload', ['controller' => 'Client', 'action' => 'ajaxUpload']);
+    $routes->connect('/client/ajax-upload/*', ['controller' => 'Client', 'action' => 'ajaxUpload']);
+    $routes->connect('/client/ajax-delete/*', ['controller' => 'Client', 'action' => 'ajaxDelete']);
+    $routes->connect('/client/test', ['controller' => 'Client', 'action' => 'test']);
     
     // $routes->connect('/admin/login', ['controller' => 'Client', 'action' => 'adminLogin']);
     // $routes->connect('/admin/casebrowser', ['controller' => 'Client', 'action' => 'adminCasebrowser']);

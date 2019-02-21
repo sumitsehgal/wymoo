@@ -1213,6 +1213,11 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.setRequestHeader("X-File-Name", encodeURIComponent(name));
         xhr.setRequestHeader("Content-Type", "application/octet-stream");
+        var csrf = document.getElementsByName('_csrfToken')[0].value;
+        xhr.setRequestHeader('X-CSRF-Token', csrf);
+        // var formData = new FormData();
+        // formData.append('file', file);
+        console.log(file);
         xhr.send(file);
     },
     _onComplete: function(id, xhr){

@@ -236,7 +236,7 @@ class AdminController extends AppController
             $attachments = [];
             // Check Uploaded Files  // TODO: Need to Upload
             $filePath = Configure::read('AMU')['directory'];
-            $directory = $filePath.'/'.$id.'_photo';
+            $directory = $filePath.'/CaseTable/'.$id.'_photo';
             if(is_dir($directory))
             {
                 $files = glob ("$directory/*");
@@ -249,7 +249,7 @@ class AdminController extends AppController
                 }
             }
 
-            $directory = $filePath.'/'.$id.'_document';
+            $directory = $filePath.'/CaseTable/'.$id.'_document';
             if(is_dir($directory))
             {
                 $files = glob ("$directory/*");

@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Auth\DefaultPasswordHasher; 
 use Cake\Validation\Validator;
+use App\Utility\qqFileUploader;
 /**
  * Application Controller
  *
@@ -17,6 +18,8 @@ use Cake\Validation\Validator;
  * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
 class ClientController extends AppController {
+
+	public $allowedExtensions = array();
 
 // 	public function initialize(){
 //     parent::initialize();
@@ -36,7 +39,7 @@ class ClientController extends AppController {
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['casebeginPost', 'casebegin', 'ajaxUpload']);
+		$this->Auth->allow(['casebeginPost', 'casebegin', 'ajaxUpload', 'ajaxDelete']);
 	}
 
 
@@ -46,15 +49,17 @@ class ClientController extends AppController {
 
 	public function casebegin()
 	{
+		$session = $this->getRequest()->getSession();
 		$timestamp = strftime("%Y%m%d%H%M%S");
 		mt_srand((double)microtime()*1000000);
 		$folderid = $timestamp."-".mt_rand(1, 999);
 
-		$dir = WWW_ROOT."/uploads/";
+		$dir = Configure::read('AMU.directory');
 
-		$directory =  $dir .DS.  'cases' . DS ;
+		$directory =  $dir .DS.  'CaseTable' . DS ;
 
 		$isPost = $this->request->is('post');
+		$this->set('folderid', $folderid);
 
 		if($isPost)
 		{
@@ -202,7 +207,7 @@ class ClientController extends AppController {
 				$case_id = $case->id;
 
 				$folderPath = Configure::read('AMU')['directory'];
-				if(!empty($_FILES))
+				/*if(!empty($_FILES))
 				{
 					if(!empty($_FILES['photoes']))
 					{
@@ -233,10 +238,10 @@ class ClientController extends AppController {
 							@move_uploaded_file($tmp_name, $filePath);
 
 						}
-					}
-				}
-
-
+					}this->
+				}*/
+				@rename($directory. $data['folderid']."_photo",$directory. $case_id."_photo");
+				@rename($directory. $data['folderid']."_document",$directory. $case_id."_document");
 
 				$this->loadModel('CaseNotes');
 				$caseNotes = $this->CaseNotes->newEntity();
@@ -269,6 +274,21 @@ class ClientController extends AppController {
 				$this->_sendEmail($user->email, [Configure::read('default_email.email')], Configure::read('noreply_email.email'), Configure::read('title').' received your Case Data' ,'case_data', array('result' => $data ) );
 				$this->redirect('/client/client/tracker/');
 			}
+		}
+		else
+		{
+			$attachfolder =  ( $session->read($this->name.'.casebegin.folderid') ) ? $session->read($this->name.'.casebegin.folderid') : '';	
+			if($attachfolder!='')
+			{
+				
+				$this->rrmdir($directory . $attachfolder.'_photo');
+				$this->rrmdir($directory . $attachfolder.'_document');
+			}
+			$session->write($this->name.'.casebegin.folderid', $folderid);	
+			if(!file_exists($directory . $folderid.'_photo'))
+				@mkdir($directory . $folderid.'_photo',0777,true);
+			if(!file_exists($directory . $folderid.'_document'))
+				@mkdir($directory . $folderid.'_document',0777,true);
 		}
 	}
 
@@ -319,9 +339,74 @@ class ClientController extends AppController {
 		//$this->layout = 'fancybox';
 	}
 
-	public function ajaxUpload()
+	public function ajaxUpload($dir = null,$maxfiles=5)
 	{
-		echo "test";exit;
+
+		// $input = fopen("php://input", "r");
+        // $temp = tmpfile();
+        // $realSize = stream_copy_to_stream($input, $temp);
+		// fclose($input);
+		// dd($input);
+		// return $realSize;exit;
+
+		$size = Configure::read ('AMU.filesizeMB');
+		if ( strlen( $size ) < 1 ) $size = 4;
+		// real path of the directroty 
+		$relPath = Configure::read ('AMU.directory');
+	
+		$sizeLimit = $size * 1024 * 1024;
+		// set layout ajax for this view
+		$this->viewBuilder()->setLayout('ajax');
+		//Configure::write('debug', 0);
+		$directory =  $relPath;
+		if ($dir === null) {
+			$this->set("result", "{\"error\":\"Upload controller was passed a null value.\"}");
+			return;
+		}
+		// Replace underscores delimiter with slash
+		$dir = str_replace ("__", "/", $dir);
+		$dir = $directory . DS . "$dir/";
+		if (!file_exists($dir)) {
+			mkdir($dir, 0777, true);
+		}
+		$files = glob ("$dir/*");
+		if(count($files) >= $maxfiles){
+			$result = array('error'=> 'Sorry, you cannot upload more than '.$maxfiles.' files.');
+			$this->set("result", htmlspecialchars(json_encode($result), ENT_NOQUOTES));
+		}else{
+			
+		$uploader = new qqFileUploader($this->allowedExtensions, $sizeLimit);
+		$result = $uploader->handleUpload($dir, true);
+		echo json_encode($result);exit;
+		//$this->set("result", htmlspecialchars(json_encode($result), ENT_NOQUOTES));
+		}
+	}
+
+	function rrmdir($dir) {
+		foreach(glob($dir . '/*') as $file) {
+			if(is_dir($file))
+				rrmdir($file);
+			else
+				@unlink($file);
+		}
+		@rmdir($dir);
+	}
+
+	public function ajaxDelete($file = null)
+	{
+		if (is_null($file)) {
+			echo json_encode(['status'=>false]);
+			exit;
+		}
+		$file = base64_decode($file);
+		if (file_exists($file)) {
+			if (unlink($file)) {
+			} else {
+			}
+		} else {
+		}
+		echo json_encode(['status'=>true]);
+		exit;
 	}
 
 }

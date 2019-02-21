@@ -20,12 +20,12 @@
                 onChangeMonthYear: function(year, month, inst) { //$("#" + inst.id).datepicker( "setDate", "/1/" + month + year ); 
                 var d = inst.selectedDay; $(this).datepicker("setDate", new Date(year, month - 1, d)); },onSelect: function(dateText) {var date = $("#CaseTableSubjectDob").datepicker("getDate");d = date.getDate(); m = date.getMonth() + 1; y = date.getFullYear();$("#CaseTableSubjectDob1").val(d+"-"+m+"-"+y); $(this).data("datepicker").inline = true; }}); $("#save_case").click(function(e){$("#CaseTableCasebeginForm").submit();e.preventDefault();}); $("#CaseTableSubjectBackground").keyup(function(){$("#CaseTableSubjectBackground").val($("#CaseTableSubjectBackground").val().substring(0,1000)).focus(); var psconsole = $("#CaseTableSubjectBackground");psconsole.scrollTop(psconsole[0].scrollHeight - psconsole.height()); var charcount = parseInt(parseInt(1000) - parseInt($("#CaseTableSubjectBackground").val().length)); $("#subject_background_count").html("(You have <font style=\'color:red;\'>"+charcount+"</font> characters remaining.)");});});
             </script>
-            <form action="/client/casebegin" class="form-inline" id="CaseTableCasebeginForm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+            <form action="/client/casebegin" class="form-inline" id="CaseTableCasebeginForm" method="post" accept-charset="utf-8" >
                 <input type="hidden" value="<?php echo $this->request->getParam('_csrfToken'); ?>" name="_csrfToken"  />
                 <div style="display:none;">
                     <input type="hidden" name="_method" value="POST">
                 </div>
-                <input type="hidden" name="folderid" value="" id="CaseTableFolderid">
+                <input type="hidden" name="folderid" value="<?php echo $folderid; ?>" id="CaseTableFolderid">
 
 
                 <div class="content_box">
@@ -276,112 +276,83 @@
                                                                                                                         <tbody>
                                                                                                                             <tr>
                                                                                                                                 <td>
-                                                                                                                                    <div id="fileupload-photo"> <input name="photoes[]" multiple type="file"  class="file photoes"  />  </div>
-                                                                                                                                    <script>    
+                                                                                                                                    <div id="fileupload-photo">   </div>
+<script>
+$(function(){
+
+        var uploader1 = new qq.FileUploader({
+            element: document.getElementById('fileupload-photo'),
+            action: '/client/ajax-upload/CaseTable__<?php echo $folderid?>_photo/4',
+            debug: true,
+            allowedExtensions: ["jpg","gif","png","jpeg"],
+            template: '<div class="qq-uploader"><div class="qq-upload-drop-area well"><span>Drop files here to attach</span></div><div class="qq-upload-button"><span><strong>Photographs of subject</strong><a class="btn btn-default" href="#">Add</a></span></div><ul class="qq-upload-list"></ul></div>',
+            onComplete: function(id, fileName, responseJSON){
+                console.log(responseJSON);
+                if (responseJSON.success){
+
+
+                    if($('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo' +' option[value="' +fileName + '"]').length==0){
+                        $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo' ).append( '<option selected="selected" title="'+ '/client/ajax_multi_upload/uploads/download/' + responseJSON.file +'" value="' +fileName + '">'+fileName+'</option>' );
+                        //$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo' ).trigger("liszt:updated");
+                        $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo_chzn .chzn-choices' ).prepend('<li class="search-choice" id="CaseTable<?php echo $folderid;?>_photo_chzn_c_0"><span style="cursor: pointer;">'+fileName+'</span><a href="javascript:void(0)" class="search-choice-close" rel="0" deletelink="'+responseJSON.file+'"  ></a></li>');
+                    }
+                }
+                if (responseJSON.error){
+                    $('.qq-upload-fail').hide();
+                }
+            }
+        });           
+
+        $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo' ).chosen().change(function(){
+            //$('#'+ 'CaseTable' + '20190206100852-105_photo' +' option:not(:selected)').remove();
+            if('/client/ajax-delete' !=''){
+            $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo' +' option:not(:selected)').each(function(){
+                deleteurl = $(this).attr('title').replace("/client/ajax_multi_upload/uploads/download","/client/ajax-delete");
+                var self = this;
+                $.ajax({url:deleteurl,success:function(){
+                    $(self).remove();
+                }});
+
+            });$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo' ).trigger("liszt:updated");
+            } else{
+                alert('You have no privilege to delete');
+                $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo').find("option").attr("selected", true);
+                return false;
+            }
+
+        } );
 
 
 
-                                                                                                                                        $(document).ready(function()
-                                                                                                                                        {
-
-                /*$('.file').change(function()
+        $('.chzn-choices .search-choice-close').live('click', function()
+        {
+            var link = $(this).attr('deletelink');
+            var anchor = $(this)
+            $.ajax({
+                url: '/client/ajax-delete/'+link,
+                beforeSend(request)
                 {
-                    var filedata = document.getElementsByClassName("photoes"),
-                            formdata = false;
-                    if (window.FormData) {
-                        formdata = new FormData();
-                    }
-                        var i = 0, len = filedata.files.length, img, reader, file;
-
-                        for (; i < len; i++) {
-                            file = filedata.files[i];
-
-                            if (window.FileReader) {
-                                reader = new FileReader();
-                                reader.onloadend = function(e) {
-                                    showUploadedItem(e.target.result, file.fileName);
-                                };
-                                reader.readAsDataURL(file);
-                            }
-                            if (formdata) {
-                                formdata.append("file", file);
-                            }
-                    }
-
-
-                    if (formdata) {
-                        $.ajax({
-                            url: "/client/ajax-upload",
-                            type: "POST",
-                            data: formdata,
-                            processData: false,
-                            contentType: false,
-                            success: function(res) {
-
-                            },       
-                            error: function(res) {
-
-                            }       
-                        });
-                    }
-                });*/
-            });
+                    var csrf = document.getElementsByName('_csrfToken')[0].value;
+                    request.setRequestHeader("X-CSRF-Token", csrf);
+                },
+                success: function(response)
+                {
+                    anchor.parent().remove();
+                }
+            })
+            return false;
+        });
 
 
 
-
-                                                                                                                                        $(function(){
-
-					// var uploader1 = new qq.FileUploader({
-                    //     element: document.getElementById('fileupload-photo'),
-                    //     // path to server-side upload script
-					// 	action: '/client/ajax-upload/',
-					// 	debug: true,
-					// 	allowedExtensions: ["jpg","gif","png","jpeg"],
-					// 	template: '<div class="qq-uploader"><div class="qq-upload-drop-area well"><span>Drop files here to attach</span></div><div class="qq-upload-button"><span><strong>Photographs of subject</strong><a class="btn btn-default" href="#">Add</a></span></div><ul class="qq-upload-list"></ul></div>',
-					// 	onComplete: function(id, fileName, responseJSON){
-
-					// 		// if (responseJSON.success){
+    });
+</script>
 
 
-					// 		// 	if($('#'+ 'CaseTable' + '20190206100852-105_photo' +' option[value="' +fileName + '"]').length==0){
-					// 		// 		$('#'+ 'CaseTable' + '20190206100852-105_photo' ).append( '<option selected="selected" title="'+ '/client/ajax_multi_upload/uploads/download/' + responseJSON.file +'" value="' +fileName + '">'+fileName+'</option>' );
-					// 		// 		$('#'+ 'CaseTable' + '20190206100852-105_photo' ).trigger("liszt:updated");
-					// 		// 	}
-					// 		// }
-					// 		// if (responseJSON.error){
-					// 		// 	$('.qq-upload-fail').hide();
-					// 		// }
-					// 	}
-					// });           
-
-					// $('#'+ 'CaseTable' + '20190206100852-105_photo' ).chosen().change(function(){
-					// 	//$('#'+ 'CaseTable' + '20190206100852-105_photo' +' option:not(:selected)').remove();
-					// 	if('/client/ajax-delete' !=''){
-					// 	$('#'+ 'CaseTable' + '20190206100852-105_photo' +' option:not(:selected)').each(function(){
-					// 		deleteurl = $(this).attr('title').replace("/client/ajax_multi_upload/uploads/download","/client/ajax-delete");
-					// 		var self = this;
-					// 		$.ajax({url:deleteurl,success:function(){
-					// 			$(self).remove();
-					// 		}});
-
-					// 	});$('#'+ 'CaseTable' + '20190206100852-105_photo' ).trigger("liszt:updated");
-					// 	} else{
-					// 		alert('You have no privilege to delete');
-					// 		$('#'+ 'CaseTable' + '20190206100852-105_photo').find("option").attr("selected", true);
-					// 		 return false;
-					// 	}
-
-					// } );
-					
-				});
-
-
-
-           </script>
-           <select id="CaseTable20190108062506-849_photo" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" name="data[CaseTable][20190108062506-849_photo][]"></select>
-           <div id="CaseTable20190108062506_849_photo_chzn" class="chzn-container chzn-container-multi" style="width: 450px;">
+           <select id="CaseTable<?php echo $folderid; ?>_photo" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" name="data[CaseTable][20190108062506-849_photo][]"></select>
+           <div id="CaseTable<?php echo $folderid; ?>_photo_chzn" class="chzn-container chzn-container-multi" style="width: 450px;">
             <ul class="chzn-choices">
+            
                 <li class="search-field">
                     <input type="text" value="Click on Add to attach files" class="default" autocomplete="off" style="width: 178px;">
                 </li>
@@ -398,15 +369,66 @@
         <link rel="stylesheet" type="text/css" href="<?php echo WEBSITE_URL;?>/css/fileuploader.css">
         <script src="<?php echo WEBSITE_URL;?>/js/fileuploader.js" type="text/javascript"></script>
         <script src="<?php echo WEBSITE_URL;?>/js/chosen.jquery.js" type="text/javascript"></script>
-        <div id="AjaxMultiUpload20190108062506-849_document">
-            <input name="docs[]" multiple type="file"  class="file photoes"  />
+        <div id="fileupload-document">
+            
         </div>
         <script src="<?php echo WEBSITE_URL;?>/js/fileuploader.js" type="text/javascript"></script>
         <script>
+					var dlg = $("#preview_dialog").dialog({
+					  autoOpen: false,
+					  draggable: false,
+					  resizable: false
+					});
+				
+				$(function(){
+					   // $("div#preview_dialog" ).dialog({autoOpen: false});	    
+					var uploader2 = new qq.FileUploader({
+						element: document.getElementById('fileupload-document'),
+						action: '/client/ajax-upload/CaseTable__<?php echo $folderid?>_document/4',
+						debug: true,
+						allowedExtensions: ["jpg","gif","png","jpeg","pdf","doc","docx","xls","xlsx"],
+						template: '<div class="qq-uploader"><div class="qq-upload-drop-area well"><span>Drop files here to attach</span></div><div class="qq-upload-button"><span><strong>Additional documentation (ID, passport, visa, records, etc.)&nbsp;</strong><a class="btn btn-default" href="#">Add</a></span></div><ul class="qq-upload-list"></ul></div>',
+						onComplete: function(id, fileName, responseJSON){
+							
+							if (responseJSON.success){
+							
+								if($('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' + 'option[value="' +fileName + '"]').length==0){
+									$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' ).append( '<option selected="selected" title="'+ '/client/ajax_multi_upload/uploads/download/' + responseJSON.file +'" value="' +fileName + '">'+fileName+'</option>' );
+                                    //$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' ).trigger("liszt:updated");
+                                    $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document_chzn .chzn-choices' ).prepend('<li class="search-choice" id="CaseTable<?php echo $folderid;?>_document_chzn_c_0"><span style="cursor: pointer;">'+fileName+'</span><a href="javascript:void(0)" class="search-choice-close" rel="0" deletelink="'+responseJSON.file+'"></a></li>');
+								}
+							}
+							if (responseJSON.error){
+								$('.qq-upload-fail').hide();
+							}
+							
+						}
+						
+					});           
+				
+					$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' ).chosen({disabled:true}).change(function(){
+						if('/client/ajax-delete' !=''){
+							$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' +' option:not(:selected)').each(function(){
+							deleteurl = $(this).attr('title').replace("/client/ajax_multi_upload/uploads/download","/client/ajax-delete");
+							var self = this;
+							$.ajax({url:deleteurl,success:function(){
+								$(self).remove();
+							}});
+							
+						});$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' ).trigger("liszt:updated");
+						} else{
+							$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document').find("option").attr("selected", true);
+							alert('You have no privilege to delete'); return false;
+						}
+						//remove();
+						
+					} );
+					
+				});
             
         </script>
-        <select id="CaseTable20190108062506-849_document" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" name="data[CaseTable][20190108062506-849_document][]"></select>
-        <div id="CaseTable20190108062506_849_document_chzn" class="chzn-container chzn-container-multi" style="width: 450px;">
+        <select id="CaseTable<?php echo $folderid; ?>_document" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" name="data[CaseTable][20190108062506-849_document][]"></select>
+        <div id="CaseTable<?php echo $folderid; ?>_document_chzn" class="chzn-container chzn-container-multi" style="width: 450px;">
             <ul class="chzn-choices">
                 <li class="search-field">
                     <input type="text" value="Click on Add to attach files" class="default" autocomplete="off" style="width: 178px;">
