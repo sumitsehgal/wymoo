@@ -5,13 +5,16 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Validation\Validator;
 
 class ClientController extends AppController
 {
 
     public function beforeFilter(Event $event) {
       parent::beforeFilter($event);
-		$this->Auth->allow(['logout']); // Temporary Allow
+        $this->Auth->allow(['logout']); // Temporary Allow
+        
+        $this->loadComponent('Csrf');
     }
 
     public function tracker($id = null)
@@ -77,7 +80,7 @@ class ClientController extends AppController
                 }
                 else
                 {
-                    $this->Flash->success(__('Invalid case id'));
+                    $this->Flash->error(__('Case has already been Submitted.'));
                     return $this->redirect(['action' => 'tracker']);
                 }
             }
@@ -163,9 +166,133 @@ class ClientController extends AppController
                 'user_id' => $user_id
             ]
         ])->first();
-        if($this->request->is('post')){
-            $this->Cases->save($this->request->getData());
-            $this->Flash->success('Case updated successfully.');
+
+        $session = $this->getRequest()->getSession();
+        $folderid = $case->id;
+        
+        $this->set('folderid', $folderid);
+
+
+        $attachments = [];
+        $directory = Configure::read('AMU.directory') . DS . 'CaseTable' . DS. $folderid .'_photo';		
+        $files = glob ("$directory/*");
+        foreach($files as $key=>$file){
+            $f 			= basename($file);
+            if($f == 'Thumbs.db') continue;
+            $attachments['photo'][$key]['path'] = $file;
+            $attachments['photo'][$key]['file'] = base64_encode($file);
+            $attachments['photo'][$key]['filename'] = basename($file);
+        }
+
+
+        $directory = Configure::read('AMU.directory') . DS . 'CaseTable' . DS. $folderid .'_document';		
+        $files = glob ("$directory/*");
+        foreach($files as $key=>$file){
+            $f 			= basename($file);
+            if($f == 'Thumbs.db') continue;
+            $attachments['document'][$key]['path'] = $file;
+            $attachments['document'][$key]['file'] = base64_encode($file);
+            $attachments['document'][$key]['filename'] = basename($file);
+        }
+
+        $this->set('attachments',$attachments);
+        /**
+         * <li class="search-choice" id="CaseTable20190305113856-263_photo_chzn_c_0"><span style="cursor: pointer;">Screenshot from 2019-01-14 22-27-53.png</span><a href="javascript:void(0)" class="search-choice-close" rel="0" deletelink="L3Zhci93d3cvaHRtbC93eW1vb0dpdC93eW1vby93ZWJyb290L1BocF9kYXRhL3VwbG9hZHMvZmlsZXMvQ2FzZVRhYmxlLzIwMTkwMzA1MTEzODU2LTI2M19waG90by9TY3JlZW5zaG90IGZyb20gMjAxOS0wMS0xNCAyMi0yNy01My5wbmc="></a></li>
+         */
+
+        
+
+        
+        if($this->request->is(array('post','put'))){
+
+
+            $this->loadModel('Users');
+			//validation
+			$validator = new Validator();
+			$validator
+					->requirePresence('client_fname')
+					->notEmpty('client_fname','This field cannot be left blank, please try again.')
+					->add('client_fname', 'validFormat', [
+						'rule' =>array('custom' ,'/^[a-zA-Z ]*$/'),
+						'message' => ' First name should be letters only '
+					])
+			         ->add('client_fname', [
+						'length' => [
+							'rule' => ['minLength', 3],
+							'message' => ' Firstname length must be minimum  3.',
+						]
+					])
+
+                    ->requirePresence('client_lname')
+					->notEmpty('client_lname','This field cannot be left blank, please try again.')
+					->add('client_lname', 'validFormat', [
+						'rule' =>array('custom','/^[a-zA-Z ]*$/'),
+						'message' => ' LastName should be letters only'
+					])
+                    ->add('client_lname', [
+						'length' => [
+							'rule' => ['minLength', 3],
+							'message' => ' LastName  length must be minimum 3.',
+						]
+					])
+
+					->requirePresence('client_email')
+					->notEmpty('client_email','This field cannot be left blank, please try again.')
+					->add('client_email', 'validFormat', [
+						'rule' => 'email',
+						'message' => 'Must be a valid email address.'
+					])
+					->allowEmptyString('subject_email')
+					->add('subject_email', 'validFormat', [
+						'rule' => 'email',
+						'message' => 'Must be a valid email address.'
+					]);
+
+					
+			$errors = $validator->errors($this->request->getData());
+
+			$oldData = $this->request->getData();
+			if(!empty($oldData['subject_phone']))
+			{
+				if(!preg_match("/^\d+\.?\d*$/",$oldData['subject_phone']))
+				{
+					$errors['subject_phone'][] = 'Must be a valid Phone Number';
+				}
+			}
+
+			if(!empty($oldData['client_email']))
+			{
+				$user = $this->Users->find('all',[
+					'conditions' => [
+                        'email' => $oldData['client_email'],
+                        'email !=' => $case['client_email']
+					]
+				])->first();
+
+				if($user)
+				{
+					$errors['client_email'][] = 'Email already has been used.';
+				}
+            }
+            
+            if(!empty($errors))
+			{
+				$this->set(compact('errors', 'oldData'));
+			}
+			else
+			{
+                $entity = TableRegistry::get('Cases')->get($case->id);
+                TableRegistry::get('Cases')->patchEntity($entity, $this->request->getData());
+                TableRegistry::get('Cases')->save($entity);
+            }
+
+
+
+
+
+
+            // $this->Cases->save($this->request->getData());
+            // $this->Flash->success('Case updated successfully.');
             return $this->redirect(['action' => 'tracker']);
         }
         $this->set(compact('breadcrumb','caseIcons','model','case'));

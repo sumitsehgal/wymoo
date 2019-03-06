@@ -23,11 +23,11 @@ Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $result['password_
 <br>
 <b>Important:</b> 1) Update your information, 2) Submit your case, and 3) Check status at <?php 
 				$siteurl = 'https://'. Configure::read("sites_id.".$result['site_id'].".site");
-				$url = $siteurl.'/client/users/login';
+				$url = $siteurl.'/users/login';
 
 				echo $this->Html->link($url,$url);?> <?php /*?> or just copy and paste this URL <?php echo $this->Html->link($url,$url);?> on your browser's address bar and press the return or enter key<?php */?> <br>
                         <br  />
                 
                 <strong>Need additional help?</strong> Email your investigator directly for assistance.<br>
                 <br />
-                <small> Copyright © <?php echo date('Y');?>. <?php echo Configure::read('all_sites.'.$result['site_id']) ;?>, LLC. All Rights Reserved. All services are strictly confidential. </small>
+                <?php echo Configure::read('all_sites.'.$result['site_id']) ;?>, LLC. All Rights Reserved. All services are strictly confidential. </small>

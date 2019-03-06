@@ -13,7 +13,7 @@ $autoOpen = (( $this->Form->error($model.'.client_email'))) ? 'true' : 'false';
 </script>
 <div id="forgot_password_dialog" title="Forgot your password?" >
 	<?php
-		echo $this->Form->create($model, array('action' => 'forgotpassword','class' => 'form-horizontal'));
+		echo $this->Form->create($model, array('url' => array('controller'=>'users','action'=>'forgotpassword'),'class' => 'form-horizontal'));
 		echo $this->Form->hidden('User.return_to', array('value' => $return_to));
 	?>
 		<table width="100%" border="0" cellspacing="8" cellpadding="0">
@@ -59,7 +59,8 @@ $autoOpen = (( $this->Form->error($model.'.client_email'))) ? 'true' : 'false';
 		<?php echo $this->Form->end();?>
 </div>
   <div class="content_box">
-    <h1>Login<span>Required </span></h1>
+		<h1>Login<span>Required </span></h1>
+		<?= $this->Flash->render() ?>
 	
 		<?php
 		if(isset($referer) && $referer=='/login')

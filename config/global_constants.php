@@ -32,15 +32,6 @@ $config['sites'] 		= array(
                                 'favicon'=>'wymoo.ico',
                                 'logo'=>'logo'
                             ),
-                            'www.wymoolocal.com'=>array(	
-                                'WEBSITE_NAME' => 	'Wymoo® International - Background Checks &amp; Private Investigators',
-                                'default_email'	=> 	array('name'=>'info','email'=>'noreply@wymoo.com'),
-                                'noreply_email'	=> 	array('name'=>'noreply','email'=>'noreply@wymoo.com'),
-                                'site_id'=>1,
-                                'title'=>'Wymoo International',
-                                'favicon'=>'wymoo.ico',
-                                'logo'=>'logo'
-                            ),
                             'www.russiapi.com'=>array(	
                                 'WEBSITE_NAME' => 	'Russia PI™ - Russian Detectives - Russia Investigations',
                                 'default_email'	=> 	array('name'=>'info','email'=>'noreply@russiapi.com'),
@@ -59,16 +50,38 @@ $config['sites'] 		= array(
                                 'favicon'=>'philippinepi.ico',
                                 'logo'=>'logo2'
                             ),
+                            'www.wymoolocal.com'=>array(	
+                                'WEBSITE_NAME' => 	'Wymoo® International - Background Checks &amp; Private Investigators',
+                                'default_email'	=> 	array('name'=>'info','email'=>'noreply@wymoo.com'),
+                                'noreply_email'	=> 	array('name'=>'noreply','email'=>'noreply@wymoo.com'),
+                                'site_id'=>4,
+                                'title'=>'Wymoo International',
+                                'favicon'=>'wymoo.ico',
+                                'logo'=>'logo'
+                            ),
+                            'www.wymoo.sejix.com'=>array(	
+                                'WEBSITE_NAME' => 	'Wymoo® International - Background Checks &amp; Private Investigators',
+                                'default_email'	=> 	array('name'=>'info','email'=>'noreply@wymoo.com'),
+                                'noreply_email'	=> 	array('name'=>'noreply','email'=>'noreply@wymoo.com'),
+                                'site_id'=>5,
+                                'title'=>'Wymoo International',
+                                'favicon'=>'wymoo.ico',
+                                'logo'=>'logo'
+                            ),
                         );
 $config['all_sites'] = array(
                             1 => 'Wymoo',
                             2 =>  'Russia PI',
-                            3 =>'Philippine PI'
+                            3 =>'Philippine PI',
+                            4 => 'Wymoo',
+                            5 => 'Wymoo'
                         );
 $config['sites_id'] = array(
                             1 => array('display_name'=> 'Wymoo','site'=>'www.wymoo.com'),
                             2 => array('display_name'=> 'Russia PI','site'=>'www.russiapi.com'),
-                            3 => array('display_name'=> 'Philippine PI','site'=>'www.philippinepi.com')
+                            3 => array('display_name'=> 'Philippine PI','site'=>'www.philippinepi.com'),
+                            4 => array('display_name'=> 'Wymoo','site'=>'wymoolocal.com'),
+                            5 => array('display_name'=> 'Wymoo','site'=>'wymoo.sejix.com'),
                         );
                                                     
 if(array_key_exists($_SERVER['HTTP_HOST'],$config['sites']))

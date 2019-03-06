@@ -134,7 +134,8 @@ class UsersController extends AppController
 			$user = $this->Auth->identify();
 			if ($user) {
 				$this->Auth->setUser($user);
-				return $this->redirect('/client/client/tracker');
+                $this->Flash->success(__($user['email'].' you have successfully logged in.'));
+                return $this->redirect('/client/client/tracker');
 			} else {
 				$this->Flash->error(__('Username or password is incorrect'));
 			}
@@ -150,6 +151,8 @@ class UsersController extends AppController
     
     public function logout()
     {
+        $user = $this->Auth->user();
+        $this->Flash->success(__($user['email'].' you have successfully logged out.'));
         return $this->redirect($this->Auth->logout());
     }
 }
