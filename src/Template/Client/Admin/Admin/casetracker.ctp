@@ -63,7 +63,7 @@
 								<div class="inputover floatleft pr20">
 									<div class="inputlt"></div>
 									<div class="inputmid select244">
-										<?= $form->control('case_status_id',['options'=>$caseStatus,'class'=>'select','
+										<?= $form->select('case_status_id',$caseStatus, ['class'=>'select','
 										id'=>'CaseTableCaseStatusId','label'=>false]) ?>
 									</div>
 									<div class="inputrt"></div>
@@ -76,8 +76,8 @@
 								<div class="inputover floatleft pr20">
 									<div class="inputlt"></div>
 									<div class="inputmid select244">
-										<?= $form->control('assigned_to',['options'=>$investors,'class'=>'select','
-										id'=>'CaseTableAssignedTo','label'=>false]) ?>
+										<?= $form->select('assigned_to', $investors, ['class'=>'select','
+										id'=>'CaseTableAssignedTo','label'=>false, 'empty'=>false]) ?>
 									</div>
 									<div class="inputrt"></div>
 								</div>
@@ -107,7 +107,7 @@
 								<div class="inputover floatleft pr20">
 									<div class="inputlt"></div>
 									<div class="inputmid">
-										<?= $form->control('service_level',['class'=>'wid243','options'=>$service_level,'label'=>false]) ?>
+										<?= $form->select('service_level', $service_level, ['class'=>'select','label'=>false, 'style'=>'display:none;']) ?>
 									</div>
 									<div class="inputrt"></div>
 								</div>
@@ -119,7 +119,7 @@
 								<div class="inputover floatleft pr20">
 									<div class="inputlt"></div>
 									<div class="inputmid">
-										<?= $form->control('discount',['class'=>'wid243','options'=>['0','10','15','20'],'label'=>false]) ?>
+										<?= $form->select('discount',['0','10','15','20'], ['class'=>'select','label'=>false]) ?>
 									</div>
 									<div class="inputrt"></div>
 								</div>
@@ -227,6 +227,7 @@
 			}
 		});
 		$(".select").sSelect({ ddMaxHeight: "300px"});
+		//$(".wid243").sSelect({ ddMaxHeight: "300px"});
 		$('#update_case').click(function(e){
 			e.preventDefault();
 			$('#CaseTableAdminCasetrackerForm').submit();

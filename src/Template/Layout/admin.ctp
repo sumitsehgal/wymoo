@@ -79,6 +79,7 @@ $(document).ready(function () {$("#forgot_password").click(function(e){e.prevent
         <div id="middle">
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
+            <br/>
         </div>
     </div>
     <footer class="clear">

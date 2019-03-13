@@ -56,10 +56,7 @@ class AdminController extends AppController
         foreach($investorList as $key=>$investor){
             $investors[$investor['id']]=$investor['fname'].' '.$investor['lname'];
         }
-        $caseStatus = array();
-        foreach ($case_status as $key => $status) {
-            $caseStatus[$key]=$status['title'];
-        }
+        $caseStatus = array('2'=>'Case Saved','4'=>'Case In Progress','5'=>'Case Cancelled','6'=>'Case Closed','7'=>'Case On Hold');
         //TO DO Select fields values aren't updating
         if ($this->request->is(['post', 'put'])) {
             //print_r($this->request->getData());die();
