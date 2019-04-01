@@ -29,6 +29,11 @@ class AdminController extends AppController
         $this->loadModel('Cases');
         $this->loadModel('CaseNotes');
         $this->loadModel('Users');
+
+        $discounts = Configure::read('discount');
+        $serviceLevel = Configure::read('service_level');
+        $caseFee = Configure::read('case_fees');
+
         $case_status = Configure::read('case_status');
         $breadcrumb = '<h1 class="relative">Case <span>Tracker </span></h1>';
         $caseIcons = Configure::read('case_icon');
@@ -89,7 +94,7 @@ class AdminController extends AppController
             $this->Flash->success('Case status updated.');
             return $this->redirect(['action' => 'casetracker',$id]);
         }
-        $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus','investors'));
+        $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus','investors', 'discounts', 'serviceLevel', 'caseFee'));
     }
 
     public function caseedit($id){
@@ -324,7 +329,65 @@ class AdminController extends AppController
         $pages = $this->paginate($this->Cases);
         $this->set(compact('pages', 'caseIcons'));
     }
-    
+
+    public function changeCase()
+    {
+        $data = $this->request->getData();
+        if(!empty($data['case_id']) && !empty($data['case_status']))
+        {
+            $this->loadModel('Cases');
+            $result = $this->Cases->findById($data['case_id'])->first();
+            if(!empty($result))
+            {
+                //$this->loadModel('CaseStatus');
+                $case_status = Configure::read('case_status');
+
+
+                $updatedData = ['case_status_id' => $data['case_status'], 'case_status' => $case_status[$data['case_status']]['title'] ];
+
+                
+
+                if($data['case_status'] >= 4  && $result['is_submited']!=1)
+                {
+                    $updatedData['is_submited'] = 1;
+                    $updatedData['submited_date'] = mktime(0,0,0,date('n'),date('j'),date('Y'));
+                }
+
+                $cases = TableRegistry::get('Cases');
+                $query = $cases->query();
+                $query->update()
+                    ->set($updatedData)
+                    ->where(['id' => $data['case_id']])
+                    ->execute();
+
+                $this->Flash->success(__('Case Status has been updated.'));
+
+                $this->loadModel('CaseNotes');
+                $case_notes = $this->CaseNotes->newEntity();
+                $caseNdata['case_id']=$data['case_id'];
+                $caseNdata['user_id']=$result['user_id'];
+                $caseNdata['case_notes']=$case_status[$result['case_status_id']]['description'];
+                $caseNdata['creator_id']=$this->Auth->User('id');
+                $caseNdata['case_status_id']=$result['case_status_id'];
+                $caseNdata['case_status']=$case_status[$result['case_status_id']]['title'];
+                $caseNdata['created']=time();
+                $caseNdata['modified']=time();
+                $caseNdata['fields_values']="";
+                $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+                $this->CaseNotes->save($case_notes);
+                
+            }
+
+        }
+
+        if ($this->referer() != '/') {
+            $this->redirect($this->referer());
+        } else {
+            $this->redirect(array('action' => 'casebrowser'));
+        }
+
+    }
+
     public function myaccount()
     {
         $this->viewBuilder()->setLayout('admin');

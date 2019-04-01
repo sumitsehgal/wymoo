@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Validation\Validator;
 
 class UsersController extends AppController
 {
@@ -41,15 +42,133 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $data = $this->request->getData();
+
+            $validator = new Validator();
+
+            $validator
+					->requirePresence('username')
+					->notEmpty('username','This field cannot be left blank, please try again.')
+			         ->add('username', [
+						'length' => [
+							'rule' => ['minLength', 3],
+							'message' => ' Username length must be minimum  3.',
+						]
+					])
+
+                    ->requirePresence('fname')
+					->notEmpty('fname','This field cannot be left blank, please try again.')
+                    ->add('fname', [
+						'length' => [
+							'rule' => ['minLength', 3],
+							'message' => ' First Name  length must be minimum 3.',
+						]
+                    ])
+                    
+                    ->requirePresence('lname')
+					->notEmpty('lname','This field cannot be left blank, please try again.')
+                    ->add('lname', [
+						'length' => [
+							'rule' => ['minLength', 3],
+							'message' => ' Last Name  length must be minimum 3.',
+						]
+                    ])
+                    
+                    ->requirePresence('newpassword')
+					->notEmpty('newpassword','This field cannot be left blank, please try again.')
+                    ->add('newpassword', [
+						'length' => [
+							'rule' => ['minLength', 3],
+							'message' => ' Password  length must be minimum 3.',
+						]
+                    ])
+                    
+                    ->requirePresence('temppassword')
+					->notEmpty('temppassword','This field cannot be left blank, please try again.')
+                    ->add('temppasslnameword', [
+						'length' => [
+							'rule' => ['minLength', 3],
+							'message' => ' Password  length must be minimum 3.',
+						]
+					])
+
+					->requirePresence('email')
+					->notEmpty('email','This field cannot be left blank, please try again.')
+					->add('email', 'validFormat', [
+						'rule' => 'email',
+						'message' => 'Must be a valid email address.'
+                    ])
+                    
+					->requirePresence('phone')
+					->notEmpty('phone','This field cannot be left blank, please try again.');
+
+					
+			        $errors = $validator->errors($this->request->getData());
+
+                    
+                    $oldData = $this->request->getData();
+                    if(!empty($oldData['phone']))
+                    {
+                        if(!preg_match("/^\d+\.?\d*$/",$oldData['phone']))
+                        {
+                            $errors['phone'][] = 'Must be a valid Phone Number';
+                        }
+                    }
+
+                    if(!empty($oldData['username']))
+                    {
+                        $user = $this->Users->find('all',[
+                            'conditions' => [
+                                'username' => $oldData['username']
+                            ]
+                        ])->first();
+
+                        if($user)
+                        {
+                            $errors['username'][] = 'Username already has been used.';
+                        }
+                    }
+
+                    if(!empty($oldData['email']))
+                    {
+                        $user = $this->Users->find('all',[
+                            'conditions' => [
+                                'email' => $oldData['email']
+                            ]
+                        ])->first();
+
+                        if($user)
+                        {
+                            $errors['email'][] = 'Email already has been used.';
+                        }
+                    }
+
+
+                    if($oldData['newpassword'] != $oldData['temppassword'])
+                    {
+                        $errors['temppassword'][] = 'Password not matched.';
+                    }
+
             $data['slug'] = $data['username'];
             $data['passwd'] = $data['newpassword'];
-            $user = $this->Users->patchEntity($user, $data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+            if(!empty($errors))
+			{
+                //$user = $oldData;
+				$this->set(compact('errors', 'oldData'));
+			      //dd($errors);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            
+            else
+            {
+                $user = $this->Users->newEntity();
+                $user = $this->Users->patchEntity($user, $data);
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('The user has been saved.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            }
         }
         $this->set(compact('user'));
     }

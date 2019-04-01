@@ -20,7 +20,63 @@
                 e.preventDefault();
             });
         });
+
+        $(function(){
+            var caseid =0;
+            $("img.chage_stateus").click(function(){
+                caseid = $(this).attr("id");
+                $("div#change_status_dialog" ).find("input#casestatus_"+$(this).attr("value")).attr("checked","checked");
+                $("div#change_status_dialog" ).dialog("open");
+            });
+            $("div#change_status_dialog" ).dialog({autoOpen: false, width:250, modal:true, resizable:false });
+            $("div#change_status_dialog" ).find("#change_status").click(function(e){
+                $("#CaseTableCaseStatus").val( $("div#change_status_dialog" ).find("input[type=radio]:checked").val());
+                $("#CaseTableCaseId").val(caseid);
+                $("#CaseTableAdminChangeCaseStatusForm").submit();
+                e.preventDefault();
+            });
+        });
+
+
+
+
     </script>
+<style>.ui-dialog .ui-dialog-content { padding:0px !important;}</style>
+<div id="change_status_dialog" title="Change Case Status" style="display:none;" >
+	<div class="">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tblcaselist">
+			<tr class="even">
+				<td ><input  name="casestatus" id="casestatus_2"  type="radio" value="2" /></td>
+				<td>Case Saved</td>
+			</tr>
+			<tr class="odd">
+				<td ><input  name="casestatus" id="casestatus_4" type="radio" value="4" /></td>
+				<td> Case In Progress</td>
+			</tr>
+			<tr class="even">
+				<td ><input  name="casestatus" id="casestatus_5" type="radio" value="5" /></td>
+				<td>Case Cancelled</td>
+			</tr>
+			<tr class="odd">
+				<td ><input  name="casestatus" id="casestatus_6" type="radio" value="6" /></td>
+				<td>Case Closed</td>
+			</tr>
+			<tr class="even">
+				<td ><input  name="casestatus" id="casestatus_7" type="radio" value="7" /></td>
+				<td>Case On Hold</td>
+			</tr>
+		</table>
+	</div>
+	<div class="floatright pt15">
+		<div class="btnlt"></div>
+		<div class="btnmid">
+			<a href="javascript:void(0);"  style="color:#FFFFFF" id="change_status">Save</a>
+		</div>
+		<div class="btnrt"></div>
+	</div>
+</div>
+
+
     <form action="/client/admin/casebrowser" class="form-inline" id="CaseTableAdminCasebrowserForm" method="post" accept-charset="utf-8">
         <div style="display:none;">
             <input type="hidden" name="_method" value="POST">
@@ -201,11 +257,11 @@
                 </div>
             </div>
         </form>
-        <form action="/client/admin/cases/cases/change_case_status" class="form-inline" id="CaseTableAdminChangeCaseStatusForm" method="post" accept-charset="utf-8">
+        <form action="/client/admin/change_case_status" class="form-inline" id="CaseTableAdminChangeCaseStatusForm" method="post" accept-charset="utf-8">
             <div style="display:none;">
                 <input type="hidden" name="_method" value="POST"></div>
-                <input type="hidden" name="data[CaseTable][case_id]" id="CaseTableCaseId">
-                <input type="hidden" name="data[CaseTable][case_status]" id="CaseTableCaseStatus">
+                <input type="hidden" name="case_id" id="CaseTableCaseId">
+                <input type="hidden" name="case_status" id="CaseTableCaseStatus">
             </div>
         </form> 
         <script type="text/javascript">

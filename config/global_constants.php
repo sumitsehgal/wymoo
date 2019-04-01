@@ -115,6 +115,12 @@ if(array_key_exists($_SERVER['HTTP_HOST'],$config['sites']))
                                 
 $config['AMU'] = array('directory'=> '/var/www/html/wymooGit/wymoo/webroot/Php_data'. DS.'uploads'. DS.'files','filesizeMB'=>'10');
 
+															
+$config['service_level'] = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19);
+$config['case_fees'] = array(0=>'0',1=>'150',2=>'300',3=>'400',4=>'500',5=>'600',6=>'800',7=>'1000',8=>'1200',9=>'1400',10=>'1600',11=>'2000',12=>'2400',13=>'2800',14=>'3000',15=>'3400',16=>'3800',17=>'4200',18=>'5000',19=>'6000');
+$config['discount'] = array(0=>0,1=>10,2=>15,3=>25);
+$config['service_type'] = array(	1 => 'Investigation');
+$config['due'] = array('on-or-before'=>'On or before','after'=>'After','on'=>'On');
 
 return $config;
 

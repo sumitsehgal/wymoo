@@ -1,4 +1,3 @@
-<?php $service_level=array(); for($i=0;$i<16;$i++){$service_level[]=$i;} ?>
 <?php $form = $this->Form; ?>
 <?= $breadcrumb ?>
 <style type="text/css" id="page-css">.scroll-pane{width: 100%;height: 200px;overflow: auto;font:12px/20px Arial, Helvetica, sans-serif;color:#333;}</style>
@@ -106,8 +105,8 @@
 							<td>
 								<div class="inputover floatleft pr20">
 									<div class="inputlt"></div>
-									<div class="inputmid">
-										<?= $form->select('service_level', $service_level, ['class'=>'select','label'=>false, 'style'=>'display:none;']) ?>
+									<div class="inputmid select244">
+										<?= $form->select('service_level', $serviceLevel, ['class'=>'select','label'=>false, 'style'=>'display:none;', 'id'=>'CaseTableServiceLevel']) ?>
 									</div>
 									<div class="inputrt"></div>
 								</div>
@@ -118,8 +117,8 @@
 							<td>
 								<div class="inputover floatleft pr20">
 									<div class="inputlt"></div>
-									<div class="inputmid">
-										<?= $form->select('discount',['0','10','15','20'], ['class'=>'select','label'=>false]) ?>
+									<div class="inputmid select244">
+										<?= $form->select('discount', $discounts, ['class'=>'select','label'=>false, 'id' => 'CaseTableDiscount']) ?>
 									</div>
 									<div class="inputrt"></div>
 								</div>
@@ -131,7 +130,7 @@
 								<div class="inputover floatleft pr20">
 									<div class="inputlt"></div>
 									<div class="inputmid">
-										<?= $form->text('fee',['class'=>'wid243']) ?>
+										<?= $form->text('fee',['class'=>'wid243','id' => 'fee']) ?>
 									</div>
 									<div class="inputrt"></div>
 								</div>
@@ -263,5 +262,23 @@
 			}
 		});
 	});
+
+	$(document).ready(function () {
+		var fees =  <?php echo json_encode($caseFee); ?> ;
+		var discount =  <?php  echo json_encode($discounts); ?> ;
+		$("#CaseTableServiceLevel, #CaseTableDiscount").change(function(){
+			var f = fees[$("#CaseTableServiceLevel").val()];
+			var d = discount[$("#CaseTableDiscount").val()];
+			f = typeof f =="undefined" ? 0 : f;
+			d = typeof d =="undefined" ? 0 : d;
+			var fee = (f - (f*d)/100);
+			$("#fee").val(fee); 
+		});
+	});
+		//$(".lightbox").fancybox({"transitionIn"		: "elastic","transitionOut"		: "elastic",				"titlePosition" 		: "outside","width"				: "80%",				"height"			: "200%",				"titleFormat"		: formatTitle,				"onStart"		: function() {						$("#fancybox-outer").hide();					},				"onComplete"		: function() {						$("#fancybox-outer").show();					}								});		  $("#update_case").click(function(e){		 	$("#CaseTableAdminCasetrackerForm").submit();		  e.preventDefault();		 });	 });
+
+
+
+
 </script>
 <script type="text/javascript" >$(function(){var api = $('.scroll-pane').jScrollPane({showArrows:true,maintainPosition: false});});</script>
