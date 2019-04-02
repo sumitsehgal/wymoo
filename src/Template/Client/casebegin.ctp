@@ -176,8 +176,8 @@
                                                                     <label>Subject's Date of Birth:</label>
                                                                 </div>
                                                                 <div class="col-sm-8">
-                                                                    <input name="subject_dob1" type="text" id="CaseTableSubjectDob" class="form-control" autocomplete="off" value="<?php echo @$oldData['subject_dob1']; ?>">
-                                                                    <input type="hidden" name="subject_dob" id="CaseTableSubjectDob1"> <small>*Leave blank and notify your investigator if unsure.</small> </div>
+                                                                    <input name="subject_dob" type="text" id="CaseTableSubjectDob" class="form-control" autocomplete="off" value="<?php echo @$oldData['subject_dob1']; ?>">
+                                                                    <input type="hidden" name="subject_dob1" id="CaseTableSubjectDob1"  value="<?php echo @$oldData['subject_dob1']; ?>"> <small>*Leave blank and notify your investigator if unsure.</small> </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-sm-4">
@@ -214,7 +214,7 @@
                                                                     <label>How do or did you communicate with the subject? </label>
                                                                     <ul class="checkbox_list">
                                                                         <li>
-                                                                            <input type="hidden" name="subject_communication_email" id="CaseTableSubjectCommunicationEmail_" value="<?php echo @$oldData['subject_communication_email']; ?>">
+                                                                            <!-- <input type="hidden" name="subject_communication_email" id="CaseTableSubjectCommunicationEmail_" value="<?php echo @$oldData['subject_communication_email']; ?>"> -->
                                                                             <input type="checkbox" name="subject_communication_email" value="<?php echo @$oldData['subject_communication_email']; ?>" id="CaseTableSubjectCommunicationEmail"> Email</li>
                                                                             <li>
                                                                                 <input type="hidden" name="subject_communication_messenger" value="0"  id="CaseTableSubjectCommunicationMessenger_" value="0">

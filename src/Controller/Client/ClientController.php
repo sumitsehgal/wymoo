@@ -281,8 +281,22 @@ class ClientController extends AppController
 			}
 			else
 			{
+                $data = $this->request->getData();
+
+
+				$duedate1 =  explode('-',$data['subject_dob']);
+				$duedate =  explode('-',$data['subject_dob1']);
+				if(count($duedate)==3 && $data['subject_dob1']!='' && (isset($duedate1[2]) && $duedate1[2]!=date('Y')))
+				{
+					$data['subject_dob'] =  mktime(23,59,59,$duedate[1]*1,$duedate[0]*1,$duedate[2]);	
+				} 
+				else 
+				{
+					$data['subject_dob'] = 0;
+				}
+
                 $entity = TableRegistry::get('Cases')->get($case->id);
-                TableRegistry::get('Cases')->patchEntity($entity, $this->request->getData());
+                TableRegistry::get('Cases')->patchEntity($entity, $data);
                 TableRegistry::get('Cases')->save($entity);
             }
 
@@ -294,6 +308,11 @@ class ClientController extends AppController
             // $this->Cases->save($this->request->getData());
             // $this->Flash->success('Case updated successfully.');
             return $this->redirect(['action' => 'tracker']);
+        }
+        if($case->subject_dob != 0)
+        {
+            $case->subject_dob1 = date('d-m-Y', $case->subject_dob);
+            $case->subject_dob = date('d-F-Y', $case->subject_dob);
         }
         $this->set(compact('breadcrumb','caseIcons','model','case'));
         //echo "here";die();

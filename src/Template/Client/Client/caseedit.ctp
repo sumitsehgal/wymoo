@@ -4,6 +4,27 @@ $form = $this->Form;
 <div id="myTabContent" class="tab-content">
 	<div id="edit" class="tab-pane fade active in">
 		<div class="content_box">
+		<script type="text/javascript">
+        $(function() {
+         $("#CaseTableSubjectDob").datepicker({
+            dateFormat: "dd-MM-yy",
+            defaultDate: new Date(1910, 00, 01),
+            changeMonth: true,
+            yearRange: "1910:c",
+            changeYear: true,
+            onClose: function() {
+                $(this).data("datepicker").inline = false;
+                var date = $("#CaseTableSubjectDob").datepicker("getDate");
+                if (date) {
+                    d = date.getDate();
+                    m = date.getMonth() + 1;
+                    y = date.getFullYear();
+                    $("#CaseTableSubjectDob1").val(d + "-" + m + "-" + y);
+                }
+            },
+                onChangeMonthYear: function(year, month, inst) { //$("#" + inst.id).datepicker( "setDate", "/1/" + month + year ); 
+                var d = inst.selectedDay; $(this).datepicker("setDate", new Date(year, month - 1, d)); },onSelect: function(dateText) {var date = $("#CaseTableSubjectDob").datepicker("getDate");d = date.getDate(); m = date.getMonth() + 1; y = date.getFullYear();$("#CaseTableSubjectDob1").val(d+"-"+m+"-"+y); $(this).data("datepicker").inline = true; }}); $("#save_case").click(function(e){$("#CaseTableCasebeginForm").submit();e.preventDefault();}); $("#CaseTableSubjectBackground").keyup(function(){$("#CaseTableSubjectBackground").val($("#CaseTableSubjectBackground").val().substring(0,1000)).focus(); var psconsole = $("#CaseTableSubjectBackground");psconsole.scrollTop(psconsole[0].scrollHeight - psconsole.height()); var charcount = parseInt(parseInt(1000) - parseInt($("#CaseTableSubjectBackground").val().length)); $("#subject_background_count").html("(You have <font style=\'color:red;\'>"+charcount+"</font> characters remaining.)");});});
+            </script>
 			<?=$form->create($case)?>
 			<?=$breadcrumb?>
 			<input type="hidden" value="<?php echo $this->request->getParam('_csrfToken'); ?>" name="_csrfToken"  />
@@ -87,7 +108,8 @@ $form = $this->Form;
 									<label>Subject's Date of Birth:</label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->text('subject_dob1',['class'=>'form-control datepicker',])?>
+									<?=$form->text('subject_dob',['class'=>'form-control datepicker','id'=>'CaseTableSubjectDob'])?>
+									<input type="hidden" name="subject_dob1" id="CaseTableSubjectDob1" value="<?php echo $case->subject_dob1; ?>" >
 								</div>
 							</div>
 							<div class="row">

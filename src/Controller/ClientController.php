@@ -148,15 +148,13 @@ class ClientController extends AppController {
 
 				if(count($duedate)==3 && $data['subject_dob1']!='' && (isset($duedate1[2]) && $duedate1[2]!=date('Y')))
 				{
-					$data['subject_dob'] =  mktime(23,59,59,$duedate[1]*1,$duedate[0]*1,$duedate[2]);	
+					$data['subject_dob'] =  mktime(23,59,59,$duedate1[1]*1,$duedate1[0]*1,$duedate1[2]);	
 				} 
 				else 
 				{
 					$data['subject_dob'] = 0;
 				}
-
-
-
+				
 
 				$userData['fname'] = $data['client_fname'];
 				$userData['lname'] = $data['client_lname'];
@@ -198,10 +196,13 @@ class ClientController extends AppController {
 				$data['service_level']  = 0;
 				$data['discount']  = 0;
 				$data['due_date']  = '';
+				$data['subject_communication_email']  = ( isset($data['subject_communication_email']) && $data['subject_communication_email'] == "") ? 1 : 0;
+				$data['subject_communication_messenger']  = (isset($data['subject_communication_messenger']) && $data['subject_communication_messenger'] == "") ? 1 : 0;
+				$data['subject_communication_phone']  = (isset($data['subject_communication_phone']) && $data['subject_communication_phone'] == "") ? 1 : 0;
+				$data['subject_communication_webcam']  = ( isset($data['subject_communication_webcam']) && $data['subject_communication_webcam'] == "") ? 1 : 0;
+				$data['subject_communication_inperson']  = (isset($data['subject_communication_inperson']) && $data['subject_communication_inperson'] == "") ? 1 : 0;
 				
 				
-				
-
 				$this->Cases->patchEntity($case, $data);
 				$this->Cases->save($case);
 				$case_id = $case->id;
