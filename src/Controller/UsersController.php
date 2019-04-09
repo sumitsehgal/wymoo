@@ -27,7 +27,7 @@ class UsersController extends AppController
 		if (!Configure::read('App.defaultEmail')) {
 			Configure::write('App.defaultEmail', Configure::read('noreply_email.email'));
 		}
-		 $this->Auth->allow(['add', 'logout']); // Temporary Allow
+		 $this->Auth->allow(['add', 'logout', 'forgotpassword']); // Temporary Allow
 	}
 
     /**
@@ -154,5 +154,27 @@ class UsersController extends AppController
         $user = $this->Auth->user();
         $this->Flash->success(__($user['email'].' you have successfully logged out.'));
         return $this->redirect($this->Auth->logout());
+    }
+
+    public function forgotpassword()
+    {
+        $data = $this->request->getData();
+        $result = $this->Users->find('all',['conditions'=>[
+            'email' => $data['client_email']
+            ]]);
+            
+        $result= (!empty($result->first())) ? $result->first()->toArray() : [];
+        if(!empty($result))
+        {
+            // send email
+            $this->_sendEmail($result['email'], [Configure::read('default_email.email')], Configure::read('noreply_email.email'), 'Forgot your password?' ,'forgot_password', array('result' => $result ) );
+            $this->Flash->success(__('An email was sent to '.$result["email"].' with your password.'));
+            return $this->redirect('/users/login');
+        }
+        else
+        {
+            $this->Flash->error(__('Invalid email address.'));
+            return $this->redirect('/users/login');
+        }
     }
 }

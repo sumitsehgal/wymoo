@@ -271,7 +271,7 @@ class ClientController extends AppController
 
 				if($user)
 				{
-					$errors['client_email'][] = 'Email already has been used.';
+					$errors['client_email'][] = 'This email is already in use.';
 				}
             }
             

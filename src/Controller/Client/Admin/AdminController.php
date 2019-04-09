@@ -325,7 +325,7 @@ class AdminController extends AppController
         $this->loadModel('Cases');
         $caseIcons = Configure::read('case_icon');
 
-        $this->paginate = [];
+        $this->paginate = ['order'=>['Cases.id' => 'desc']];
         $pages = $this->paginate($this->Cases);
         $this->set(compact('pages', 'caseIcons'));
     }

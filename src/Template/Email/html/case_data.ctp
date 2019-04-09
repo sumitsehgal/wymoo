@@ -30,4 +30,4 @@ Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $result['password_
                 
                 <strong>Need additional help?</strong> Email your investigator directly for assistance.<br>
                 <br />
-                <?php echo Configure::read('all_sites.'.$result['site_id']) ;?>, LLC. All Rights Reserved. All services are strictly confidential. </small>
+                <small>Copyright &copy; <?php echo Configure::read('all_sites.'.$result['site_id']) ;?>, LLC. All Rights Reserved. All services are strictly confidential. </small>

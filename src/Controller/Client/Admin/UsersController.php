@@ -124,7 +124,7 @@ class UsersController extends AppController
 
                         if($user)
                         {
-                            $errors['username'][] = 'Username already has been used.';
+                            $errors['username'][] = 'This Username is already in use.';
                         }
                     }
 
@@ -138,7 +138,7 @@ class UsersController extends AppController
 
                         if($user)
                         {
-                            $errors['email'][] = 'Email already has been used.';
+                            $errors['email'][] = 'This email is already in use.';
                         }
                     }
 
@@ -232,22 +232,27 @@ class UsersController extends AppController
     {
         return $this->redirect($this->Auth->logout());
     }
-    public function forgotpassword(){
+    
+    public function forgotpassword()
+    {
         $data = $this->request->getData();
-        print_r($data['data']['User']);
-        $user = $this->Users->find('all',[
-            'conditions' => [
-                'email'=>$data['data']['User']['client_email']
-            ]
-        ])->first();
-        // $this->_sendMail($data['data']['User']['client_email'], Configure::read('title').' <'.Configure::read('default_email.email').'>', Configure::read('noreply_email.email'), 'Forgot your password?' ,'forgot_password',array('result' => $user ), "", 'html' );
-        $this->_sendEmail($data['data']['User']['client_email'], [Configure::read('default_email.email')], Configure::read('noreply_email.email'), 'Forgot Passowrd?','casenotes', array('result' => $user ) );
-        print_r($user);
-        die();
-        // $user = $this->Users->find('all',[
-        //     'conditions' => [
-        //         'email'=>2
-        //     ]
-        // ])->all()->toList();
+    
+        $result = $this->Users->find('all',['conditions'=>[
+            'email' => $data['client_email']
+            ]]);
+            
+        $result= (!empty($result->first())) ? $result->first()->toArray() : [];
+        if(!empty($result))
+        {
+            // send email
+            $this->_sendEmail($result['email'], [Configure::read('default_email.email')], Configure::read('noreply_email.email'), 'Forgot your password?' ,'admin_forgot_password', array('result' => $result ) );
+            $this->Flash->success(__('An email was sent to '.$result["email"].' with your password.'));
+            return $this->redirect('/client/admin/users/login');
+        }
+        else
+        {
+            $this->Flash->error(__('Invalid email address.'));
+            return $this->redirect('/client/admin/users/login');
+        }
     }
 }

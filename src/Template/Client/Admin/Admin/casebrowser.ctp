@@ -188,7 +188,8 @@
                         <tbody>
                             <?php $count = 1; if(!empty($pages)): ?>
                             <?php foreach($pages as $page): ?>
-                                <tr class="<?php echo $count % 2 == 0 ? 'even' : 'odd'; ?>">
+                            <?php $style = ($page['is_read']==0) ? 'style="font-weight:bold"' : ''; ?>
+                                <tr class="<?php echo $count % 2 == 0 ? 'even' : 'odd'; ?>" <?= $style ?>>
                                     <td width="3%">
                                         <input type="checkbox" name="id" value="<?= $page['id'] ?>">
                                     </td>

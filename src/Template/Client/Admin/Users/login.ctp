@@ -7,7 +7,7 @@
             <div style="display:none;">
                 <input type="hidden" name="_method" value="POST">
             </div>
-            <input type="hidden" name="data[User][return_to]" id="UserReturnTo">
+            <input type="hidden" name="return_to" id="UserReturnTo">
             <div style="color: #535353;font-family: Arial,Helvetica,sans-serif;font-size: 12px;">
                 <table width="100%" border="0" cellspacing="8" cellpadding="0">
                     <tbody>
@@ -17,7 +17,7 @@
                                 <div class="inputover floatleft">
                                     <div class="inputlt"></div>
                                     <div class="inputmid">
-                                        <input name="data[User][client_email]" type="text" class="wid243" id="UserClientEmail">
+                                        <input name="client_email" type="text" class="wid243" id="UserClientEmail">
                                     </div>
                                     <div class="inputrt"></div>
 

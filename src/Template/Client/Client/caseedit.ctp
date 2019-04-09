@@ -30,7 +30,11 @@ $form = $this->Form;
 			<input type="hidden" value="<?php echo $this->request->getParam('_csrfToken'); ?>" name="_csrfToken"  />
 			<div class="secure"> <span> Secure Contact</span> </div>
 			<div class="clearfix"></div>
+			<?php $disabled ="";
+			 if($case['case_status_id'] != 1): ?>
+			<?php $disabled = ' disabled ';?>
 			<p>Your investigation is in progress and your case data is no longer editable.  Please contact your investigator if you need to make updates.</p>
+				<?php endif;?>
 			<div class="row">
 				<div class="col-sm-6">
 					<div>
@@ -44,7 +48,7 @@ $form = $this->Form;
 									<label>Your First Name:<span class="error_class">*</span></label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->text('client_fname',['class'=>'form-control'])?>
+									<?=$form->text('client_fname',['class'=>'form-control', $disabled])?>
 								</div>
 							</div>
 							<div class="row">
@@ -52,7 +56,7 @@ $form = $this->Form;
 									<label>Your Last Name:<span class="error_class">*</span></label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->text('client_lname',['class'=>'form-control'])?>											
+									<?=$form->text('client_lname',['class'=>'form-control', $disabled])?>											
 								</div>
 							</div>
 							<div class="row">
@@ -60,7 +64,7 @@ $form = $this->Form;
 									<label>Your Email:<span class="error_class">*</span></label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->text('client_email',['class'=>'form-control'])?>
+									<?=$form->text('client_email',['class'=>'form-control', $disabled])?>
 								</div>
 							</div>
 						</div>
@@ -76,7 +80,7 @@ $form = $this->Form;
 									<label>Subject's Full Name:</label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->text('subject_fullname',['class'=>'form-control'])?>
+									<?=$form->text('subject_fullname',['class'=>'form-control', $disabled])?>
 								</div>
 							</div>
 							<div class="row">
@@ -84,7 +88,7 @@ $form = $this->Form;
 									<label>Subject's Alias::</label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->text('subject_alias',['class'=>'form-control'])?>
+									<?=$form->text('subject_alias',['class'=>'form-control', $disabled])?>
 								</div>
 							</div>
 							<div class="row">
@@ -92,7 +96,7 @@ $form = $this->Form;
 									<label>Subject's Email:</label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->email('subject_email',['class'=>'form-control'])?>
+									<?=$form->email('subject_email',['class'=>'form-control', $disabled])?>
 								</div>
 							</div>
 							<div class="row">
@@ -100,7 +104,7 @@ $form = $this->Form;
 									<label>Subject's Phone:</label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->text('subject_phone',['class'=>'form-control'])?>
+									<?=$form->text('subject_phone',['class'=>'form-control', $disabled])?>
 								</div>
 							</div>
 							<div class="row">
@@ -108,7 +112,7 @@ $form = $this->Form;
 									<label>Subject's Date of Birth:</label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->text('subject_dob',['class'=>'form-control datepicker','id'=>'CaseTableSubjectDob'])?>
+									<?=$form->text('subject_dob',['class'=>'form-control datepicker','id'=>'CaseTableSubjectDob', $disabled])?>
 									<input type="hidden" name="subject_dob1" id="CaseTableSubjectDob1" value="<?php echo $case->subject_dob1; ?>" >
 								</div>
 							</div>
@@ -117,7 +121,7 @@ $form = $this->Form;
 									<label>Subject's Address:</label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->textarea('subject_address',['class'=>'form-control','rows'=>'4'])?>
+									<?=$form->textarea('subject_address',['class'=>'form-control','rows'=>'4', $disabled])?>
 								</div>
 							</div>
 							<div class="row">
@@ -125,7 +129,7 @@ $form = $this->Form;
 									<label>Subject's Education:</label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->textarea('subject_education',['class'=>'form-control','rows'=>'3'])?>
+									<?=$form->textarea('subject_education',['class'=>'form-control','rows'=>'3', $disabled])?>
 								</div>
 							</div>
 							<div class="row">
@@ -133,7 +137,7 @@ $form = $this->Form;
 									<label>Subject's Employment:</label>
 								</div>
 								<div class="col-sm-8">
-									<?=$form->textarea('subject_employment',['class'=>'form-control','rows'=>'3'])?>
+									<?=$form->textarea('subject_employment',['class'=>'form-control','rows'=>'3', $disabled])?>
 								</div>
 							</div>
 						</div>
@@ -143,20 +147,20 @@ $form = $this->Form;
 					<div>
 						<div class="form_content">
 							<h2>Step 3: Some background</h2>
-							<?= $this->Html->image('tabpoint.png',['alt'=>'tagpoint','class'=>'tag_arrow'])?>
+							<?= $this->Html->image('tabpoint.png',['alt'=>'tagpoint','class'=>'tag_arrow', $disabled])?>
 						</div>
 						<div class="form_box">
 							<label>How do or did you communicate with the subject? </label>
 							<ul class="checkbox_list">
-								<li><?=$form->checkbox('subject_communication_email')?> Email</li>
-								<li><?=$form->checkbox('subject_communication_messenger')?> Messenger</li>
-								<li><?=$form->checkbox('subject_communication_phone')?> Phone</li>
-								<li><?=$form->checkbox('subject_communication_webcam')?> Webcam</li>
-								<li><?=$form->checkbox('subject_communication_inperson')?> In Person</li>
+								<li><?=$form->checkbox('subject_communication_email',[$disabled])?> Email</li>
+								<li><?=$form->checkbox('subject_communication_messenger',[$disabled])?> Messenger</li>
+								<li><?=$form->checkbox('subject_communication_phone',[$disabled])?> Phone</li>
+								<li><?=$form->checkbox('subject_communication_webcam',[$disabled])?> Webcam</li>
+								<li><?=$form->checkbox('subject_communication_inperson',[$disabled])?> In Person</li>
 							</ul>
 							<label>Please provide a brief summary of your case and how we can help. </label>
 							<div class="text_area">
-								<?=$form->textarea('subject_background',['rows'=>'4','class'=>'form-control'])?>
+								<?=$form->textarea('subject_background',['rows'=>'4','class'=>'form-control',$disabled])?>
 								<span id="subject_background_count">(1000 character maximum)</span> 
 							</div>
 						</div>
@@ -172,7 +176,7 @@ $form = $this->Form;
 									<label>Has the subject sent any ID or documents?</label>
 								</div>
 								<div class="col-sm-5">
-									<?=$form->text('subject_id',['class'=>'form-control'])?>
+									<?=$form->text('subject_id',['class'=>'form-control',$disabled])?>
 								</div>
 							</div>
 							<div class="row">
@@ -180,7 +184,7 @@ $form = $this->Form;
 									<label>How long have you known the subject?</label>
 								</div>
 								<div class="col-sm-5">
-									<?=$form->text('subject_how_long',['class'=>'form-control'])?>
+									<?=$form->text('subject_how_long',['class'=>'form-control', $disabled])?>
 								</div>
 							</div>
 							<div class="row">
@@ -189,7 +193,7 @@ $form = $this->Form;
 									please specify on which website.</label>
 								</div>
 								<div class="col-sm-5">
-									<?=$form->text('subject_website_met',['class'=>'form-control'])?>
+									<?=$form->text('subject_website_met',['class'=>'form-control', $disabled])?>
 								</div>
 							</div>
 							<div class="row">
@@ -198,7 +202,7 @@ $form = $this->Form;
 									address? If so, was it received?</label>
 								</div>
 								<div class="col-sm-5">
-									<?=$form->text('subject_sent_address',['class'=>'form-control'])?>
+									<?=$form->text('subject_sent_address',['class'=>'form-control', $disabled])?>
 								</div>
 							</div>
 						</div>
@@ -209,6 +213,7 @@ $form = $this->Form;
 						<div class="form_content">
 							<h2>Step 5: Optional Documentation</h2> <img src="<?php echo WEBSITE_URL;?>images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
 							<div class="form_box photo_add">
+							<?php if($disabled == ""):?>
 								<table width="100%" border="0" cellspacing="8" cellpadding="0">
 									<tbody>
 										<tr>
@@ -397,6 +402,29 @@ var dlg = $("#preview_dialog").dialog({
 </tr>
 </tbody>
 </table>
+			<?php else: ?>
+
+				<p>Photographs of subject</p>
+				<ul>
+				<?php if(!empty($attachments['photo'])):?>
+					<?php foreach($attachments['photo'] as $key=>$file):?>
+						<li class="search-choice"><span style="cursor: pointer;"><?php echo $file['filename']; ?></span></li>
+					<?php endforeach; ?>
+				<?php endif; ?>
+				</ul>
+				<br/>
+				<p>Additional documentation (ID, passport, visa, records, etc.) </p>
+				<ul>
+				<?php if(!empty($attachments['document'])):?>
+					<?php foreach($attachments['document'] as $key=>$file):?>
+					<li class="search-choice"><span style="cursor: pointer;"><?php echo $file['filename']; ?></span></li>
+				<?php endforeach; ?>
+				<?php endif; ?>
+				</ul>
+			<?php endif; ?>
+
+
+
 </div>
 </div>
 </div>
@@ -408,9 +436,11 @@ var dlg = $("#preview_dialog").dialog({
 			</div>
 			<div class="row">
 				<div class=" col-sm-offset-6 col-sm-6">
+					<?php if($disabled == ""):?>
 					<div class="clearfix save_wrp"><strong>All services are strictly confidential and discreet.</strong> 
 						<?=$form->submit('Save',['class'=>'btn btn-default pull-right'])?>
 					</div>
+			<?php endif; ?>
 				</div>
 			</div>
 			<?=$form->end()?>

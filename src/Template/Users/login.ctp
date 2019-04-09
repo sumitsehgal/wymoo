@@ -13,8 +13,8 @@ $autoOpen = (( $this->Form->error($model.'.client_email'))) ? 'true' : 'false';
 </script>
 <div id="forgot_password_dialog" title="Forgot your password?" >
 	<?php
-		echo $this->Form->create($model, array('url' => array('controller'=>'users','action'=>'forgotpassword'),'class' => 'form-horizontal'));
-		echo $this->Form->hidden('User.return_to', array('value' => $return_to));
+		echo $this->Form->create($model, array('url' => array('controller'=>'users','action'=>'forgotpassword'),'class' => 'form-horizontal', 'id'=>'UserForgotpasswordForm'));
+		echo $this->Form->hidden('return_to', array('value' => $return_to));
 	?>
 		<table width="100%" border="0" cellspacing="8" cellpadding="0">
 			<tr>
@@ -22,18 +22,18 @@ $autoOpen = (( $this->Form->error($model.'.client_email'))) ? 'true' : 'false';
 				<td>
 					<div class="inputover floatleft">
 						<div class="inputlt"></div>
-						<div class="inputmid"><?php echo $this->Form->text($model.'.client_email',array('class'=>'wid243'));?></div>
+						<div class="inputmid"><?php echo $this->Form->text('client_email',array('class'=>'wid243'));?></div>
 						<div class="inputrt"></div>
 					</div>
 				</td>
 			</tr>
-			<?php if( $this->Form->error($model.'.client_email'))
+			<?php if( $this->Form->error('client_email'))
 			{ 
 			?>
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<small  style="color:#FF0000;"> <?php echo $this->Form->error($model.'.client_email');?> </small>
+					<small  style="color:#FF0000;"> <?php echo $this->Form->error('client_email');?> </small>
 				</td>
 			</tr>
 			<?php 

@@ -69,10 +69,10 @@ class ClientController extends AppController {
 			$validator
 					->requirePresence('client_fname')
 					->notEmpty('client_fname','This field cannot be left blank, please try again.')
-					->add('client_fname', 'validFormat', [
-						'rule' =>array('custom' ,'/^[a-zA-Z ]*$/'),
-						'message' => ' First name should be letters only '
-					])
+					// ->add('client_fname', 'validFormat', [
+					// 	'rule' =>array('custom' ,'/^[a-zA-Z ]*$/'),
+					// 	'message' => ' First name should be letters only '
+					// ])
 			         ->add('client_fname', [
 						'length' => [
 							'rule' => ['minLength', 3],
@@ -82,10 +82,10 @@ class ClientController extends AppController {
 
                     ->requirePresence('client_lname')
 					->notEmpty('client_lname','This field cannot be left blank, please try again.')
-					->add('client_lname', 'validFormat', [
-						'rule' =>array('custom','/^[a-zA-Z ]*$/'),
-						'message' => ' LastName should be letters only'
-					])
+					// ->add('client_lname', 'validFormat', [
+					// 	'rule' =>array('custom','/^[a-zA-Z ]*$/'),
+					// 	'message' => ' LastName should be letters only'
+					// ])
                     ->add('client_lname', [
 						'length' => [
 							'rule' => ['minLength', 3],
@@ -127,7 +127,7 @@ class ClientController extends AppController {
 
 				if($user)
 				{
-					$errors['client_email'][] = 'Email already has been used.';
+					$errors['client_email'][] = 'This email is already in use.';
 				}
 			}
 
