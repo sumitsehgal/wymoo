@@ -49,8 +49,8 @@
                         </div>
 
 
-                        <?php
-                        
+                <?php
+
                        /* foreach($errors as $err){
                          foreach($err as $nest){ ?>
                             <small style="color:#FF0000;"> 
@@ -62,7 +62,7 @@
                      }         
                  }*/
 
-                 ?>   
+                ?>   
 
 
              <?php endif; ?>
@@ -102,7 +102,7 @@
                                             <?php endforeach; ?>
                                         </small>
                                         <?php endif; ?>
-                                    
+
                                     </div>
                                     </div>
                                     <div class="row">
@@ -214,20 +214,20 @@
                                                                     <label>How do or did you communicate with the subject? </label>
                                                                     <ul class="checkbox_list">
                                                                         <li>
-                                                                            <!-- <input type="hidden" name="subject_communication_email" id="CaseTableSubjectCommunicationEmail_" value="<?php echo @$oldData['subject_communication_email']; ?>"> -->
-                                                                            <input type="checkbox" name="subject_communication_email" value="<?php echo @$oldData['subject_communication_email']; ?>" id="CaseTableSubjectCommunicationEmail"> Email</li>
+                                                                         <input type="hidden" name="subject_communication_email" id="CaseTableSubjectCommunicationEmail_" value="0"> 
+                                                                            <input type="checkbox" name="subject_communication_email" <?php  if(!empty($oldData)){ echo ($oldData['subject_communication_email'] == '')? 'checked' : ''; } ?> value="" id="CaseTableSubjectCommunicationEmail"> Email</li>
                                                                             <li>
                                                                                 <input type="hidden" name="subject_communication_messenger" value="0"  id="CaseTableSubjectCommunicationMessenger_" value="0">
-                                                                                <input type="checkbox" name="subject_communication_messenger" value="<?php echo @$oldData['subject_communication_messenger']; ?>" id="CaseTableSubjectCommunicationMessenger"> Messenger</li>
+                        <input type="checkbox" name="subject_communication_messenger" <?php  if(!empty($oldData)){ echo ($oldData['subject_communication_messenger'] == '')? 'checked' : ''; } ?> value="" id="CaseTableSubjectCommunicationMessenger"> Messenger</li>
                                                                                 <li>
                                                                                     <input type="hidden" name="subject_communication_phone" id="CaseTableSubjectCommunicationPhone_" value="0">
-                                                                                    <input type="checkbox" name="subject_communication_phone" value="<?php echo @$oldData['subject_communication_phone']; ?>" id="CaseTableSubjectCommunicationPhone"> Phone</li>
+                                                                                    <input type="checkbox" name="subject_communication_phone" <?php  if(!empty($oldData)){ echo ($oldData['subject_communication_phone'] == '')? 'checked' : ''; } ?> value="" id="CaseTableSubjectCommunicationPhone"> Phone</li>
                                                                                     <li>
                                                                                         <input type="hidden" name="subject_communication_webcam" id="CaseTableSubjectCommunicationWebcam_" value="0">
-                                                                                        <input type="checkbox" name="subject_communication_webcam" value="<?php echo @$oldData['subject_communication_webcam']; ?>" id="CaseTableSubjectCommunicationWebcam"> Webcam</li>
+                                                                                        <input type="checkbox" name="subject_communication_webcam" <?php  if(!empty($oldData)){ echo ($oldData['subject_communication_webcam'] == '')? 'checked' : ''; } ?>  value="" id="CaseTableSubjectCommunicationWebcam"> Webcam</li>
                                                                                         <li>
                                                                                             <input type="hidden" name="subject_communication_inperson" id="CaseTableSubjectCommunicationInperson_" value="0">
-                                                                                            <input type="checkbox" name="subject_communication_inperson" value="<?php echo @$oldData['subject_communication_inperson']; ?>" id="CaseTableSubjectCommunicationInperson"> In Person</li>
+                                                                                            <input type="checkbox" name="subject_communication_inperson" <?php  if(!empty($oldData)){ echo ($oldData['subject_communication_inperson'] == '')? 'checked' : ''; } ?> value="" id="CaseTableSubjectCommunicationInperson"> In Person</li>
                                                                                         </ul>
                                                                                         <label>Please provide a brief summary of your case and how we can help. </label>
                                                                                         <div class="text_area">
@@ -327,7 +327,13 @@ $(function(){
         $('.chzn-choices .search-choice-close').live('click', function()
         {
             var link = $(this).attr('deletelink');
-            var anchor = $(this)
+            var anchor = $(this);
+            var get = $(this).parent('.search-choice').find('span').text();
+            var check=$(this).parent().attr('id');
+            if(check.indexOf("photo") != -1)
+              $('#CaseTable<?php echo $folderid; ?>_photo option[value='+get+']').remove();
+            else
+              $('#CaseTable<?php echo $folderid; ?>_document option[value='+get+']').remove();
             $.ajax({
                 url: '/client/ajax-delete/'+link,
                 beforeSend(request)
@@ -349,10 +355,27 @@ $(function(){
 </script>
 
 
-           <select id="CaseTable<?php echo $folderid; ?>_photo" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" name="data[CaseTable][20190108062506-849_photo][]"></select>
+        <select id="CaseTable<?php echo $folderid; ?>_photo" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" name="data[CaseTable][<?php echo $folderid; ?>_photo][]">
+                <?php if(!empty($oldData['data']['CaseTable'][$folderid.'_photo'])){ 
+                $files1=$oldData['data']['CaseTable'][$folderid.'_photo']; } ?>
+                <?php if(!empty($files1)) { ?>
+                <?php foreach ($files1 as  $file1) : ?>
+                 <option selected="selected" title="'+ '/client/ajax_multi_upload/uploads/download/' + responseJSON.file +'" value="<?=$file1;?>"><?=$file1;?></option>
+                <?php endforeach; ?>    
+                <?php } ?>  
+        </select>
            <div id="CaseTable<?php echo $folderid; ?>_photo_chzn" class="chzn-container chzn-container-multi" style="width: 450px;">
             <ul class="chzn-choices">
-            
+             
+                <?php if(!empty($oldData['data']['CaseTable'][$folderid.'_photo'])){ 
+                $files=$oldData['data']['CaseTable'][$folderid.'_photo'];
+                krsort($files); } ?>
+                <?php if(!empty($files)) { ?>
+                <?php foreach ($files as  $file) : ?>
+                 <li class="search-choice" id="CaseTable<?php echo $folderid;?>_photo_chzn_c_0"><span style="cursor: pointer;"><?=$file?></span><a href="javascript:void(0)" class="search-choice-close" rel="0" deletelink="'+responseJSON.file+'"  ></a></li>
+                <?php endforeach; ?>    
+                <?php } ?>      
+
                 <li class="search-field">
                     <input type="text" value="Click on Add to attach files" class="default" autocomplete="off" style="width: 178px;">
                 </li>
@@ -367,9 +390,9 @@ $(function(){
     <td style="padding-top: 10px;">
         <link rel="stylesheet" type="text/css" href="<?php echo WEBSITE_URL;?>/css/chosen.css">
         <link rel="stylesheet" type="text/css" href="<?php echo WEBSITE_URL;?>/css/fileuploader.css">
-        <script src="<?php echo WEBSITE_URL;?>/js/fileuploader.js" type="text/javascript"></script>
-        <script src="<?php echo WEBSITE_URL;?>/js/chosen.jquery.js" type="text/javascript"></script>
-        <div id="fileupload-document">
+       <script src="<?php echo WEBSITE_URL;?>/js/fileuploader.js" type="text/javascript"></script>
+       <script src="<?php echo WEBSITE_URL;?>/js/chosen.jquery.js" type="text/javascript"></script>
+       <div id="fileupload-document">
             
         </div>
         <script src="<?php echo WEBSITE_URL;?>/js/fileuploader.js" type="text/javascript"></script>
@@ -389,9 +412,9 @@ $(function(){
 						allowedExtensions: ["jpg","gif","png","jpeg","pdf","doc","docx","xls","xlsx"],
 						template: '<div class="qq-uploader"><div class="qq-upload-drop-area well"><span>Drop files here to attach</span></div><div class="qq-upload-button"><span><strong>Additional documentation (ID, passport, visa, records, etc.)&nbsp;</strong><a class="btn btn-default" href="#">Add</a></span></div><ul class="qq-upload-list"></ul></div>',
 						onComplete: function(id, fileName, responseJSON){
-							
+
 							if (responseJSON.success){
-							
+
 								if($('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' + 'option[value="' +fileName + '"]').length==0){
 									$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' ).append( '<option selected="selected" title="'+ '/client/ajax_multi_upload/uploads/download/' + responseJSON.file +'" value="' +fileName + '">'+fileName+'</option>' );
                                     //$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' ).trigger("liszt:updated");
@@ -400,12 +423,12 @@ $(function(){
 							}
 							if (responseJSON.error){
 								$('.qq-upload-fail').hide();
-							}
-							
-						}
-						
-					});           
-				
+                            }
+                            
+                        }
+                        
+                    }); 
+                              
 					$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' ).chosen({disabled:true}).change(function(){
 						if('/client/ajax-delete' !=''){
 							$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' +' option:not(:selected)').each(function(){
@@ -420,16 +443,33 @@ $(function(){
 							$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document').find("option").attr("selected", true);
 							alert('You have no privilege to delete'); return false;
 						}
-						//remove();
-						
-					} );
-					
-				});
-            
+                        //remove();
+                        
+                    } );
+                    
+                });
+                
         </script>
-        <select id="CaseTable<?php echo $folderid; ?>_document" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" name="data[CaseTable][20190108062506-849_document][]"></select>
+        <select id="CaseTable<?php echo $folderid; ?>_document" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" name="data[CaseTable][<?php echo $folderid; ?>_document][]">
+            <?php if(!empty($oldData['data']['CaseTable'][$folderid.'_document'])){ 
+                $docs1=$oldData['data']['CaseTable'][$folderid.'_document']; } ?>
+                <?php if(!empty($docs1)) { ?>
+                <?php foreach ($docs1 as  $doc1) : ?>
+                <option selected="selected" title="'+ '/client/ajax_multi_upload/uploads/download/' + responseJSON.file +'" value="<?=$doc1;?>"><?=$doc1;?></option>
+                <?php endforeach; ?>    
+                <?php } ?> 
+        </select>
         <div id="CaseTable<?php echo $folderid; ?>_document_chzn" class="chzn-container chzn-container-multi" style="width: 450px;">
             <ul class="chzn-choices">
+                <?php if(!empty($oldData['data']['CaseTable'][$folderid.'_document'])){ 
+                $docs=$oldData['data']['CaseTable'][$folderid.'_document'];
+                krsort($docs); } ?>
+                <?php if(!empty($docs)) { ?>
+                <?php foreach ($docs as  $doc) : ?>
+                <li class="search-choice" id="CaseTable<?php echo $folderid;?>_document_chzn_c_0"><span style="cursor: pointer;"><?=$doc?></span><a href="javascript:void(0)" class="search-choice-close" rel="0" deletelink="'+responseJSON.file+'"></a></li>  
+
+                <?php endforeach; ?>    
+                <?php } ?>      
                 <li class="search-field">
                     <input type="text" value="Click on Add to attach files" class="default" autocomplete="off" style="width: 178px;">
                 </li>

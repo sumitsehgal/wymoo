@@ -59,10 +59,16 @@ class ClientController extends AppController {
 		$directory =  $dir .DS.  'CaseTable' . DS ;
 
 		$isPost = $this->request->is('post');
+
+		$sessionfolder =  ( $session->read($this->name.'.casebegin.folderid') ) ? $session->read($this->name.'.casebegin.folderid') : '';	
+		
 		$this->set('folderid', $folderid);
 
 		if($isPost)
 		{
+			if($sessionfolder != '')
+				$folderid = $sessionfolder;
+			$this->set('folderid', $folderid);
 			$this->loadModel('Users');
 			//validation
 			$validator = new Validator();
@@ -73,12 +79,12 @@ class ClientController extends AppController {
 					// 	'rule' =>array('custom' ,'/^[a-zA-Z ]*$/'),
 					// 	'message' => ' First name should be letters only '
 					// ])
-			         ->add('client_fname', [
-						'length' => [
-							'rule' => ['minLength', 3],
-							'message' => ' Firstname length must be minimum  3.',
-						]
-					])
+			        //  ->add('client_fname', [
+					// 	'length' => [
+					// 		'rule' => ['minLength', 3],
+					// 		'message' => ' Firstname length must be minimum  3.',
+					// 	]
+					// ])
 
                     ->requirePresence('client_lname')
 					->notEmpty('client_lname','This field cannot be left blank, please try again.')
@@ -86,12 +92,12 @@ class ClientController extends AppController {
 					// 	'rule' =>array('custom','/^[a-zA-Z ]*$/'),
 					// 	'message' => ' LastName should be letters only'
 					// ])
-                    ->add('client_lname', [
-						'length' => [
-							'rule' => ['minLength', 3],
-							'message' => ' LastName  length must be minimum 3.',
-						]
-					])
+                    // ->add('client_lname', [
+					// 	'length' => [
+					// 		'rule' => ['minLength', 3],
+					// 		'message' => ' LastName  length must be minimum 3.',
+					// 	]
+					// ])
 
 					->requirePresence('client_email')
 					->notEmpty('client_email','This field cannot be left blank, please try again.')
@@ -130,7 +136,6 @@ class ClientController extends AppController {
 					$errors['client_email'][] = 'This email is already in use.';
 				}
 			}
-
 
 			if(!empty($errors))
 			{
