@@ -176,7 +176,7 @@
                                                                     <label>Subject's Date of Birth:</label>
                                                                 </div>
                                                                 <div class="col-sm-8">
-                                                                    <input name="subject_dob" type="text" id="CaseTableSubjectDob" class="form-control" autocomplete="off" value="<?php echo @$oldData['subject_dob1']; ?>">
+                                                                    <input name="subject_dob" type="text" id="CaseTableSubjectDob" class="form-control" autocomplete="off" value="<?php echo @$oldData['subject_dob']; ?>">
                                                                     <input type="hidden" name="subject_dob1" id="CaseTableSubjectDob1"  value="<?php echo @$oldData['subject_dob1']; ?>"> <small>*Leave blank and notify your investigator if unsure.</small> </div>
                                                                 </div>
                                                                 <div class="row">

@@ -131,13 +131,12 @@ $(document).ready(function () {$("#forgot_password").click(function(e){e.prevent
                 <div class="social_connect">
                     <h2>Get Connected</h2>
                     <?php echo '<a target="_blank" href="http://www.facebook.com/WymooInternational">'.$this->Html->image('facebook.png').'</a>'; ?>
-                    <?php echo '<a target="_blank" href="https://plus.google.com/+WymooInternational/">'.$this->Html->image('google_plus.png').'</a>'; ?>
                     <?php echo '<a target="_blank" href="http://twitter.com/Wymoo">'.$this->Html->image('twiiter.png').'</a>'; ?>
                     <?php echo '<a target="_blank" href="http://www.youtube.com/user/wymoo">'.$this->Html->image('you_tube.png').'</a>'; ?>
                     <?php echo '<a target="_blank" href="http://www.linkedin.com/company/wymoo-international">'.$this->Html->image('link_in.png').'</a>'; ?>
                 </div>
                 <div class="copy_rite clear"  >
-                    <p> Wymoo International, LLC All Rights Reserved | A Global Partner of  <a href="http://www.philippinepi.com/" target="_blank" class="custom_anchor" >Philippine PI™</a> and <a href="http://www.russiapi.com/" target="_blank" class="custom_anchor">Russia PI™</a></p>
+                    <p>Copyright &copy; Wymoo International, LLC All Rights Reserved | A Global Partner of <a href="http://www.philippinepi.com/" target="_blank" class="custom_anchor" >Philippine PI™</a> and <a href="http://www.russiapi.com/" target="_blank" class="custom_anchor">Russia PI™</a></p>
                 </div>
             </div>
         </div>
