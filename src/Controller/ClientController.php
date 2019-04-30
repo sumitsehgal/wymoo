@@ -256,6 +256,7 @@ class ClientController extends AppController {
 				$CaseNote['case_id'] = $case_id;
 				$CaseNote['case_notes'] = Configure::read('case_status.1.description');
 				$CaseNote['creator_id'] = $user_id;
+				$CaseNote['created'] = time();
 				$CaseNote['case_status_id'] = 1;
 				$CaseNote['case_status'] = Configure::read('case_status.1.title');
 				$CaseNote['fields_values'] = json_encode($fields_values);
@@ -277,7 +278,7 @@ class ClientController extends AppController {
 				$this->Auth->setUser($user);
 				$this->Flash->clientsuccess('You are succesfully submitted case.',[ 'params' => $logindata ]);
 				//$this->_sendEmail('theprofessional1992@gmail.com', ['from@example.com'], 'theprofessional67@gmail.com', 'Subject is here', 'welcome');
-				$this->_sendEmail($user->email, [Configure::read('default_email.email')], Configure::read('noreply_email.email'), Configure::read('title').' received your Case Data' ,'case_data', array('result' => $data ) );
+				$this->_sendEmail($user->email, [Configure::read('default_email.email')=>Configure::read('default_email.name')], Configure::read('noreply_email.email'), Configure::read('title').' received your Case Data' ,'case_data', array('result' => $data ) );
 				$this->redirect('/client/client/tracker/');
 			}
 		}

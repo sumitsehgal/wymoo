@@ -22,8 +22,8 @@ Login Name:&nbsp;&nbsp;&nbsp;<?php echo $result['username'] ;?><br>
 Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $result['password_token'] ;?><br>
 <br>
 <b>Important:</b> 1) Update your information, 2) Submit your case, and 3) Check status at <?php 
-				$siteurl = 'https://'. Configure::read("sites_id.".$result['site_id'].".site");
-				$url = $siteurl.'/users/login';
+				$siteurl = 'https://'. Configure::read("sites_id.1.site");
+				$url = $siteurl.'/client/login';
 
 				echo $this->Html->link($url,$url);?> <?php /*?> or just copy and paste this URL <?php echo $this->Html->link($url,$url);?> on your browser's address bar and press the return or enter key<?php */?> <br>
                         <br  />
