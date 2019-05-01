@@ -7,11 +7,22 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#delete_case").click(function(e){
+
+                var selected = [];
+                $.each($("input[type='checkbox']:checked"),function()
+                {   selected.push($(this).val());  }); 
+
+
                 if ($('input[type="checkbox"][id!="selectall"]:checked:first').length!=0) {
-                    r=confirm('Do you want to delete this case?');
-                    if(r==true){
-                        window.location.href="/client/admin/casedelete/"+$('input[type="checkbox"][id!="selectall"]:checked:first').val();
-                    }
+                    // r=confirm('Do you want to delete this case?');
+                    // if(r==true){
+                    //     window.location.href="/client/admin/casedelete/"+selected;
+                    // }
+                    $( "div#submit_case_dialog").dialog({autoOpen: false,width:370,modal:true});
+                    $( "div#submit_case_dialog").dialog("open");
+                    $("div#submit_case_dialog #save_notify_delete").attr('href', "/client/admin/casedelete/"+selected);
+
+
                 } else {
                     $("#no_case").empty().html(" <br />No case selected. Please select at least one case to delete case.");
                     $( "div#no_email_case_dialog").dialog({title:"Delete Case"});
@@ -42,6 +53,39 @@
 
     </script>
 <style>.ui-dialog .ui-dialog-content { padding:0px !important;}</style>
+
+
+<div id="submit_case_dialog" title="Delete Case" style="display:none;" >
+    <div style="color: #535353;font-family: Arial,Helvetica,sans-serif;font-size: 12px;padding:5px;">
+        <div style="text-align:justify;">
+            Are you sure you want to delete selected case?If you are sure, click "<b>Delete Case</b>". After this step, selected case information and attachments will no longer be viewable.
+        </div>
+        <div class="floatright pt15">
+            <div class="btnlt">
+            </div>
+            <div class="btnmid">
+                <a href="javascript:void(0);" style="color:#FFFFFF" id="save_notify_delete">Delete Case</a>
+            </div>
+            <div class="btnrt">
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+
+<div id="no_email_case_dialog" title="Email Case" style="display:none;"  >
+	<div style="color: #535353;font-family: Arial,Helvetica,sans-serif;font-size: 12px;">
+        <div id="no_case" style="text-align:justify;padding:5px;">
+            <br />No case selected.Please select one case to email case.
+        </div>
+    </div>
+</div> 
+
+
+
+
+
 <div id="change_status_dialog" title="Change Case Status" style="display:none;" >
 	<div class="">
 		<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tblcaselist">

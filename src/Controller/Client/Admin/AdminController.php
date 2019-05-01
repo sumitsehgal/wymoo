@@ -193,13 +193,20 @@ class AdminController extends AppController
     }
 
     public function casedelete($id){
+        $ids = explode(',', $id);
         $this->loadModel('Cases');
         $this->loadModel('CaseNotes');
         $this->loadModel('CaseNotifications');
         $this->loadModel('Users');
-        $entity = $this->Cases->get($id);
-        $result = $this->Cases->delete($entity);
-        $this->Flash->success(__('Case is successfully deleted.'));
+        if(!empty($ids))
+        {
+            foreach($ids as $id)
+            {
+                $entity = $this->Cases->get($id);
+                $result = $this->Cases->delete($entity);
+            }     
+            $this->Flash->success(__('Case is successfully deleted.'));
+        }
         return $this->redirect(['action' => 'casebrowser']);
     }
 
