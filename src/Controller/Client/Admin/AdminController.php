@@ -15,7 +15,7 @@ class AdminController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['casenotes2']);
+		$this->Auth->allow(['casenotes2','export']);
 	}
 
 
@@ -148,21 +148,45 @@ class AdminController extends AppController
         //print_r($result);die();
         if($this->request->is('post')){
             $data = $this->request->getData();
-            $case_notifications = $this->CaseNotifications->newEntity();
-            $caseNdata['case_id']=$id;
-            $caseNdata['user_id']=$case['user_id'];
-            $caseNdata['comments']=$data['Cases']['notes'];
-            $caseNdata['creator_id']=$this->Auth->User('id');
-            $caseNdata['notification_type']=$role;
-            $caseNdata['created']=time();
-            $caseNdata['modified']=time();
-            $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
-            $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
-            $this->CaseNotifications->save($case_notifications);
+            if(isset($data['Cases']['notification']) && !empty($data['Cases']['notification']))
+            {
+
+                $case_notifications = $this->CaseNotifications->newEntity();
+                $caseNdata['case_id']=$id;
+                $caseNdata['user_id']=$case['user_id'];
+                $caseNdata['comments']=$data['Cases']['notification'];
+                $caseNdata['creator_id']=$this->Auth->User('id');
+                $caseNdata['notification_type'] = (isset($data['Cases']['notification_type']) && !empty($data['Cases']['notification_type'])) ? $data['Cases']['notification_type'] : $role;
+                $caseNdata['created']=time();
+                $caseNdata['modified']=time();
+                $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
+                $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
+                $this->CaseNotifications->save($case_notifications);
+            }
+            if(isset($data['Cases']['notes']) && !empty($data['Cases']['notes']))
+            {
+                $caseNdata = [];
+                $case_notes = $this->CaseNotes->newEntity();
+                $caseNdata['case_id']=$id;
+                $caseNdata['user_id']=$case['user_id'];
+                $caseNdata['case_notes']=$data['Cases']['notes'];
+                $caseNdata['creator_id']=$this->Auth->User('id');
+                $caseNdata['fields_values']='[]';
+                $caseNdata['case_status'] = (isset($data['Cases']['case_status']) && !empty($data['Cases']['case_status'])) ? $data['Cases']['case_status'] : '';
+                $caseNdata['case_status_id'] = (isset($data['Cases']['case_status_id']) && !empty($data['Cases']['case_status_id'])) ? $data['Cases']['case_status_id'] : 0;
+                $caseNdata['created']=time();
+                $caseNdata['modified']=time();
+                $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+                $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+                $this->CaseNotes->save($case_notes);
+
+            }
             return $this->redirect(['action' => 'casenotes',$id]);
             //echo"<pre>";print_r($data);echo "</pre>";die();
         }
-        $this->set(compact('id','role','breadcumb','caseIcons','model','result'));
+        $userList = $this->Users->find('list', ['keyField' => 'id',
+        'valueField' => 'fname'])->toArray();
+        $this->set(compact('id','role','breadcumb','caseIcons','model','result', 'userList'));
     }
 
     public function casenotes2($id) {
@@ -190,6 +214,48 @@ class AdminController extends AppController
         $result['User']=$user;
         //print_r($result);die();
         $this->set(compact('id','role','breadcumb','caseIcons','model','result'));
+    }
+
+    public function export($id)
+    {
+
+        $this->viewBuilder()->setLayout('fancybox');
+        $this->loadModel('Cases');
+        $this->loadModel('Users');
+
+
+        $role = $this->Auth->User('role');
+        $breadcumb = '<h1 class="relative">Case <span>Notes </span></h1>';
+        $caseIcons = Configure::read('case_icon');
+
+        $case = $this->Cases->find('all',[
+            'conditions' => [
+                'id' => $id
+            ]
+        ])->contain(['Quotes','CaseNotes','CaseNotifications'])->first();
+
+        $caseTable = TableRegistry::get('cases');
+        $caseObj = $caseTable->get($id);;
+        $caseObj->is_exported= 1;
+        $caseTable->save($caseObj);
+
+
+
+        $dir = Configure::read('AMU.directory');
+
+		$directory =  $dir .DS.  'CaseTable' . DS ;
+
+        $model = 'Cases';
+        $user = $this->Users->find('all',[
+            'conditions' => [
+                'id' => $case['user_id']
+            ]
+        ])->first();
+        $result[$model]=$case;
+        $result['User']=$user;
+        //print_r($result);die();
+        $this->set(compact('id','role','breadcumb','caseIcons','model','result', 'directory'));
+
     }
 
     public function casedelete($id){

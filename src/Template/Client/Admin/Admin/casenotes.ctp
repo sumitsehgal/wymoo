@@ -27,7 +27,7 @@ if( $case['is_exported']==0 ){
 }
 </style>
 <script type="text/javascript" >$(function(){
-  $(document).ready(function () {$("#fancybox-outer",window.parent.document).mousewheel(function(event, delta) { event.stopPropagation();$("#fancybox-wrap",window.parent.document).trigger("mousewheel.fb", delta);});$("#fancybox-content" , window.parent.document).css("height", $("body").height() - 50 );$("#fancybox-frame" , window.parent.document).css("height", $("body").height() - 50);$("#fancybox-content" , window.parent.document).css("width", "990px");$("#fancybox-outer" , window.parent.document).css("width", "1000px");$("#fancybox-wrap" , window.parent.document).css("width", "1010px");$("#edit_case").click(function(e){window.parent.location.href = $(this).attr("href");  e.preventDefault();});$("#status_case").click(function(e){window.parent.location.href = $(this).attr("href");  e.preventDefault();});$("#notify_client").click(function(e){$( "div#notify_client_dialog").dialog("open");e.preventDefault();});$("div#notify_client_dialog" ).dialog({autoOpen: '. $autoOpen  .',width:450,modal:true});  $("div#notify_client_dialog" ).find("#save_notify").click(function(e){$("#CaseTableNotification").val( $("div#notify_client_dialog" ).find("#CaseTableNotification1").val());$("#CaseTableNotificationType").val("Admin");$("#CaseTableAdminCasenotesForm").submit();e.preventDefault();});$("#email_case").click(function(e){$("div#email_case_dialog" ).dialog("open");e.preventDefault();});$("div#email_case_dialog" ).dialog({autoOpen: false,width:400,modal:true});  $("div#no_email_case_dialog" ).dialog({autoOpen: false,modal:true       }); $("div#email_case_dialog" ).find("#send_email").click(function(e){if($("#email_address").val()=="" ){ $("#no_case").empty().html(" <br />Please enter email address to send email.");$( "div#no_email_case_dialog").dialog({title:"Send Email Case"});$( "div#no_email_case_dialog").dialog("open");return false;}if(!(emailregs . test($("#email_address").val())) ){$("#no_case").empty().html(" <br />Please enter valid email address to send email.");$( "div#no_email_case_dialog").dialog({title:"Send Email Case"});$( "div#no_email_case_dialog").dialog("open");return false;}window.location.href = "' . $email_caseurl. '" + "/" + $("#email_address").val();e.preventDefault();});$("a.ttt").mouseover(function() {$("div#preview_dialog_info").load($(this).attr("href") + "/1",function(){dlginfo.dialog("open");}); }).mousemove(function(event) {dlginfo.dialog("option", "position", {my: "left top",at: "right bottom",of: event,offset: "20 20"});}).mouseleave(function() {dlginfo.dialog("close");});var dlginfo = $("#preview_dialog_info").dialog({ autoOpen: false,  draggable: false,  resizable: false});});''
+  $(document).ready(function () {$("#fancybox-outer",window.parent.document).mousewheel(function(event, delta) { event.stopPropagation();$("#fancybox-wrap",window.parent.document).trigger("mousewheel.fb", delta);});$("#fancybox-content" , window.parent.document).css("height", $("body").height() - 50 );$("#fancybox-frame" , window.parent.document).css("height", $("body").height() - 50);$("#fancybox-content" , window.parent.document).css("width", "990px");$("#fancybox-outer" , window.parent.document).css("width", "1000px");$("#fancybox-wrap" , window.parent.document).css("width", "1010px");$("#edit_case").click(function(e){window.parent.location.href = $(this).attr("href");  e.preventDefault();});$("#status_case").click(function(e){window.parent.location.href = $(this).attr("href");  e.preventDefault();});$("#notify_client").click(function(e){$( "div#notify_client_dialog").dialog("open");e.preventDefault();});$("div#notify_client_dialog" ).dialog({autoOpen: false,width:450,modal:true});  $("div#notify_client_dialog" ).find("#save_notify").click(function(e){$("#CaseTableNotification").val( $("div#notify_client_dialog" ).find("#CaseTableNotification1").val()); $("#notificationnote").val( $("div#notify_client_dialog" ).find("#CaseTableNotification1").val());    $("#CaseTableNotificationType").val("Admin");$("#CaseTableAdminCasenotesForm").submit();e.preventDefault();});$("#email_case").click(function(e){$("div#email_case_dialog" ).dialog("open");e.preventDefault();});$("div#email_case_dialog" ).dialog({autoOpen: false,width:400,modal:true});  $("div#no_email_case_dialog" ).dialog({autoOpen: false,modal:true       }); $("div#email_case_dialog" ).find("#send_email").click(function(e){if($("#email_address").val()=="" ){ $("#no_case").empty().html(" <br />Please enter email address to send email.");$( "div#no_email_case_dialog").dialog({title:"Send Email Case"});$( "div#no_email_case_dialog").dialog("open");return false;}if(!(emailregs . test($("#email_address").val())) ){$("#no_case").empty().html(" <br />Please enter valid email address to send email.");$( "div#no_email_case_dialog").dialog({title:"Send Email Case"});$( "div#no_email_case_dialog").dialog("open");return false;}window.location.href = "' . $email_caseurl. '" + "/" + $("#email_address").val();e.preventDefault();});$("a.ttt").mouseover(function() {$("div#preview_dialog_info").load($(this).attr("href") + "/1",function(){dlginfo.dialog("open");}); }).mousemove(function(event) {dlginfo.dialog("option", "position", {my: "left top",at: "right bottom",of: event,offset: "20 20"});}).mouseleave(function() {dlginfo.dialog("close");});var dlginfo = $("#preview_dialog_info").dialog({ autoOpen: false,  draggable: false,  resizable: false});});''
   $("#export_case").click(function(e){
     $("div#export_case_dialog" ).dialog("open");e.preventDefault();
   });
@@ -84,6 +84,8 @@ if( $case['is_exported']==0 ){
 });
 </script>
 <input type="hidden" id="caseid" value="<?php echo $case['id']; ?>" />
+
+
 <div class="divfull pt15">
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
@@ -452,18 +454,18 @@ if( $case['is_exported']==0 ){
       <div class="floatleft pr10">
         <div class="btnlt"></div>
         <div class="btnmid">
-          <?php         echo $this->Html->link( 'Export Case',array('controller'=>'Admin','action'=> 'caseexport','admin'=>true,$id),array('id'=>'export_case','style'=>'color:#FFFFFF'));?>
+          <?php         echo $this->Html->link( 'Export Case','/client/admin/casenotes2/'.$id,array('id'=>'export_case','style'=>'color:#FFFFFF'));?>
         </div>
         <div class="btnrt"></div>
       </div>
-      <div class="floatleft pr10"<?php if(!$disabled)?> style="display:none" id="unlockbtndiv">
+                    <div class="floatleft pr10"<?php if(!$disabled){ ?> style="display:none" <?php } ?> id="unlockbtndiv">
         <div class="btnlt"></div>
         <div class="btnmid">
           <?php 
           if($role=='Administrator'){
-                    //echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case',array('plugin'=>'cases','controller'=>'cases','action'=> 'unlocked','admin'=>true,$id),array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
+                    echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case',array('plugin'=>'cases','controller'=>'cases','action'=> 'unlocked','admin'=>true,$id),array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
           } else {
-                    //echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case','javascript:void(0);',array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
+                    echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case','javascript:void(0);',array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
           }
           ?>                  
         </div>
@@ -472,6 +474,11 @@ if( $case['is_exported']==0 ){
     </div>
   </div>
   <?=$this->Form->create('casenotes',['class'=>'form-inline','id'=>'CaseTableAdminCasenotesForm']);?>
+  <input type="hidden" id="CaseTableNotification" value="" name="Cases[notification]" />
+<input type="hidden" name="Cases[notification_type]" id="CaseTableNotificationType" value="Investigator" />
+<input type="hidden" name="Cases[case_status]"  value="<?php echo $case['case_status']; ?>" />
+<input type="hidden" name="Cases[case_status_id]"  value="<?php echo $case['case_status_id']; ?>" />
+
   <div class="divfull pt15">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
@@ -487,10 +494,10 @@ if( $case['is_exported']==0 ){
               <div class="scroll-pane" >
                 <div style="width:100%">
                   <table width="100%" style="width:550px" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
-                    <?php $class = 'even'; foreach($notifications as $InvestigatorNote): $class = ($class=='even')? 'odd' : 'even'; ?>
+                    <?php $class = 'even'; foreach($notes as $InvestigatorNote): $class = ($class=='even')? 'odd' : 'even'; ?>
                     <tr class="<?php echo $class;?>" >
-                      <td width="150"><?=$InvestigatorNote['creator_name'];?>: (<?=date('d-m-Y',$InvestigatorNote['created']);?>):</td>
-                      <td><?=nl2br($InvestigatorNote['comments'])  ;?> </td>
+                      <td width="150"><?=$userList[$InvestigatorNote['user_id']];?>: (<?=date('d-m-Y',$InvestigatorNote['created']);?>):</td>
+                      <td><?=nl2br($InvestigatorNote['case_notes'])  ;?> </td>
                     </tr>
                   <?php endforeach; ?>
                 </table>
@@ -585,9 +592,24 @@ if( $case['is_exported']==0 ){
     <?php if($disabled) {
     } else { ?>
       <div class="btnlt"></div>
-      <div class="btnmid"><?php echo $this->Html->link( 'Export Case',array('controller'=>'cases','action'=> 'caseexport','admin'=>true,$id),array('id'=>'export_case_lnk','style'=>'color:#FFFFFF'));?></div>
+      <div class="btnmid"><?php echo $this->Html->link( 'Export Case','/client/admin/export/'.$id,array('id'=>'export_case_lnk','style'=>'color:#FFFFFF'));?></div>
       <div class="btnrt"></div>
     <?php }?>
   </div>
 </div>
+</div>
+
+<div id="notify_client_dialog" title="Notify Client"  style="display:none;">
+  <div class="floatleft pd20">
+    <div class="pl20">
+    <textarea class="wid345 floatleft"  rows="16" id="CaseTableNotification1"></textarea>
+
+    <?php //echo $form->textarea($model.'.notification1',array('class'=>'wid345 floatleft', 'rows'=>16));?><br />
+      <small  style="color:#FF0000;"><?php //echo $form->error($model.'.notification');?> </small></div>
+    <div class="floatright pt15">
+      <div class="btnlt"></div>
+      <div class="btnmid"><a href="javascript:void(0);"  style="color:#FFFFFF" id="save_notify">Send</a></div>
+      <div class="btnrt"></div>
+    </div>
+  </div>
 </div>
