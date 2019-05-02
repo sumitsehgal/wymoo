@@ -58,7 +58,7 @@
 <div id="submit_case_dialog" title="Delete Case" style="display:none;" >
     <div style="color: #535353;font-family: Arial,Helvetica,sans-serif;font-size: 12px;padding:5px;">
         <div style="text-align:justify;">
-            Are you sure you want to delete selected case?If you are sure, click "<b>Delete Case</b>". After this step, selected case information and attachments will no longer be viewable.
+            Are you sure you want to delete selected case? If you are sure, click "<b>Delete Case</b>". After this step, selected case information and attachments will no longer be viewable.
         </div>
         <div class="floatright pt15">
             <div class="btnlt">

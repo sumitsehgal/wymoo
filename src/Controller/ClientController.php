@@ -125,13 +125,13 @@ class ClientController extends AppController {
 
 			if(!empty($oldData['client_email']))
 			{
-				$user = $this->Users->find('all',[
+				 $this->loadModel('Cases');
+				 $user = $this->Cases->find('all',[
 					'conditions' => [
-						'email' => $oldData['client_email']
+						'client_email' => $oldData['client_email']
 					]
 				])->first();
-
-				if($user)
+			  	if($user)
 				{
 					$errors['client_email'][] = 'This email is already in use.';
 				}
