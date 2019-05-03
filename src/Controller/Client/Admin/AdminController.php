@@ -67,6 +67,16 @@ class AdminController extends AppController
             //print_r($this->request->getData());die();
             $data = $this->request->getData();
             // dd($data);
+            $check_note = $this->CaseNotes->find('all',[ 
+                'conditions' => [
+                'case_id' => $id,
+                'case_status_id'=> $data['case_status_id']
+            ]])->first();
+            if(empty($check_note) && empty($data['notes']))
+            { 
+              $this->Flash->error(__('Please enter note.'));  
+              return $this->redirect(['action' => 'casetracker',$id]);  
+            }
             $caseTable = TableRegistry::get('Cases');
             $caseUp = $caseTable->get($id);
             $caseUp->case_status=$case_status[$data['case_status_id']]['title'];
