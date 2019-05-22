@@ -62,21 +62,11 @@ class AdminController extends AppController
             $investors[$investor['id']]=$investor['fname'].' '.$investor['lname'];
         }
         $caseStatus = array('2'=>'Case Saved','4'=>'Case In Progress','5'=>'Case Cancelled','6'=>'Case Closed','7'=>'Case On Hold');
+        $casedescription =array('2'=>'Case data saved.','4'=>'Investigation in progress.  Report will be emailed to client on due date.','5'=>'Case cancelled.  Payment not received.','6'=>'Investigation complete.  Report emailed to client.','7'=>'Case on hold.  Full payment required to proceed.');
         //TO DO Select fields values aren't updating
         if ($this->request->is(['post', 'put'])) {
-            //print_r($this->request->getData());die();
+           
             $data = $this->request->getData();
-            // dd($data);
-            $check_note = $this->CaseNotes->find('all',[ 
-                'conditions' => [
-                'case_id' => $id,
-                'case_status_id'=> $data['case_status_id']
-            ]])->first();
-            if(empty($check_note) && empty($data['notes']))
-            { 
-              $this->Flash->error(__('Please enter note.'));  
-              return $this->redirect(['action' => 'casetracker',$id]);  
-            }
             $caseTable = TableRegistry::get('Cases');
             $caseUp = $caseTable->get($id);
             $caseUp->case_status=$case_status[$data['case_status_id']]['title'];
@@ -92,6 +82,27 @@ class AdminController extends AppController
                 $caseNdata['case_id']=$id;
                 $caseNdata['user_id']=$case['user_id'];
                 $caseNdata['case_notes']=$data['notes'];
+                $caseNdata['creator_id']=$this->Auth->User('id');
+                $caseNdata['case_status_id']=$data['case_status_id'];
+                $caseNdata['case_status']=$case_status[$data['case_status_id']]['title'];
+                $caseNdata['created']=time();
+                $caseNdata['modified']=time();
+                $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+                $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+                $this->CaseNotes->save($case_notes);
+            }
+            else
+            {   
+                foreach ($casedescription as $key => $value)
+                {   if($data['case_status_id'] == $key)
+                    {
+                        $casenote=$value;
+                    }
+                } 
+                $case_notes = $this->CaseNotes->newEntity();
+                $caseNdata['case_id']=$id;
+                $caseNdata['user_id']=$case['user_id'];
+                $caseNdata['case_notes']=$casenote;
                 $caseNdata['creator_id']=$this->Auth->User('id');
                 $caseNdata['case_status_id']=$data['case_status_id'];
                 $caseNdata['case_status']=$case_status[$data['case_status_id']]['title'];

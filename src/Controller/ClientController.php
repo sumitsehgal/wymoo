@@ -147,8 +147,7 @@ class ClientController extends AppController {
 
 				$data = $this->request->getData();
 
-
-				$duedate =  explode('-',$data['subject_dob']);
+   			    $duedate =  explode('-',$data['subject_dob']);
 				$duedate1 =  explode('-',$data['subject_dob1']);
 
 				if(count($duedate)==3 && $data['subject_dob1']!='' && (isset($duedate1[2]) && $duedate1[2]!=date('Y')))

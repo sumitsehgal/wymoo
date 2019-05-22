@@ -1,6 +1,13 @@
 <?php //$delete_caseurl = $this->Html->url(array('controller'=>'Admin','action'=>'casedelete')); ?>
 <div id="middle">
     <h1>Case <span>Browser </span></h1>
+
+    <style type="text/css">
+      .alert-success.fade.in{ height: 25px !important; }
+      .alert-success.fade.in .close{ margin-top: 5.3px !important; }
+      .alert-success.fade.in figure{ margin-top: 5px !important; }
+      .alert-success.fade.in strong{ margin-top: 8.10px !important; }
+    </style>
     <?= $this->Flash->render() ?>
     <br/>
     <style type="text/css" id="page-css">/* Styles specific to this particular page */.scroll-pane{width: 970px;height: 350px;overflow: auto;font:12px/20px Arial, Helvetica, sans-serif;color:#333;}</style><script type="text/javascript" >$(function(){var api = $('.scroll-pane').jScrollPane({showArrows:true,maintainPosition: false});});</script><script>var emailregs = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i;$(function(){var caseid =0;$("img.chage_stateus").click(function(){caseid = $(this).attr("id");$("div#change_status_dialog" ).find("input#casestatus_"+$(this).attr("value")).attr("checked","checked");$("div#change_status_dialog" ).dialog("open");});$("div#change_status_dialog" ).dialog({autoOpen: false, width:250, modal:true, resizable:false });	$("div#change_status_dialog" ).find("#change_status").click(function(e){$("#CaseTableCaseStatus").val( $("div#change_status_dialog" ).find("input[type=radio]:checked").val());$("#CaseTableCaseId").val(caseid);$("#CaseTableAdminChangeCaseStatusForm").submit();e.preventDefault();});});</script><style>.ui-dialog .ui-dialog-content { padding:0px !important;}</style>
@@ -34,7 +41,7 @@
 
         $(function(){
             var caseid =0;
-            $("img.chage_stateus").click(function(){
+            $("img.chage_stateus,").click(function(){
                 caseid = $(this).attr("id");
                 $("div#change_status_dialog" ).find("input#casestatus_"+$(this).attr("value")).attr("checked","checked");
                 $("div#change_status_dialog" ).dialog("open");
@@ -231,6 +238,8 @@
                     <table width="100%" style="width:970px;" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
                         <tbody>
                             <?php $count = 1; if(!empty($pages)): ?>
+                           <?php /* echo "<pre>"; print_r($pages); */ ?>
+
                             <?php foreach($pages as $page): ?>
                             <?php $style = ($page['is_read']==0) ? 'style="font-weight:bold"' : ''; ?>
                                 <tr class="<?php echo $count % 2 == 0 ? 'even' : 'odd'; ?>" <?= $style ?>>
@@ -250,7 +259,7 @@
                                     <td width="12%"><?php echo ($page['is_submited']==0) ? '' : floor((time()-(floor($page['submited_date']/86400)*86400))/86400);?><!-- TODO --></td>
                                     <td nowrap="nowrap"> <!-- TODO -->
                                         <span class="floatleft">
-                                            <a href="/client/admin/casetracker/<?=$page['id'] ?>" class="newlink"><?= $page['case_status'] ?></a></span><span class="statusicon">
+                                            <a href="/client/admin/casetracker/<?=$page['id'] ?>" value="<?=$page['case_status_id']?>" class="newlink"><?= $page['case_status']  ?></a></span><span class="statusicon">
                                                 <?php 
 
                                                 echo $this->Html->image($caseIcons[$page['case_status_id']], [

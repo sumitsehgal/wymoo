@@ -161,6 +161,10 @@ class UsersController extends AppController
             else
             {
                 $user = $this->Users->newEntity();
+                if(empty($data['slug']))
+                {
+                    $data['slug']=$data['username'];
+                }  
                 $user = $this->Users->patchEntity($user, $data);
                 if ($this->Users->save($user)) {
                     $this->Flash->success(__('The user has been saved.'));
