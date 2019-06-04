@@ -128,7 +128,7 @@ if( $case['is_exported']==0 ){
             </tr>
             <tr class="even">
               <td>Assigned To:</td>
-              <td></td>
+              <td><?php if(!empty($investor)): ?><?=$investor['fname'].' '.$investor['lname']?><?php endif; ?></td>
             </tr>
           </table>
         </div>
@@ -211,7 +211,11 @@ if( $case['is_exported']==0 ){
                   <td width="150">Pictures:</td>
                   <td style="padding-right:0px; margin-right:0px;">
                     <div class="scroll-pane" style="height:73px;">
-                      <div style="width:100%"><?php //TO DO Pictures    ?></div>
+                    <div style="width:100%"><?php if(!empty($attachments['photo'])):?>
+                    <?php foreach($attachments['photo'] as $key=>$file):?>
+                         <li class="search-choice"><span style="cursor: pointer;"><?php echo $file['filename']; ?></span></li>
+                      <?php endforeach; ?>
+                    <?php endif; ?></div>
                     </div>
                   </td>
                 </tr>
@@ -219,7 +223,11 @@ if( $case['is_exported']==0 ){
                   <td>Documents:</td>
                   <td style="padding-right:0px; margin-right:0px;">
                     <div class="scroll-pane" style="height:72px;">
-                      <div style="width:100%"><?php //TO DO Documents    ?></div>
+                      <div style="width:100%"><?php if(!empty($attachments['document'])):?>
+                         <?php foreach($attachments['document'] as $key=>$file):?>
+                         <li class="search-choice"><span style="cursor: pointer;"><?php echo $file['filename']; ?></span></li>
+                         <?php endforeach; ?>
+                         <?php endif; ?></div>
                     </div>
                   </td>
                 </tr>
@@ -448,7 +456,7 @@ if( $case['is_exported']==0 ){
       </div>
       <div class="floatleft pr10">
         <div class="btnlt"></div>
-        <div class="btnmid"><?php echo $this->Html->link( 'Case Status',array('controller'=>'cases','action'=> 'casetracker','admin'=>true,$id),array('id'=>'status_case'));?></div>
+        <div class="btnmid"><?php echo $this->Html->link( 'Case Status',array('controller'=>'admin','action'=> 'casetracker',/*'admin'=>true,*/$id),array('id'=>'status_case'));?></div>
         <div class="btnrt"></div>
       </div>
       <div class="floatleft pr10">

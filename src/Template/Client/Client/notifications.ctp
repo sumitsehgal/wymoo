@@ -40,8 +40,8 @@
                 <div style="display:none;">
                     <input type="hidden" name="_method" value="POST">
                 </div>
-                <textarea name="notification" class="form-control" rows="4" id="CaseTableNotification"></textarea>
-                <a class="btn btn-default" href="javascript:void(0)" id="send_notification">Send</a>
+                <textarea name="notification" class="form-control" rows="4" id="CaseTableNotification" <?php if(!empty($valid)) echo $valid; ?>></textarea>
+                <a class="btn btn-default" href="javascript:void(0)" id="send_notification" <?php if(!empty($valid)) echo $valid; ?>>Send</a>
                 <div style="color:#FF0000;clear:both;margin-left:13px;">
                     <small> <div class="clr"></div>&nbsp;&nbsp; </small>
                 </div>

@@ -250,7 +250,7 @@
                                     <td width="12%"><?= $page['client_lname'] ?></td>
                                     <td width="25%">
                                     <?php if($page['is_exported']==1){ echo $this->Html->image('lock-sm.png'); }else{ echo $this->Html->image("dot.png",['height'=>'13','width'=>'10']); } ?>&nbsp;&nbsp;
-                                    <a href="/client/admin/casenotes/<?= $page['id'] ?>?iframe" class="newlink lightbox iframe" style="">
+                                    <a href="/client/admin/casenotes/<?= $page['id'] ?>?iframe" class="newlink lightbox iframe isread" id="<?= $page['id'] ?>" style="">
                                     <?= $page['client_email'] ?>
                                     </a>	
                                     </td>
@@ -318,11 +318,28 @@
                 <input type="hidden" name="case_status" id="CaseTableCaseStatus">
             </div>
         </form> 
+        
         <script type="text/javascript">
             function formatTitle(title, currentArray, currentIndex, currentOpts) {  
                 return "<div id=\"tip7-title\"><span><a href=\"javascript:;\" onclick=\"$.fancybox.close();\"><?=addslashes($this->Html->Image('fancybox/cross.png'))?></a></span><?=addslashes( $this->Html->Image('fancybox/casenotes_head.png') )?></div>";
             }
             $(document).ready(function(){
+                jQuery('.isread').click(function(){
+                  var  id = $(this).attr('id');
+                    $.ajax(
+                    {  
+                        type : 'POST',
+                        url  : 'admin/checkread',
+                        data : {id:id},  
+                        success: function(success) 
+                        {
+                            if(success == 'notread')
+                            { 
+                              $('#'+id).closest("tr").removeAttr("style");
+                            }
+                        }
+                    }); 
+                });
                 jQuery('#edit_case').click(function(e){
                     e.preventDefault();
                     if(jQuery('input[name="id"]:checked').val()){

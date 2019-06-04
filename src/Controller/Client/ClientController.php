@@ -99,6 +99,8 @@ class ClientController extends AppController
         if(!empty($result) && $result->is_exported==1)
         {
             $this->Flash->error('Your case is in progress and notifications are now closed.  Contact your investigator for assistance.');
+            $this->set('valid', 'disabled');
+
         }
 
         $this->set('result', $result);
@@ -146,6 +148,14 @@ class ClientController extends AppController
                 'case_id' => $result->id,
             ]
         ])->all();
+         
+        $updatedData['is_read'] = 0;
+        $cases = TableRegistry::get('Cases');
+        $query = $cases->query();
+        $query->update()
+                    ->set($updatedData)
+                    ->where(['id' => $result->id])
+                    ->execute();  
 
         $this->set(compact('notifications'));
 

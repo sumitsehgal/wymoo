@@ -43,6 +43,15 @@ class AdminController extends AppController
                 'id' => $id
             ]
         ])->contain(['CaseNotes'])->first();
+        
+        $updatedData['is_read'] = 1;
+        $cases = TableRegistry::get('Cases');
+        $query = $cases->query();
+        $query->update()
+                    ->set($updatedData)
+                    ->where(['id' => $id])
+                    ->execute(); 
+        
         foreach ($case['case_notes'] as $key => $note) {
             $note_creator = $this->Users->find('all',[
                 'conditions' => [
@@ -118,6 +127,25 @@ class AdminController extends AppController
         $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus','investors', 'discounts', 'serviceLevel', 'caseFee'));
     }
 
+    public function checkread()
+    {
+        $this->loadModel('Cases');
+        if($this->request->is('post'))
+        {   
+            $case = $this->Cases->find('all',[
+            'conditions' => [
+                'is_read'=> '1', 
+                'id'     => $this->request->getData()['id'],
+            ]])->first();
+            if(!$case){
+                echo 'notread';  die; 
+            }else{
+                echo 'isread'; die;
+            } 
+          
+        }  
+
+    } 
     public function caseedit($id){
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Cases');
@@ -127,7 +155,7 @@ class AdminController extends AppController
                 'id' => $id
             ]
         ])->first();
-        $this->set(compact('caseIcons','model','case'));
+        $this->set(compact('caseIcons', 'case'));
 
         // To Do Save entries
     }
@@ -149,6 +177,25 @@ class AdminController extends AppController
                 'id' => $id
             ]
         ])->contain(['Quotes','CaseNotes','CaseNotifications'])->first();
+        
+        $investor = null;
+        if($case['assigned_to']!=''){
+            $investor = $this->Users->find('all',[
+                'conditions' => [
+                    'id'=>$case['assigned_to']
+                ]
+            ])->first();
+        }
+        $this->set('investor',$investor);
+    
+        $updatedData['is_read'] = 1;
+        $cases = TableRegistry::get('Cases');
+        $query = $cases->query();
+        $query->update()
+                    ->set($updatedData)
+                    ->where(['id' => $id])
+                    ->execute(); 
+         
         $model = 'Cases';
         $user = $this->Users->find('all',[
             'conditions' => [
@@ -167,6 +214,27 @@ class AdminController extends AppController
         $result[$model]=$case;
         $result['User']=$user;
         //print_r($result);die();
+        $attachments = [];
+        $directory = Configure::read('AMU.directory') . DS . 'CaseTable' . DS. $id .'_photo';     
+        $files = glob ("$directory/*");
+        foreach($files as $key=>$file){
+            $f          = basename($file);
+            if($f == 'Thumbs.db') continue;
+            $attachments['photo'][$key]['path'] = $file;
+            $attachments['photo'][$key]['file'] = base64_encode($file);
+            $attachments['photo'][$key]['filename'] = basename($file);
+        }
+        $directory = Configure::read('AMU.directory') . DS . 'CaseTable' . DS. $id .'_document';      
+        $files = glob ("$directory/*");
+        foreach($files as $key=>$file){
+            $f          = basename($file);
+            if($f == 'Thumbs.db') continue;
+            $attachments['document'][$key]['path'] = $file;
+            $attachments['document'][$key]['file'] = base64_encode($file);
+            $attachments['document'][$key]['filename'] = basename($file);
+        }
+        $this->set('attachments',$attachments);
+      
         if($this->request->is('post')){
             $data = $this->request->getData();
             if(isset($data['Cases']['notification']) && !empty($data['Cases']['notification']))
@@ -289,9 +357,20 @@ class AdminController extends AppController
         {
             foreach($ids as $id)
             {
-                $entity = $this->Cases->get($id);
-                $result = $this->Cases->delete($entity);
-            }     
+                $case = $this->Cases->find('all',[
+                        'conditions' => [
+                        'id' => $id
+                ]])->first();
+                $user_id=$case->user_id;  
+                $this->Cases->deleteAll(
+                array(  "id" => $id  ));
+                $this->Users->deleteAll(
+                array(  "id" => $user_id  ));
+                $this->CaseNotes->deleteAll(
+                array(  "user_id" => $user_id  ));
+                $this->CaseNotifications->deleteAll(
+                array(  "user_id" => $user_id  ));
+            } 
             $this->Flash->success(__('Case is successfully deleted.'));
         }
         return $this->redirect(['action' => 'casebrowser']);
@@ -307,7 +386,7 @@ class AdminController extends AppController
             $this->loadModel('Cases');
             $this->loadModel('Users');
 
-
+            
             $role = $this->Auth->User('role');
             $breadcumb = '<h1 class="relative">Case <span>Notes </span></h1>';
             $caseIcons = Configure::read('case_icon');

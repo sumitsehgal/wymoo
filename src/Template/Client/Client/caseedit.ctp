@@ -264,7 +264,23 @@ return false;
 } );
 
 
+});
+</script>
 
+
+<select id="CaseTable<?php echo $folderid; ?>_photo" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" >
+	
+</select>
+<div id="CaseTable<?php echo $folderid; ?>_photo_chzn" class="chzn-container chzn-container-multi" style="width: 450px;">
+<ul class="chzn-choices">
+<?php if(!empty($attachments['photo'])):?>
+	<?php foreach($attachments['photo'] as $key=>$file):?>
+
+	<li class="search-choice" id="CaseTable<?php echo $folderid; ?>_photo_chzn_c_<?php echo $key; ?>"><span style="cursor: pointer;"><?php echo $file['filename']; ?></span><a href="javascript:void(0)" class="search-choice-close" rel="<?php echo $key; ?>" deletelink="<?php echo $file['file'];?>"></a></li>
+<?php endforeach; ?>
+<?php endif; ?>
+
+<script type="text/javascript">
 $('.chzn-choices .search-choice-close').live('click', function()
 {
 var link = $(this).attr('deletelink');
@@ -283,25 +299,7 @@ anchor.parent().remove();
 })
 return false;
 });
-
-
-
-});
 </script>
-
-
-<select id="CaseTable<?php echo $folderid; ?>_photo" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" >
-	
-</select>
-<div id="CaseTable<?php echo $folderid; ?>_photo_chzn" class="chzn-container chzn-container-multi" style="width: 450px;">
-<ul class="chzn-choices">
-<?php if(!empty($attachments['photo'])):?>
-	<?php foreach($attachments['photo'] as $key=>$file):?>
-
-	<li class="search-choice" id="CaseTable<?php echo $folderid; ?>_photo_chzn_c_<?php echo $key; ?>"><span style="cursor: pointer;"><?php echo $file['filename']; ?></span><a href="javascript:void(0)" class="search-choice-close" rel="<?php echo $key; ?>" deletelink="<?php echo $file['file'];?>"></a></li>
-<?php endforeach; ?>
-<?php endif; ?>
-
 
 
 <li class="search-field">

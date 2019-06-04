@@ -234,49 +234,49 @@
                                                                                             <textarea name="subject_background" class="form-control" rows="4" id="CaseTableSubjectBackground"><?php echo @$oldData['subject_background']; ?></textarea> <span id="subject_background_count">(1000 character maximum)</span> </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="step4">
-                                                                                        <div class="form_content">
-                                                                                            <h2>Step 4: A Few Questions (if applicable)</h2> <img src="<?php echo WEBSITE_URL;?>images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
-                                                                                            <div class="form_box">
-                                                                                                <div class="row">
-                                                                                                    <div class="col-sm-7">
-                                                                                                        <label>Has the subject sent any ID or documents?</label>
-                                                                                                    </div>
-                                                                                                    <div class="col-sm-5">
-                                                                                                        <input name="subject_id" value="<?php echo @$oldData['subject_id']; ?>" type="text" class="form-control" id="CaseTableSubjectId"> </div>
-                                                                                                    </div>
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-sm-7">
-                                                                                                            <label>How long have you known the subject?</label>
-                                                                                                        </div>
-                                                                                                        <div class="col-sm-5">
-                                                                                                            <input name="subject_how_long" value="<?php echo @$oldData['subject_how_long']; ?>" type="text" class="form-control" id="CaseTableSubjectHowLong"> </div>
-                                                                                                        </div>
-                                                                                                        <div class="row">
-                                                                                                            <div class="col-sm-7">
-                                                                                                                <label>If you met the subject via the internet, please specify on which website.</label>
-                                                                                                            </div>
-                                                                                                            <div class="col-sm-5">
-                                                                                                                <input name="subject_website_met" value="<?php echo @$oldData['subject_website_met']; ?>" type="text" class="form-control" id="CaseTableSubjectWebsiteMet"> </div>
-                                                                                                            </div>
-                                                                                                            <div class="row">
-                                                                                                                <div class="col-sm-7">
-                                                                                                                    <label>Have you sent anything to the subject's address? If so, was it received?</label>
-                                                                                                                </div>
-                                                                                                                <div class="col-sm-5">
-                                                                                                                    <input name="subject_sent_address" value="<?php echo @$oldData['subject_sent_address']; ?>" type="text" class="form-control" id="CaseTableSubjectSentAddress"> </div>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div>
-                                                                                                            <div class="form_content">
-                                                                                                                <h2>Step 5: Optional Documentation</h2> <img src="<?php echo WEBSITE_URL;?>images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
-                                                                                                                <div class="form_box photo_add">
-                                                                                                                    <table width="100%" border="0" cellspacing="8" cellpadding="0">
-                                                                                                                        <tbody>
-                                                                                                                            <tr>
-                                                                                                                                <td>
-                                                                                                                                    <div id="fileupload-photo">   </div>
+<div class="step4">
+<div class="form_content">
+<h2>Step 4: A Few Questions (if applicable)</h2> <img src="<?php echo WEBSITE_URL;?>images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
+<div class="form_box">
+<div class="row">
+<div class="col-sm-7">
+    <label>Has the subject sent any ID or documents?</label>
+</div>
+<div class="col-sm-5">
+    <input name="subject_id" value="<?php echo @$oldData['subject_id']; ?>" type="text" class="form-control" id="CaseTableSubjectId"> </div>
+</div>
+<div class="row">
+    <div class="col-sm-7">
+        <label>How long have you known the subject?</label>
+    </div>
+    <div class="col-sm-5">
+        <input name="subject_how_long" value="<?php echo @$oldData['subject_how_long']; ?>" type="text" class="form-control" id="CaseTableSubjectHowLong"> </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-7">
+            <label>If you met the subject via the internet, please specify on which website.</label>
+        </div>
+        <div class="col-sm-5">
+            <input name="subject_website_met" value="<?php echo @$oldData['subject_website_met']; ?>" type="text" class="form-control" id="CaseTableSubjectWebsiteMet"> </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-7">
+                <label>Have you sent anything to the subject's address? If so, was it received?</label>
+            </div>
+            <div class="col-sm-5">
+                <input name="subject_sent_address" value="<?php echo @$oldData['subject_sent_address']; ?>" type="text" class="form-control" id="CaseTableSubjectSentAddress"> </div>
+            </div>
+        </div>
+    </div>
+    <div>
+    <div class="form_content">
+        <h2>Step 5: Optional Documentation</h2> <img src="<?php echo WEBSITE_URL;?>images/tabpoint.png" alt="tagpoint" class="tag_arrow"> </div>
+    <div class="form_box photo_add">
+        <table width="100%" border="0" cellspacing="8" cellpadding="0">
+    <tbody> 
+<tr>
+    <td>
+    <div id="fileupload-photo">   </div>
 <script>
 $(function(){
 
@@ -322,36 +322,7 @@ $(function(){
 
         } );
 
-
-
-        $('.chzn-choices .search-choice-close').live('click', function()
-        {
-            var link = $(this).attr('deletelink');
-            var anchor = $(this);
-            var get = $(this).parent('.search-choice').find('span').text();
-            var check=$(this).parent().attr('id');
-            if(check.indexOf("photo") != -1)
-              $('#CaseTable<?php echo $folderid; ?>_photo option[value='+get+']').remove();
-            else
-              $('#CaseTable<?php echo $folderid; ?>_document option[value='+get+']').remove();
-            $.ajax({
-                url: '/client/ajax-delete/'+link,
-                beforeSend(request)
-                {
-                    var csrf = document.getElementsByName('_csrfToken')[0].value;
-                    request.setRequestHeader("X-CSRF-Token", csrf);
-                },
-                success: function(response)
-                {
-                    anchor.parent().remove();
-                }
-            })
-            return false;
-        });
-
-
-
-    });
+  });
 </script>
 
 
@@ -449,6 +420,32 @@ $(function(){
                     
                 });
                 
+        </script>
+        <script type="text/javascript">
+        $('.chzn-choices .search-choice-close').live('click', function()
+        {
+            var link = $(this).attr('deletelink');
+            var anchor = $(this);
+            var get = $(this).parent('.search-choice').find('span').text();
+            var check=$(this).parent().attr('id');
+            if(check.indexOf("photo") != -1)
+              $('#CaseTable<?php echo $folderid; ?>_photo option[value='+get+']').remove();
+            else
+              $('#CaseTable<?php echo $folderid; ?>_document option[value='+get+']').remove();
+            $.ajax({
+                url: '/client/ajax-delete/'+link,
+                beforeSend(request)
+                {
+                    var csrf = document.getElementsByName('_csrfToken')[0].value;
+                    request.setRequestHeader("X-CSRF-Token", csrf);
+                },
+                success: function(response)
+                {
+                    anchor.parent().remove();
+                }
+            })
+            return false;
+        });
         </script>
         <select id="CaseTable<?php echo $folderid; ?>_document" data-placeholder="Click on Add to attach files" style="width: 450px; display: none;" class="chzn-select chzn-done" multiple="multiple" name="data[CaseTable][<?php echo $folderid; ?>_document][]">
             <?php if(!empty($oldData['data']['CaseTable'][$folderid.'_document'])){ 
