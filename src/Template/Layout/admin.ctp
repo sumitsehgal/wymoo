@@ -63,10 +63,10 @@ $(document).ready(function () {$("#forgot_password").click(function(e){e.prevent
                         <li></li>
                         <?php if(isset($Auth) && !empty($Auth->user())): ?>
                         <li>
-                            <a href="/client/admin/casebrowser" class="<?php echo $this->request->getParam('action') == 'casebrowser' ? 'active' : ''; ?>"><span><strong>Case Browser</strong></span></a>
+                            <a href="/client/admin/casebrowser" class="<?php echo ($this->getRequest()->getParam('action') == 'casebrowser' || $this->getRequest()->getParam('action') == "caseedit" || $this->getRequest()->getParam('action') == "casetracker" )   ? 'active' : ''; ?>"><span><strong>Case Browser</strong></span></a>
                         </li>
                         <li>
-                            <a href="/client/admin/myaccount" class="<?php echo $this->request->getParam('action') == 'myaccount' ? 'active' : ''; ?>"><span><strong>Admin Details</strong></span></a>
+                            <a href="/client/admin/myaccount" class="<?php echo ($this->getRequest()->getParam('action') == 'myaccount'  ||  $this->getRequest()->getParam('controller') == "Users")     ? 'active' : ''; ?>"><span><strong>Admin Details</strong></span></a>
                         </li>
                         <?php endif; ?>
                     </ul>
@@ -189,13 +189,7 @@ $(document).ready(function () {$("#forgot_password").click(function(e){e.prevent
 
 		$(document).ready(function(){
 
-				$('#email_case').click( function()
-				{
-					$('#email_case_dialog').dialog('open');
-					return false;
-				});
-
-				$('#send_email').click( function()
+	 			$('#send_email').click( function()
 				{
 					var email = $('#email_address').val();
                     $('input[type=checkbox]:checked').each(function()

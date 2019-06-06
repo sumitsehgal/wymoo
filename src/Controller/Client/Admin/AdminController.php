@@ -155,9 +155,31 @@ class AdminController extends AppController
                 'id' => $id
             ]
         ])->first();
-        $this->set(compact('caseIcons', 'case'));
+        $folderid = $id;
+        $attachments = [];
+        $directory = Configure::read('AMU.directory') . DS . 'CaseTable' . DS. $folderid .'_photo';     
+        $files = glob ("$directory/*");
+        foreach($files as $key=>$file){
+            $f          = basename($file);
+            if($f == 'Thumbs.db') continue;
+            $attachments['photo'][$key]['path'] = $file;
+            $attachments['photo'][$key]['file'] = base64_encode($file);
+            $attachments['photo'][$key]['filename'] = basename($file);
+        }
 
-        // To Do Save entries
+
+        $directory = Configure::read('AMU.directory') . DS . 'CaseTable' . DS. $folderid .'_document'; 
+        $files = glob ("$directory/*");
+        foreach($files as $key=>$file){
+            $f          = basename($file);
+            if($f == 'Thumbs.db') continue;
+            $attachments['document'][$key]['path'] = $file;
+            $attachments['document'][$key]['file'] = base64_encode($file);
+            $attachments['document'][$key]['filename'] = basename($file);
+        }
+
+        $this->set(compact('caseIcons', 'case', 'folderid', 'attachments'));
+
     }
 
     public function casenotes($id) {

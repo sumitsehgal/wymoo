@@ -9,6 +9,14 @@ use Cake\Validation\Validator;
 
 class UsersController extends AppController
 {
+
+    public $paginate = [
+        'limit' => 1000,
+        'order' => [
+            'Users.id' => 'desc'
+        ]
+    ];
+
     public function beforeFilter(Event $event) {
 		parent::beforeFilter($event);
 		$this->Auth->allow(['logout','forgotpassword']); // Temporary Allow
@@ -31,8 +39,12 @@ class UsersController extends AppController
                     $conditions['email LIKE'] = '%'.$data['email'].'%';
             }
         }
-        $query = $this->Users->find('all')->where($conditions);
-        $users = $this->paginate($query);
+        if(!empty($conditions))
+        {
+           $query = $this->Users->find('all')->where($conditions);
+           $users = $this->paginate($query);
+        }else
+         $users = $this->paginate($this->Users);
         $this->set(compact('users'));
     }
 

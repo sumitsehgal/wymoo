@@ -1,4 +1,3 @@
-
 <h1>View <span>Users </span></h1>
 <script>
     var emailregs = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i;
@@ -72,13 +71,13 @@
             <tr>
 
                 <th>
-                    <?php echo $this->Paginator->sort('fname', 'First Name'); ?>
+                    <span class="floatleft"><?php echo $this->Paginator->sort('fname', 'First Name'); ?></span><span class="shorting"><a href="/client/admin/users?sort=fname&direction=asc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortup.png" alt=""></a><a href="/client/admin/users?sort=fname&direction=desc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortdown.png" class="two"></a></span>
                 <th>
-                    <?php echo $this->Paginator->sort('lname', 'Last Name'); ?>
+                    <span class="floatleft"><?php echo $this->Paginator->sort('lname', 'Last Name'); ?></span><span class="shorting"><a href="/client/admin/users?sort=lname&direction=asc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortup.png" alt=""></a><a href="/client/admin/users?sort=lname&direction=desc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortdown.png" alt=""></a></span>
                 <th>
-                    <?php echo $this->Paginator->sort('email', 'Email'); ?>
+                    <span class="floatleft"><?php echo $this->Paginator->sort('email', 'Email'); ?></span><span class="shorting"><a href="/client/admin/users?sort=email&direction=asc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortup.png" alt=""></a><a href="/client/admin/users?sort=email&direction=desc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortdown.png" alt=""></a></span>
                 <th>
-                    <?php echo $this->Paginator->sort('username', 'Login id'); ?>
+                    <span class="floatleft"><?php echo $this->Paginator->sort('username', 'Login id'); ?></span><span class="shorting"><a href="/client/admin/users?sort=username&direction=asc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortup.png" alt=""></a><a href="/client/admin/users?sort=username&direction=desc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortdown.png" alt=""></a></span>
                 <th>
                     Action
                 </th>
@@ -118,10 +117,23 @@
                 <?php $count++; endforeach; ?>
             <?php endif; ?>
         </table>
-            <?php echo $this->Paginator->numbers(); ?>
+<style type="text/css">
+    button:hover > a {
+    text-decoration: none;
+}
+
+</style>
+    <table class="pagination">
+     <td>
+        <?php echo (count($users) == 20 ) ? $this->Paginator->prev('<<' . __d('users', 'previous')) : '';?>
+      <td>
+        <?php echo (count($users) == 20 ) ? $this->Paginator->next(__d('users', 'next') . ' >>') : '';  ?>
+      </td>
+    </table>
+            <!-- <?php echo $this->Paginator->numbers(); ?> -->
     </div>
 </div>
-<!-- <div id="unlock_case_dialog" title="Are you sure?">
+<div id="unlock_case_dialog" title="Are you sure?" style="display: none">
     <br/> Are you sure you want to delete this user?
     <div class="floatright pt15" id="floatrightbtn" style="padding-top:20px;">
         <div class="btnlt"></div>
@@ -131,5 +143,19 @@
         <div class="btnmid"><a href="/client/admin/users/users/view" id="close_dialog" style="color:#FFFFFF">No</a></div>
         <div class="btnrt"></div>
     </div>
-</div> -->
 </div>
+</div>
+
+
+<script type="text/javascript">
+      jQuery(document).ready(function()
+      {  var val = "<?php echo $_SERVER['REQUEST_URI']; ?>";
+         $("[href='"+val+"']").find("img").hide();
+      
+       jQuery('.deleteuser').click(function(){
+            $('iv#unlock_case_dialog').css('overflow','hidden');
+            $( "div#unlock_case_dialog").dialog();
+         alert();
+        });
+      });
+</script>

@@ -648,7 +648,7 @@ line-height:normal;
 .shorting a {
 height:7px;
 margin-bottom:3px;
-display:block;
+display:grid;
 }
 
 .gradbox {

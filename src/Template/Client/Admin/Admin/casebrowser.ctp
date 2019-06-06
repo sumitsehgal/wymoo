@@ -13,11 +13,21 @@
     <style type="text/css" id="page-css">/* Styles specific to this particular page */.scroll-pane{width: 970px;height: 350px;overflow: auto;font:12px/20px Arial, Helvetica, sans-serif;color:#333;}</style><script type="text/javascript" >$(function(){var api = $('.scroll-pane').jScrollPane({showArrows:true,maintainPosition: false});});</script><script>var emailregs = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i;$(function(){var caseid =0;$("img.chage_stateus").click(function(){caseid = $(this).attr("id");$("div#change_status_dialog" ).find("input#casestatus_"+$(this).attr("value")).attr("checked","checked");$("div#change_status_dialog" ).dialog("open");});$("div#change_status_dialog" ).dialog({autoOpen: false, width:250, modal:true, resizable:false });	$("div#change_status_dialog" ).find("#change_status").click(function(e){$("#CaseTableCaseStatus").val( $("div#change_status_dialog" ).find("input[type=radio]:checked").val());$("#CaseTableCaseId").val(caseid);$("#CaseTableAdminChangeCaseStatusForm").submit();e.preventDefault();});});</script><style>.ui-dialog .ui-dialog-content { padding:0px !important;}</style>
     <script type="text/javascript">
         $(document).ready(function () {
+            jQuery('#selectall').click(function(){
+             var selected = [];
+                $('input[type=checkbox]').each(function()
+                {   if($(this).attr('checked'))
+                    { selected.push($(this).val());
+                      $('input[type=checkbox]').attr('checked',true);
+                    }
+                    else
+                      $('input[type=checkbox]').attr('checked', false);
+                }); });
             $("#delete_case").click(function(e){
-
-                var selected = [];
-                $.each($("input[type='checkbox']:checked"),function()
-                {   selected.push($(this).val());  }); 
+            
+                // var selected = [];
+                // $.each($("input[type='checkbox']:checked"),function()
+                // {   selected.push($(this).val());  }); 
 
 
                 if ($('input[type="checkbox"][id!="selectall"]:checked:first').length!=0) {
@@ -90,9 +100,6 @@
 </div> 
 
 
-
-
-
 <div id="change_status_dialog" title="Change Case Status" style="display:none;" >
 	<div class="">
 		<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tblcaselist">
@@ -157,7 +164,7 @@
             <div class="inputover floatleft pr20">
                 <div class="inputlt"></div>
                 <div class="inputmid">
-                    <input name="data[CaseTable][due_date]" type="text" placeholder="DD-MM-YYYY" class="wid120 hasDatepicker" id="CaseTableDueDate">
+                    <input name="data[CaseTable][due_date]" type="text" placeholder="DD-MM-YYYY" class="wid120" id="CaseTableDueDate">
                 </div>
                 <div class="inputrt"></div>
             </div>
@@ -209,25 +216,29 @@
                                 <input type="checkbox" id="selectall">
                             </th>
                             <th width="12%">
-                                <?php echo $this->Paginator->sort('client_fname', 'First Name'); ?>
+                                <span class="floatleft"><?php echo $this->Paginator->sort('client_fname', 'First Name'); ?></span><span class="shorting"><a href="/client/admin/casebrowser?sort=client_fname&direction=asc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortup.png" alt=""></a><a href="/client/admin/casebrowser?sort=client_fname&direction=desc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortdown.png" class="two"></a></span>
                             </th>
                             <th width="12%">
-                                <?php echo $this->Paginator->sort('client_lname', 'Last Name'); ?>
+                                
+                                 <span class="floatleft"><?php echo $this->Paginator->sort('client_lname', 'Last Name'); ?></span><span class="shorting"><a href="/client/admin/casebrowser?sort=client_lname&direction=asc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortup.png" alt=""></a><a href="/client/admin/casebrowser?sort=client_lname&direction=desc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortdown.png" alt=""></a></span>
                             </th>
                             <th width="25%">
-                                <?php echo $this->Paginator->sort('client_email', 'Login ID'); ?>
+                                
+                                 <span class="floatleft"><?php echo $this->Paginator->sort('client_email', 'Login ID'); ?></span><span class="shorting"><a href="/client/admin/casebrowser?sort=client_email&direction=asc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortup.png" alt=""></a><a href="/client/admin/casebrowser?sort=client_email&direction=desc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortdown.png" alt=""></a></span>
                             </th>
                             <th width="10%">
-                                <?php echo $this->Paginator->sort('site_name', 'Site'); ?>
+                                
+                                 <span class="floatleft"><?php echo $this->Paginator->sort('site_name', 'Site'); ?></span><span class="shorting"><a href="/client/admin/casebrowser?sort=site_name&direction=asc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortup.png" alt=""></a><a href="/client/admin/casebrowser?sort=site_name&direction=desc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortdown.png" alt=""></a></span>
                             </th>
                             <th width="10%" style="padding:0px;padding-left:5px;">
-                                <?php echo $this->Paginator->sort('due_date', 'Due Date'); ?>
+                                
+                                 <span class="floatleft"><?php echo $this->Paginator->sort('due_date', 'Due Date'); ?></span><span class="shorting"><a href="/client/admin/casebrowser?sort=due_date&direction=asc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortup.png" alt=""></a><a href="/client/admin/casebrowser?sort=due_date&direction=desc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortdown.png" alt=""></a></span>
                             </th>
                             <th width="12%">
-                                <?php echo $this->Paginator->sort('submitted_date', 'Days Open'); ?>
+                                 <span class="floatleft"><?php echo $this->Paginator->sort('submitted_date', 'Days Open'); ?></span><span class="shorting"><a href="/client/admin/casebrowser?sort=submitted_date&direction=asc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortup.png" alt=""></a><a href="/client/admin/casebrowser?sort=submitted_date&direction=desc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortdown.png" alt=""></a></span>
                             </th>
                             <th width="12%" style="border-right:0px;">
-                                <?php echo $this->Paginator->sort('case_status', 'Case Status'); ?>
+                                 <span class="floatleft"><?php echo $this->Paginator->sort('case_status', 'Case Status'); ?></span><span class="shorting"><a href="/client/admin/casebrowser?sort=case_status&direction=asc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortup.png" alt=""></a><a href="/client/admin/casebrowser?sort=case_status&direction=desc" new_template="1"><img src="<?php echo WEBSITE_URL;?>images/shortdown.png" alt=""></a></span>
                             </th>
                             <th style="border-left:0px;">&nbsp;</th>
                         </tr>
@@ -324,6 +335,10 @@
                 return "<div id=\"tip7-title\"><span><a href=\"javascript:;\" onclick=\"$.fancybox.close();\"><?=addslashes($this->Html->Image('fancybox/cross.png'))?></a></span><?=addslashes( $this->Html->Image('fancybox/casenotes_head.png') )?></div>";
             }
             $(document).ready(function(){
+                jQuery(document).ready(function(){
+                   var val = "<?php echo $_SERVER['REQUEST_URI']; ?>";
+                   $("[href='"+val+"']").find("img").hide();
+                });
                 jQuery('.isread').click(function(){
                   var  id = $(this).attr('id');
                     $.ajax(
@@ -345,8 +360,27 @@
                     if(jQuery('input[name="id"]:checked').val()){
                         var url = '/client/admin/caseedit/'+jQuery('input[name="id"]:checked:first').val();
                         window.location.href=url;
+                    }else
+                    {  $("#no_case").empty().html(" <br />No case  selected.  Please select one case to edit case.");
+                       $( "div#no_email_case_dialog").dialog({title:"Edit Case"});
+                       $( "div#no_email_case_dialog").dialog("open");
                     }
                 });
+                jQuery('#email_case').click(function(e){
+                
+                  if(jQuery('input[name="id"]:checked').val() == undefined)
+                  {
+                       $("#no_case").empty().html(" <br />No case selected. Please select one case to email case.");
+                       $( "div#no_email_case_dialog").dialog({title:"Email Case"});
+                       $( "div#no_email_case_dialog").dialog("open");
+                       return false;
+                  }else
+                  {
+                    $('#email_case_dialog').dialog('open');
+                    return false;
+                  }
+                });
+
                 $(".lightbox").fancybox({
                     "transitionIn"      : "elastic",
                     "transitionOut"     : "elastic",                

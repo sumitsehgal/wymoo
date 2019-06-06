@@ -1,3 +1,8 @@
+<style type="text/css">
+.photo_add{
+	display: inline-block;
+}
+</style>
 <?php 
 $form = $this->Form;
 ?>
@@ -303,7 +308,7 @@ return false;
 
 
 <li class="search-field">
-<input type="text" value="Click on Add to attach files" class="default" autocomplete="off" style="width: 178px;">
+<input type="text" value="<?php echo (empty($attachments['photo'])) ? 'Click on Add to attach files': '' ?>" class="default" autocomplete="off" style="width: 178px;">
 </li>
 </ul>
 <div class="chzn-drop" style="left: -9000px; width: 450px; top: 32px;">
@@ -386,7 +391,7 @@ var dlg = $("#preview_dialog").dialog({
 <?php endforeach; ?>
 <?php endif; ?>
 <li class="search-field">
-<input type="text" value="Click on Add to attach files" class="default" autocomplete="off" style="width: 178px;">
+<input type="text" value="<?php echo (empty($attachments['document'])) ? 'Click on Add to attach files': '' ?>" class="default" autocomplete="off" style="width: 178px;">
 </li>
 </ul>
 <div class="chzn-drop" style="left: -9000px; width: 450px; top: 32px;">
