@@ -26,14 +26,28 @@
 	}
 	.qq-upload-button span strong {
     font-weight: normal;
-}
+    }
+    .empty-img{
+    	display: flex;
+    }
+   .alert_box figure img{  margin-top: 2px; }
+   .alert_box .alert-danger{padding: 9px 4px 9px 4px !important;}
+   .alert-success.fade.in{ height: 25px !important; }
+   .alert-success.fade.in .close{ margin-top: 5.3px !important; }
+   .alert-success.fade.in figure{ margin-top: 5px !important; }
+   .alert-success.fade.in strong{ margin-top: 8.10px !important; }
+   
 </style>
 <?php $form = $this->Form; ?>
-<h1 class="relative">
+	<h1 class="relative">
 	Case 
 	<span>Information </span> 
+   
 	<div class="secureicon">Secure Contact</div>
 </h1>
+<div class="empty-img"><img width="1" height="10" alt="" src="https://www.wymoo.com/client/img/dot.png"></div>
+ <?= $this->Flash->render() ?> 
+ <div class="empty-img"><img width="1" height="10" alt="" src="https://www.wymoo.com/client/img/dot.png"></div>
 <?=$form->create($case)?>
 <input type="hidden" value="<?php echo $this->getRequest()->getCookie('csrfToken'); ?>" name="_csrfToken"  />
 <div class="case_search">
@@ -82,6 +96,13 @@
 											</div>
 											<div class="inputrt"></div>
 										</div>
+										<?php if(isset($errors) && isset($errors['client_fname'])): ?>
+                                        <small style="color:#FF0000;">
+                                         <?php foreach( $errors['client_fname'] as $err ): ?>
+                                             <div class="error-message"><?php echo $err; ?></div> 
+                                         <?php endforeach; ?>
+                                       </small>
+                                       <?php endif; ?>
 									</td>
 								</tr>
 								<tr>
@@ -94,6 +115,13 @@
 											</div>
 											<div class="inputrt"></div>
 										</div>
+										 <?php if(isset($errors) && isset($errors['client_lname'])): ?>
+                                        <small style="color:#FF0000;">
+                                            <?php foreach( $errors['client_lname'] as $err ): ?>
+                                                <div class="error-message"><?php echo $err; ?></div> 
+                                            <?php endforeach; ?>
+                                        </small>
+                                        <?php endif; ?>
 									</td>
 								</tr>
 								<tr>
@@ -106,6 +134,13 @@
 											</div>
 											<div class="inputrt"></div>
 										</div>
+										   <?php if(isset($errors) && isset($errors['client_email'])): ?>
+                                            <small style="color:#FF0000;">
+                                                <?php foreach( $errors['client_email'] as $err ): ?>
+                                                    <div class="error-message"><?php echo $err; ?></div> 
+                                                <?php endforeach; ?>
+                                            </small>
+                                            <?php endif; ?>
 									</td>
 								</tr>
 							</tbody>
@@ -176,7 +211,8 @@
 										<div class="inputover floatleft">
 											<div class="inputlt"></div>
 											<div class="inputmid">
-												<?=$form->text('subject_dob1',['class'=>'wid243 hasDatepicker'])?>
+												<?=$form->text('subject_dob',['class'=>'wid243 hasDatepicker'])?>
+												<input type="hidden" name="subject_dob1" id="CaseTableSubjectDob1" value="<?php echo $case->subject_dob1; ?>" >
 											</div>
 											<div class="inputrt"></div>
 										</div>
@@ -566,9 +602,10 @@ var dlg = $("#preview_dialog").dialog({
 							</div>
 							<div class="btnrt"></div>
 						</div>
+						
 						<div class="floatright pr10">
 							<div class="btnlt"></div>
-							<div class="btnmid"><a href="#" id="save_case">Save</a></div>
+							<div class="btnmid"><a href="#" id="save_case"><?=$form->submit('Save',['class'=>'btn btn-default pull-right'])?></a></div>
 							<div class="btnrt"></div>
 						</div>
 					</div>

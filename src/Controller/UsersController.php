@@ -132,7 +132,7 @@ class UsersController extends AppController
 
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
-			if ($user) {
+	        if ($user) {
 				$this->Auth->setUser($user);
                 $this->Flash->success(__($user['email'].' you have successfully logged in.'));
                 return $this->redirect('/client/client/tracker');

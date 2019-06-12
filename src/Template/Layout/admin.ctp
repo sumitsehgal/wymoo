@@ -1,3 +1,4 @@
+
 <?php
 /**
 * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
@@ -184,6 +185,8 @@ $(document).ready(function () {$("#forgot_password").click(function(e){e.prevent
          $( function() {
 			$( "#email_case_dialog" ).dialog({
 				autoOpen: false,
+                width:400
+
 			});
 		} );
 
@@ -207,6 +210,7 @@ $(document).ready(function () {$("#forgot_password").click(function(e){e.prevent
                                 if(response == "success")
                                 {
                                     $('#email_case_dialog').dialog('close');
+                                    location.reload();
                                 }
                             }
                         });

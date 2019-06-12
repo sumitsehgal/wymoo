@@ -220,7 +220,11 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                 <td style="padding-left:5px;">
                   <span class="floatleft pr10"><?= $case['case_status']?> </span>
                   <span class="statusicon" style="padding:2px 0 0;">
-                  <img src="<?php echo '/img/'.$caseIcons[$case['case_status_id']];  ?>" alt="<?php echo $case['case_status']; ?>"
+
+
+
+                    
+                  <img src="<?php echo WEBSITE_URL.'img/'.$caseIcons[$case['case_status_id']];  ?>" alt="<?php echo $case['case_status']; ?>"
                             class="chage_stateus" style="cursor:pointer" id="<?php echo $case['id']; ?>" value="<?php echo $case['case_status_id']; ?>" />
                                       
                   </span>

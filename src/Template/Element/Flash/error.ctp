@@ -17,7 +17,7 @@ if($message != "You are not authorized to access that location."):
 <span aria-hidden="true">x</span>
 <span class="sr-only"></span>
 </button>
-<figure><a href="#"><img src="<?php echo WEBSITE_URL; ?>img/close.png" height="16" width="16" alt="close"/></a></figure>
+<figure><a href="#"><img src="<?php echo WEBSITE_URL; ?>img/close.png" height="14" width="14" alt="close"/></a></figure>
 <strong><?php echo $message;?></strong>
 </div>
 </div>

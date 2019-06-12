@@ -14,7 +14,7 @@ if (!isset($params['escape']) || $params['escape'] !== false) {
 <span aria-hidden="true">x</span>
 <span class="sr-only"></span>
 </button>
-<figure><a href="#"><img src="<?php echo WEBSITE_URL; ?>img/green_close.png" height="16" width="16" alt="close"/></a></figure>
+<figure><a href="#"><img src="<?php echo WEBSITE_URL; ?>img/green_close.png" height="14" width="14" alt="close"/></a></figure>
 <strong><?php echo $message;?></strong>
 </div>
 </div>

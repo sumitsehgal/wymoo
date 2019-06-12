@@ -123,7 +123,8 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                       "value" => $case['case_status_id'],
                       "id" => $case['id'],
                       "class" => 'chage_stateus',
-                      "style" => 'cursor:pointer'
+                      "style" => 'cursor:pointer',
+                      "fullBase" => true,
                     ]); ?> </span></td>
                     </tr>
                     <tr>

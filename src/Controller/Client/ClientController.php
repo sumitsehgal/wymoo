@@ -96,6 +96,7 @@ class ClientController extends AppController
         $this->CaseNotifications->updateAll(array('is_new'=>0),array('user_id'=>$this->Auth->User('id')));
 
         $result = $this->Cases->find('all',array('conditions'=>array('Cases.user_id'=>$this->Auth->User('id'))))->first();
+        // echo "<pre>"; print_r($result); die;
         if(!empty($result) && $result->is_exported==1)
         {
             $this->Flash->error('Your case is in progress and notifications are now closed.  Contact your investigator for assistance.');

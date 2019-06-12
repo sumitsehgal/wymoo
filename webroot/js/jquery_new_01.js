@@ -62,18 +62,18 @@ $(document).ready(function(){
         // $(this).parents().find('.newListSelHover').removeClass();
  //});
 
- $('.newList li a').click(function(){
-    var txt=$(this).text();
+//  $('.newList li a').click(function(){
+//     var txt=$(this).text();
 
-    var par=$(this).parents();
-    console.log(par);
+//     var par=$(this).parents();
+//     console.log(par);
 
-            $(this).parents().find('.newListSelected').children('div:eq(0)').text(txt);
-            $(this).parents().find('.SSContainerDivWrapper').css('display','none');
-            $(this).parents().find('.newListSelected').css('position','static');
+//             $(this).parents().find('.newListSelected').children('div:eq(0)').text(txt);
+//             $(this).parents().find('.SSContainerDivWrapper').css('display','none');
+//             $(this).parents().find('.newListSelected').css('position','static');
             
 
-})
+// })
 
           
 

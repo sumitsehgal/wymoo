@@ -102,12 +102,12 @@
                         <div class="btnlt"></div>
                         <div class="btnmid">
                             <?php
-                                echo $this->Form->postLink('Delete', '/client/admin/users/delete/'.$user->id, [
-                                    'class' => 'deleteuser',
-                                    'confirm' => 'Are you sure you want to delete this user?'
-                                ]);
+                                // echo $this->Form->postLink('Delete', '/client/admin/users/delete/'.$user->id, [
+                                //     'class' => 'deleteuser',
+                                //     'confirm' => 'Are you sure you want to delete this user?'
+                                // ]);
                             ?>
-                            <!-- <a href="/client/admin/users/delete/<?= $user->id ?>" class="deleteuser">Delete</a> -->
+                            <a href="javascript:void(0);" deleteid="<?= $user->id ?>" class="deleteuser">Delete</a>
                         </div>
                         <div class="btnrt"></div>
                     </div>
@@ -137,7 +137,8 @@
     <br/> Are you sure you want to delete this user?
     <div class="floatright pt15" id="floatrightbtn" style="padding-top:20px;">
         <div class="btnlt"></div>
-        <div class="btnmid"><a href="javascript:void(0);" id="export_case_lnk" style="color:#FFFFFF">Yes</a></div>
+        <form style="display: none;" method="post" action="#" id="delete-form"><input type="hidden" name="_method" value="POST"></form>
+        <div class="btnmid"><a href="javascript:void(0);" id="delete_case_lnk" style="color:#FFFFFF">Yes</a></div>
         <div class="btnrt" style="padding-right:2px;"></div>
         <div class="btnlt"></div>
         <div class="btnmid"><a href="/client/admin/users/users/view" id="close_dialog" style="color:#FFFFFF">No</a></div>
@@ -149,13 +150,36 @@
 
 <script type="text/javascript">
       jQuery(document).ready(function()
-      {  var val = "<?php echo $_SERVER['REQUEST_URI']; ?>";
+      { 
+
+        $("#unlock_case_dialog").dialog({show:"slide",hide:"slide", width: 350,height: 150,autoOpen: false,resizable: true,draggable: false,modal: true,});
+
+       var val = "<?php echo $_SERVER['REQUEST_URI']; ?>";
          $("[href='"+val+"']").find("img").hide();
       
        jQuery('.deleteuser').click(function(){
-            $('iv#unlock_case_dialog').css('overflow','hidden');
-            $( "div#unlock_case_dialog").dialog();
-         alert();
+
+            var deleteId = jQuery(this).attr('deleteid');
+
+            var url = '/client/admin/users/delete/'+deleteId;
+            jQuery('#delete-form').attr('action', url);
+            $('div#unlock_case_dialog').css('overflow','hidden');
+            $( "div#unlock_case_dialog").dialog("open");
+            //
+        
         });
+
+       $('#delete_case_lnk').click(function(){
+
+            jQuery('#delete-form').submit();
+            return false;
+       });
+
+       $('#unlock_case_dialog #close_dialog').live('click', function()
+       {
+
+        $( "div#unlock_case_dialog").dialog("close");
+        return false;
+       })
       });
 </script>

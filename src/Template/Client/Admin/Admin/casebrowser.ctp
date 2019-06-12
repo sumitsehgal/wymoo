@@ -13,7 +13,9 @@
     <style type="text/css" id="page-css">/* Styles specific to this particular page */.scroll-pane{width: 970px;height: 350px;overflow: auto;font:12px/20px Arial, Helvetica, sans-serif;color:#333;}</style><script type="text/javascript" >$(function(){var api = $('.scroll-pane').jScrollPane({showArrows:true,maintainPosition: false});});</script><script>var emailregs = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i;$(function(){var caseid =0;$("img.chage_stateus").click(function(){caseid = $(this).attr("id");$("div#change_status_dialog" ).find("input#casestatus_"+$(this).attr("value")).attr("checked","checked");$("div#change_status_dialog" ).dialog("open");});$("div#change_status_dialog" ).dialog({autoOpen: false, width:250, modal:true, resizable:false });	$("div#change_status_dialog" ).find("#change_status").click(function(e){$("#CaseTableCaseStatus").val( $("div#change_status_dialog" ).find("input[type=radio]:checked").val());$("#CaseTableCaseId").val(caseid);$("#CaseTableAdminChangeCaseStatusForm").submit();e.preventDefault();});});</script><style>.ui-dialog .ui-dialog-content { padding:0px !important;}</style>
     <script type="text/javascript">
         $(document).ready(function () {
-            jQuery('#selectall').click(function(){
+            jQuery('#process').click(function(e){
+                $("#CaseTableAdminCasebrowserForm").submit(); e.preventDefault(); });
+           jQuery('#selectall').click(function(){
              var selected = [];
                 $('input[type=checkbox]').each(function()
                 {   if($(this).attr('checked'))
@@ -25,9 +27,9 @@
                 }); });
             $("#delete_case").click(function(e){
             
-                // var selected = [];
-                // $.each($("input[type='checkbox']:checked"),function()
-                // {   selected.push($(this).val());  }); 
+                var selected = [];
+                $.each($("input[type='checkbox']:checked"),function()
+                {   selected.push($(this).val());  }); 
 
 
                 if ($('input[type="checkbox"][id!="selectall"]:checked:first').length!=0) {
@@ -143,15 +145,15 @@
             <div class="lbl">Due</div><div class="inputover floatleft pr20">
                 <div class="inputlt"></div>
                 <div class="inputmid select150">
-                    <select name="data[CaseTable][due]" class="select" style="display:none" id="CaseTableDue">
-                        <option value="on-or-before">On or before</option>
-                        <option value="after">After</option>
-                        <option value="on">On</option>
+                    <select name="data[CaseTable][due]" class="selectdue" style="display:none" id="CaseTableDue">
+                        <option value="On or before">On or before</option>
+                        <option value="After">After</option>
+                        <option value="On">On</option>
                     </select>
                     <div class="newListSelected" tabindex="0">
                         <div class="selectedTxt">On or before</div>
                         <div class="SSContainerDivWrapper" style="visibility: visible; top: 25px; height: 69px; left: 0px; display: none;">
-                            <ul class="newList" style="height: 69px;">
+                            <ul class="newList duelist" style="height: 69px;">
                                 <li><a href="JavaScript:void(0);" class="hiLite">On or before</a></li>
                                 <li><a href="JavaScript:void(0);">After</a></li>
                                 <li><a href="JavaScript:void(0);">On</a></li>
@@ -172,16 +174,16 @@
             <div class="inputover floatleft pr20">
                 <div class="inputlt"></div>
                 <div class="inputmid select150">
-                    <select name="data[CaseTable][site_id]" class="select" style="display:none" id="CaseTableSiteId">
-                        <option value="">All Sites</option>
-                        <option value="1">Wymoo</option>
-                        <option value="2">Russia PI</option>
-                        <option value="3">Philippine PI</option>
+                    <select name="data[CaseTable][site_id]" class="selectsite" style="display:none" id="CaseTableSiteId">
+                        <option value="All Sites" >All Sites</option>
+                        <option value="Wymoo">Wymoo</option>
+                        <option value="Russia PI">Russia PI</option>
+                        <option value="Philippine PI">Philippine PI</option>
                     </select>
                     <div class="newListSelected" tabindex="0" style="position: static;">
                         <div class="selectedTxt">All Sites</div>
                         <div class="SSContainerDivWrapper" style="visibility: visible; top: 25px; height: 92px; left: 0px; display: none;">
-                            <ul class="newList" style="height: 92px;">
+                            <ul class="newList sitelist" style="height: 92px;">
                                 <li><a href="JavaScript:void(0);" class="hiLite">All Sites</a></li>
                                 <li><a href="JavaScript:void(0);">Wymoo</a></li>
                                 <li><a href="JavaScript:void(0);">Russia PI</a></li>
@@ -291,6 +293,37 @@
                     </div>
                 </div>
             </div>
+        
+
+<div class="divfull pt15">
+   <div class="floatleft pr10">
+    <div class="btnlt"></div>
+   <div class="btnmid"> 
+
+    <?php
+    echo $this->Paginator->prev('<< Previos', array('tag' => 'li',  'escape' => false), '<a href="#">&laquo; </a>', array('class' => 'prev disabled btnmid', 'tag' => 'li', 'escape' => false));
+    $numbers = $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a'));
+    $numbers = preg_replace("#\<li class=\"active\"\>([0-9]+)\<\/li\>#", "<li class=\"active\"><a href=''>$1</a></li>",$numbers);
+    ?></div>
+     <div class="btnrt"></div>
+</div>
+    
+<div class="floatleft pr10">
+    <div class="btnlt"></div>
+   <div class="btnmid"> 
+    <?php
+    $numbers = $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a'));
+    $numbers = preg_replace("#\<li class=\"active\"\>([0-9]+)\<\/li\>#", "<li class=\"active\"><a href=''>$1</a></li>",$numbers);
+    echo $this->Paginator->next('Next >>', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
+    ?>
+    </div>
+     <div class="btnrt"></div>   
+     </div> 
+</div>
+  
+ 
+          
+ 
             <div class="divfull pt15">
                 <div class="floatleft pr10">
                     <div class="btnlt"></div>
@@ -335,6 +368,17 @@
                 return "<div id=\"tip7-title\"><span><a href=\"javascript:;\" onclick=\"$.fancybox.close();\"><?=addslashes($this->Html->Image('fancybox/cross.png'))?></a></span><?=addslashes( $this->Html->Image('fancybox/casenotes_head.png') )?></div>";
             }
             $(document).ready(function(){
+               
+        $('.duelist li a').click(function(){
+              var txt=$(this).text();
+              var par=$(this).parents();
+              $('.selectdue option[value="' + txt + '"]').attr("selected", "selected");
+        });  
+        $('.sitelist li a').click(function(){
+              var txt=$(this).text();
+              $('.selectsite option[value="' + txt + '"]').attr("selected", "selected");
+        });             
+ 
                 jQuery(document).ready(function(){
                    var val = "<?php echo $_SERVER['REQUEST_URI']; ?>";
                    $("[href='"+val+"']").find("img").hide();
@@ -355,6 +399,7 @@
                         }
                     }); 
                 });
+                
                 jQuery('#edit_case').click(function(e){
                     e.preventDefault();
                     if(jQuery('input[name="id"]:checked').val()){
