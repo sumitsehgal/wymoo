@@ -75,7 +75,8 @@
 								<div class="inputover floatleft pr20">
 									<div class="inputlt"></div>
 									<div class="inputmid select244">
-									<input type="" class="wid243" name="" value="  <?php echo (!empty($investor)) ? $investor['fname'].' '.$investor['lname'] : '' ?>">
+										<?= $form->select('assigned_to', $investors, ['class'=>'select','
+										id'=>'CaseTableAssignedTo','label'=>false, 'empty'=>false]) ?>
 									</div>
 									<div class="inputrt"></div>
 								</div>

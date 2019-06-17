@@ -13,11 +13,11 @@ class AdminController extends AppController
 {
 
 
-	public function initialize()
-	{
-		parent::initialize();
-		$this->Auth->allow(['casenotes2','export']);
-	}
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['casenotes2','export']);
+    }
 
 
     public function index()
@@ -62,15 +62,6 @@ class AdminController extends AppController
             $case['case_notes'][$key]['creator_user']=$note_creator;
         }
         //dd($case);
-        $investor = null;
-        if($case['assigned_to']!=''){
-            $investor = $this->Users->find('all',[
-                'conditions' => [
-                    'id'=>$case['assigned_to']
-                ]
-            ])->first();
-        }
-
         $investorList = $this->Users->find('all',[
             'conditions' => [
                 'user_type_id'=>2
@@ -80,12 +71,20 @@ class AdminController extends AppController
         foreach($investorList as $key=>$investor){
             $investors[$investor['id']]=$investor['fname'].' '.$investor['lname'];
         }
+        if(empty($investors))
+        {
+            $investors = null;
+        }
         $caseStatus = array('2'=>'Case Saved','4'=>'Case In Progress','5'=>'Case Cancelled','6'=>'Case Closed','7'=>'Case On Hold');
         $casedescription =array('2'=>'Case data saved.','4'=>'Investigation in progress.  Report will be emailed to client on due date.','5'=>'Case cancelled.  Payment not received.','6'=>'Investigation complete.  Report emailed to client.','7'=>'Case on hold.  Full payment required to proceed.');
         //TO DO Select fields values aren't updating
         if ($this->request->is(['post', 'put'])) {
 
             $data = $this->request->getData();
+            if(empty($data['assigned_to']))
+            {
+               $data['assigned_to']= 0;
+            }
             $caseTable = TableRegistry::get('Cases');
             $caseUp = $caseTable->get($id);
             $caseUp->case_status=$case_status[$data['case_status_id']]['title'];
@@ -134,7 +133,7 @@ class AdminController extends AppController
         $this->Flash->success('Case status updated.');
         return $this->redirect(['action' => 'casetracker',$id]);
     }
-    $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus','investor', 'discounts', 'serviceLevel', 'caseFee'));
+    $this->set(compact('id','breadcrumb','caseIcons','model','case','caseStatus','investors', 'discounts', 'serviceLevel', 'caseFee'));
 }
 
 public function checkread()
@@ -159,6 +158,10 @@ public function checkread()
 public function caseedit($id){
     $this->viewBuilder()->setLayout('admin');
     $this->loadModel('Cases');
+    $this->loadModel('CaseNotifications');
+       
+    $role = $this->Auth->User('role');
+       
     $caseIcons = Configure::read('case_icon');
     $case = $this->Cases->find('all',[
         'conditions' => [
@@ -188,7 +191,7 @@ public function caseedit($id){
         $attachments['document'][$key]['filename'] = basename($file);
     }
 
-    $this->set(compact('caseIcons', 'case', 'folderid', 'attachments'));
+    $this->set(compact('id','caseIcons', 'case', 'folderid', 'attachments'));
     if($this->request->is(array('post','put'))){
    
        $this->loadModel('Users');
@@ -284,15 +287,30 @@ public function caseedit($id){
                 TableRegistry::get('Cases')->patchEntity($entity, $data);
                 TableRegistry::get('Cases')->save($entity);
             }
+           if(!empty($oldData['notify']) && !empty($oldData['notification']))
+           {
+                $case_notifications = $this->CaseNotifications->newEntity();
+                $caseNdata['case_id']=$id;
+                $caseNdata['user_id']=$case['user_id'];
+                $caseNdata['comments']=$oldData['notification'];
+                $caseNdata['creator_id']=$this->Auth->User('id');
+                $caseNdata['notification_type'] = 'Admin';
+                $caseNdata['created']=time();
+                $caseNdata['modified']=time();
+                $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
+                $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
+                $this->CaseNotifications->save($case_notifications);
+               return $this->Flash->success('Notification sent successfully.');
+           }
+           if(!empty($oldData['notify']) && empty($oldData['notification']) )
+           {
+             return $this->Flash->error(__('Please see the below error messages. Complete the form and submit again.'));   
+           }
            if(!empty($errors))
            {
-                $this->Flash->error(__('Please see the below error messages. Complete the form and submit again.'));            
+              return  $this->Flash->error(__('Please see the below error messages. Complete the form and submit again.'));            
            }else
-           {
-            $this->Flash->success('Case updated successfully.');
-
-           }  
-            
+            return $this->Flash->success('Case updated successfully.');
     }
     if($case->subject_dob != 0)
     {
@@ -656,24 +674,33 @@ public function casebrowser()
                 $op = '>';
                 break;
                 case 'On':
-                $op = '=';
+                $starttime=date('m/d/Y',strtotime($data['data']['CaseTable']['due_date']));
+                $endtime=date('m',strtotime($starttime)).'/'.(date('d',strtotime($starttime))+1).'/'.date('Y',strtotime($starttime));
                 break;
                 default:
                 $op = '';    
                 break;
             }
-
             $conditions['submited_date '.$op] = strtotime($data['data']['CaseTable']['due_date']); 
         }
-
         if($data['data']['CaseTable']['site_id'] != 'All Sites' )
         {
             $conditions['site_name'] = $data['data']['CaseTable']['site_id'];
         }
     }
-    $this->paginate = ['order'=>['Cases.id' => 'desc'], 'conditions'=>$conditions];
-    $pages = $this->paginate($this->Cases);
-    $this->set(compact('pages', 'caseIcons'));
+    if(!empty($starttime))
+    {
+      $where=['submited_date >=' => strtotime($starttime),'submited_date <=' => strtotime($endtime)];
+      $getdata = $this->Cases->find('all')->where($where);
+      $pages = $this->paginate($getdata);
+      $this->set(compact('pages', 'caseIcons'));
+    }else
+    {
+     $this->paginate = ['order'=>['Cases.id' => 'desc'], 'conditions'=>$conditions];
+     $pages = $this->paginate($this->Cases);
+     $this->set(compact('pages', 'caseIcons'));
+    }
+          
 }
 
 public function changeCase()

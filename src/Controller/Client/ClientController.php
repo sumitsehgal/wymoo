@@ -142,6 +142,14 @@ class ClientController extends AppController
             $case_notification = $this->CaseNotifications->patchEntity($case_notification, $caseNdata);
             $this->CaseNotifications->save($case_notification);
             $this->Flash->success('Notification sent successfully.');
+            
+            $updatedData['is_read'] = 0;
+            $cases = TableRegistry::get('Cases');
+            $query = $cases->query();
+            $query->update()
+                    ->set($updatedData)
+                    ->where(['id' => $result->id])
+                    ->execute();  
 
         }
         $notifications = $this->CaseNotifications->find('all', [
@@ -150,17 +158,7 @@ class ClientController extends AppController
             ]
         ])->all();
          
-        $updatedData['is_read'] = 0;
-        $cases = TableRegistry::get('Cases');
-        $query = $cases->query();
-        $query->update()
-                    ->set($updatedData)
-                    ->where(['id' => $result->id])
-                    ->execute();  
-
         $this->set(compact('notifications'));
-
-
         $this->viewBuilder()->setLayout('client');
     }
 
