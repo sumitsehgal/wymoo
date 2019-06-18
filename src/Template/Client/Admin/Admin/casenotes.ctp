@@ -84,8 +84,6 @@ if( $case['is_exported']==0 ){
 });
 </script>
 <input type="hidden" id="caseid" value="<?php echo $case['id']; ?>" />
-
-
 <div class="divfull pt15">
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
@@ -100,7 +98,7 @@ if( $case['is_exported']==0 ){
           <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
             <tr class="odd">
               <td width="150">Case#:</td>
-              <td><?php echo $case['id']; ?></td>
+              <td><?php echo $case['id'];  ?></td>
             </tr>
             <tr class="even">
               <td>Login Name:</td>
@@ -212,10 +210,15 @@ if( $case['is_exported']==0 ){
                   <td style="padding-right:0px; margin-right:0px;">
                     <div class="scroll-pane" style="height:73px;">
                     <div style="width:100%"><?php if(!empty($attachments['photo'])):?>
+                    <ul>
                     <?php foreach($attachments['photo'] as $key=>$file):?>
-                         <li class="search-choice"><span style="cursor: pointer;"><?php echo $file['filename']; ?></span></li>
+                         <li class="search-choice">
+                         <img src="/img/img.png">
+                         <a href="/client/download2/<?=$file['file'];?>" class="newlink ttt" ><?php  echo $file['filename']; ?></a> 
+                          </li>
                       <?php endforeach; ?>
                     <?php endif; ?></div>
+                    </ul>
                     </div>
                   </td>
                 </tr>
@@ -224,10 +227,15 @@ if( $case['is_exported']==0 ){
                   <td style="padding-right:0px; margin-right:0px;">
                     <div class="scroll-pane" style="height:72px;">
                       <div style="width:100%"><?php if(!empty($attachments['document'])):?>
+                      <ul>   
                          <?php foreach($attachments['document'] as $key=>$file):?>
-                         <li class="search-choice"><span style="cursor: pointer;"><?php echo $file['filename']; ?></span></li>
+                         <li class="search-choice">
+                         <img src="/img/doc.png">
+                         <a href="/client/download2/<?=$file['file'];?>" class="newlink ttt" ><?php  echo $file['filename']; ?></a>
+                         </li>
                          <?php endforeach; ?>
                          <?php endif; ?></div>
+                      </ul>
                     </div>
                   </td>
                 </tr>

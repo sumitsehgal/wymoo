@@ -68,6 +68,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/client/ajax-upload/*', ['controller' => 'Client', 'action' => 'ajaxUpload']);
     $routes->connect('/client/ajax-delete/*', ['controller' => 'Client', 'action' => 'ajaxDelete']);
     $routes->connect('/client/test', ['controller' => 'Client', 'action' => 'test']);
+     $routes->connect('/client/download2/*', ['controller' => 'Client', 'action' => 'download2']);
     
     // $routes->connect('/admin/login', ['controller' => 'Client', 'action' => 'adminLogin']);
     // $routes->connect('/admin/casebrowser', ['controller' => 'Client', 'action' => 'adminCasebrowser']);

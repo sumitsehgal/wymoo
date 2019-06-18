@@ -29,7 +29,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <meta name="robots" content="noindex" />
     <?php
     echo $this->Html->css(['bootstrap','jquery-ui','style_new_02']);
-    echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one','jquery_new_01']);
+    echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one','jquery_new_01','browser']);
     ?>
     
  <script>$(function(){$("img#close_flash").click(function(){var options = {};$("div#flash_message").hide("clip");});});</script><style media="screen" type="text/css">  html,body{height:100%;}#wrapper{position:relative;}#footer{height: 110px;position:relative;}.clearfooter{height:110px;clear:both;}</style><!--[if lt IE 7]><style media="screen" type="text/css">#container{height:100%;}</style><![endif]-->

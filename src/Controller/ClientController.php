@@ -39,7 +39,46 @@ class ClientController extends AppController {
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['casebeginPost', 'casebegin', 'ajaxUpload', 'ajaxDelete']);
+		$this->Auth->allow(['casebeginPost', 'casebegin', 'ajaxUpload', 'ajaxDelete', 'downloadFile', 'download2']);
+	}
+
+	public function download2($file=null, $view = null)
+	{
+		$file = base64_decode($file);
+		if($view == 1){
+			$filepath  = explode("files/",$file);
+			//$filepath  = explode("files\\",$file);
+			
+			//$readdata = exif_read_data($file, 0, true);
+			//echo 'image.php?image/files/'.$filepath[1].'&height=100px&width=100px';exit;
+			echo '<table class="tblcaselist" style="width:270px;border-top: 1px ridge;border-left: 1px ridge;" align="center" cellpadding="0" cellspacing="0">
+			<tr><td class="even" colspan="2" align="center" style="margin:0px;padding:0px;"><img src="'. WEBSITE_URL.'image.php?image=/files/'.$filepath[1].'&height=200px&width=270px"></td></tr>';
+			//echo $file;
+			$path_parts = pathinfo($file);
+			//pr($path_parts);
+			echo  '<tr><td class="odd" width="70">File Name: </td><td class="odd"><div style="word-wrap:break-word; width:150px;">' . $path_parts['basename'] .'</div></td></tr>';
+			echo  '<tr><td class="odd">File Size: </td><td class="odd">'. round((filesize($file)) / 1024, 2) .' KB</td></tr>';
+			echo  '<tr><td class="odd">Uploaded Time: </td><td class="odd">'.date("F d Y H:i:s.", filectime($file)) .'</td></tr>';
+					
+			/*$exif = @exif_read_data ($file, 0, true);
+			if($exif){
+			foreach ($exif as $key => $section) {
+				foreach ($section as $name => $val) {
+					echo  '<tr><td class="odd">'."$key.$name:" . '</td><td class="odd">'. " $val" .'</td></tr>';
+				}
+			}
+			}*/
+			//echo '<tr><td class="odd"></td><td class="odd"></td></tr>';
+			echo '</table>';
+			//$this->redirect('image.php?image/files/'.$filepath[1].'&height=100px&width=100px');
+			exit;
+			
+		}
+		if (file_exists($file)) {
+			$this->downloadFile('', $file);
+		}
+		
+		$this->redirect($this->referer());
 	}
 
 
@@ -413,6 +452,65 @@ class ClientController extends AppController {
 		}
 		echo json_encode(['status'=>true]);
 		exit;
+	}
+
+	function downloadFile($filename, $downloadPath,$alt_name = '') {
+	  $file = $downloadPath . $filename;
+	  if (!is_file($file)) { die("<b>404 File not found!</b>"); }
+
+	 //Gather relevent info about file
+	 $len = filesize($file);
+	 $filename = basename($file);
+	 $file_extension = strtolower( substr( strrchr( $filename, "." ), 1 ) );
+	
+	 //This will set the Content-Type to the appropriate setting for the file
+	 switch( $file_extension ) {
+	   case "pdf": $ctype = "application/pdf"; break;
+	   case "exe": $ctype = "application/octet-stream"; break;
+	   case "zip": $ctype = "application/zip"; break;
+	   case "docx": $ctype = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"; break;
+	   case "doc": $ctype = "application/msword"; break;
+	   case "xlsx": $ctype = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; break;
+	   case "xls": $ctype = "application/vnd.ms-excel"; break;
+	   case "ppt": $ctype = "application/vnd.ms-powerpoint"; break;
+	   case "gif": $ctype = "image/gif"; break;
+	   case "png": $ctype = "image/png"; break;
+	   case "jpeg":
+	   case "jpg": $ctype = "image/jpg"; break;
+	   case "mp3": $ctype = "audio/mpeg"; break;
+	   case "wav": $ctype = "audio/x-wav"; break;
+	   case "mpeg":
+	   case "mpg":
+	   case "mpe": $ctype = "video/mpeg"; break;
+	   case "mov": $ctype = "video/quicktime"; break;
+	   case "avi": $ctype = "video/x-msvideo"; break;
+	
+	   //The following are for extensions that shouldn't be downloaded (sensitive stuff, like php files)
+	   case "php":
+	   case "htm":
+	   case "html": die("<b>Cannot be used for " . $file_extension . " files!</b>"); break;
+	
+	   default: $ctype = "application/force-download";
+	 }
+	
+	 //Begin writing headers
+	 header("Pragma: public");
+	 header("Expires: 0");
+	 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+	 header("Cache-Control: public"); 
+	 header("Content-Description: File Transfer");
+	 
+	 //Use the switch-generated Content-Type
+	 header("Content-Type: $ctype");
+	
+	 //Force the download
+	 if($alt_name==''){ $alt_name = $filename;}else{ $alt_name = $alt_name . '.' . $file_extension;}
+	 $header="Content-Disposition: attachment; filename=" . $alt_name . ";";
+	 header($header );
+	 header("Content-Transfer-Encoding: binary");
+	 header("Content-Length: " . $len);
+	 @readfile($file);
+	 exit();
 	}
 
 }

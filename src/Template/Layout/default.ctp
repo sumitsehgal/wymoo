@@ -29,7 +29,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <meta name="robots" content="noindex" />
     <?php
     echo $this->Html->css(array('bootstrap.css','jquery-ui'));
-    echo $this->Html->script(array('jquery.min','bootstrap.min','all.in.one'));
+    echo $this->Html->script(array('jquery.min','bootstrap.min','all.in.one','browser'));
     ?>
 </head>
 <body>

@@ -30,7 +30,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <meta name="robots" content="noindex" />
     <?php
     echo $this->Html->css(['all.in.one']);
-    echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one','jquery_new_01']);
+    echo $this->Html->script(['jquery.min','bootstrap.min','all.in.one','jquery_new_01','browser']);
+
     ?>
     <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
