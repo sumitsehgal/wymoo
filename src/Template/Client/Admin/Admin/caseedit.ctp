@@ -414,7 +414,7 @@ $(function(){
 
                     if($('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo' +' option[value="' +fileName + '"]').length==0){
                         $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo' ).append( '<option selected="selected" title="'+ '/client/ajax_multi_upload/uploads/download/' + responseJSON.file +'" value="' +fileName + '">'+fileName+'</option>' );
-                        $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo_chzn .chzn-choices' ).prepend('<li class="search-choice" id="CaseTable<?php echo $folderid;?>_photo_chzn_c_0"><span style="cursor: pointer;">'+fileName+'</span><a href="javascript:void(0)" class="search-choice-close" rel="0" deletelink="'+responseJSON.file+'"  ></a></li>');
+                        $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_photo_chzn .chzn-choices' ).prepend('<li class="search-choice" id="CaseTable<?php echo $folderid;?>_photo_chzn_c_0"><a href="/client/download2/'+responseJSON.file+'">'+fileName+'</a><a href="javascript:void(0)" class="search-choice-close" rel="0" deletelink="'+responseJSON.file+'"  ></a></li>');
                     }
                 }
                 if (responseJSON.error){
@@ -454,8 +454,8 @@ return false;
 <ul class="chzn-choices">
 <?php if(!empty($attachments['photo'])):?>
     <?php foreach($attachments['photo'] as $key=>$file):?>
-
-    <li class="search-choice" id="CaseTable<?php echo $folderid; ?>_photo_chzn_c_<?php echo $key; ?>"><span style="cursor: pointer;"><?php echo $file['filename']; ?></span><a href="javascript:void(0)" class="search-choice-close" rel="<?php echo $key; ?>" deletelink="<?php echo $file['file'];?>"></a></li>
+    <li class="search-choice" id="CaseTable<?php echo $folderid; ?>_photo_chzn_c_<?php echo $key; ?>">
+       <a href="/client/download2/<?=$file['file'];?>"><?php  echo $file['filename']; ?></a><a href="javascript:void(0)" class="search-choice-close" rel="<?php echo $key; ?>" deletelink="<?php echo $file['file'];?>"></a></li>
 <?php endforeach; ?>
 <?php endif; ?>
 
@@ -524,7 +524,7 @@ var dlg = $("#preview_dialog").dialog({
                                 if($('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' + 'option[value="' +fileName + '"]').length==0){
                                     $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' ).append( '<option selected="selected" title="'+ '/client/ajax_multi_upload/uploads/download/' + responseJSON.file +'" value="' +fileName + '">'+fileName+'</option>' );
                                     //$('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document' ).trigger("liszt:updated");
-                                    $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document_chzn .chzn-choices' ).prepend('<li class="search-choice" id="CaseTable<?php echo $folderid;?>_document_chzn_c_0"><span style="cursor: pointer;">'+fileName+'</span><a href="javascript:void(0)" class="search-choice-close" rel="0" deletelink="'+responseJSON.file+'"></a></li>');
+                                    $('#'+ 'CaseTable' + '<?php echo $folderid; ?>_document_chzn .chzn-choices' ).prepend('<li class="search-choice" id="CaseTable<?php echo $folderid;?>_document_chzn_c_0"><a href="/client/download2/'+responseJSON.file+'">'+fileName+'</a><a href="javascript:void(0)" class="search-choice-close" rel="0" deletelink="'+responseJSON.file+'"></a></li>');
                                 }
                             }
                             if (responseJSON.error){
@@ -562,7 +562,7 @@ var dlg = $("#preview_dialog").dialog({
 <?php if(!empty($attachments['document'])):?>
     <?php foreach($attachments['document'] as $key=>$file):?>
 
-    <li class="search-choice" id="CaseTable<?php echo $folderid; ?>_document_chzn_c_<?php echo $key; ?>"><span style="cursor: pointer;"><?php echo $file['filename']; ?></span><a href="javascript:void(0)" class="search-choice-close" rel="<?php echo $key; ?>" deletelink="<?php echo $file['file'];?>"></a></li>
+    <li class="search-choice" id="CaseTable<?php echo $folderid; ?>_document_chzn_c_<?php echo $key; ?>"><a href="/client/download2/<?=$file['file'];?>"><?php  echo $file['filename']; ?></a><a href="javascript:void(0)" class="search-choice-close" rel="<?php echo $key; ?>" deletelink="<?php echo $file['file'];?>"></a></li>
 <?php endforeach; ?>
 <?php endif; ?>
 <li class="search-field">

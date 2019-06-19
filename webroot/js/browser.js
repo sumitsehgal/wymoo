@@ -6,3 +6,13 @@ case /iPad/i.test(navigator.userAgent):return"iPad";case /iPod/i.test(navigator.
 ""));case /PlayBook/.test(navigator.userAgent):case /BB[0-9]{1,}; Touch/.test(navigator.userAgent):case /Safari/.test(navigator.userAgent):return parseFloat(navigator.userAgent.split("Version/")[1].split("Safari")[0].replace(/[^0-9\.]/g,""));case /Firefox/.test(navigator.userAgent):return parseFloat(navigator.userAgent.split(/Firefox\//i)[1].replace(/[^0-9\.]/g,""));case /Android/.test(navigator.userAgent):return parseFloat(navigator.userAgent.split("Version/")[1].split("Safari")[0].replace(/[^0-9\.]/g,
 ""));case /Nokia/.test(navigator.userAgent):return parseFloat(navigator.userAgent.split("Browser")[1].replace(/[^0-9\.]/g,""))}}catch(a){console.debug("ERROR:setVersion\t",a)}}a:{try{if(navigator&&navigator.userAgent){navigator.browser=c();navigator.mobile=d();navigator.version=e();var b;b:{try{b=/WebKit/i.test(navigator.userAgent);break b}catch(a){console.debug("ERROR:setWebkit\t",a)}b=void 0}navigator.webkit=b;break a}}catch(a){}throw Error("Browser does not support `navigator` Object |OR| has undefined `userAgent` property.");
 }})();
+
+// setInterval(function(){
+// $("body").addClass(navigator.browser);
+// },10)
+
+// $(document).ready(function(){
+	
+// 	$("body").addClass(navigator.browser);
+	
+// });

@@ -1,4 +1,5 @@
 <h1 class="relative">Admin <span>Details </span>
+<?php if($user['user_type_id'] == '4'):?> 
   <div class="btnh1">
     <div class="btnlt"></div>
     <div class="btnmid">
@@ -6,6 +7,7 @@
     </div>
     <div class="btnrt"></div>
   </div>
+<?php endif; ?> 
 </h1>
 <?= $this->Form->create($user,[
         'url'=>'/client/admin/myaccount',

@@ -234,11 +234,15 @@ class UsersController extends AppController
         $this->viewBuilder()->setLayout('admin');
         if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
-			if ($user) {
+	        if ($user['user_type_id'] == '3' || $user['user_type_id'] == '4') {
                 $this->Auth->setUser($user);
                 $this->Flash->success(__($user['email'].' you have successfully logged in.'));
 				return $this->redirect('/client/admin');
-			} else {
+			}if($user['user_type_id'] == '1' || $user['user_type_id'] == '2'){
+                $this->Auth->setUser($user);
+                $this->Flash->success(__($user['email'].' you have successfully logged in.'));
+                return $this->redirect('/client/client/tracker');
+            }else {
 				$this->Flash->error(__('Invalid User-ID / password combination. Please try again'));
 			}
 		}

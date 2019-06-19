@@ -88,8 +88,8 @@ easingOut:"swing",showCloseButton:true,showNavArrows:true,enableEscapeButton:tru
 
 
 
-$(document).ready(function(){
-	setTimeout(function(){
-		$("body").addClass(navigator.browser);
-	},500);
-});
+// $(document).ready(function(){
+// 	setTimeout(function(){
+// 		$("body").addClass(navigator.browser);
+// 	},500);
+// });

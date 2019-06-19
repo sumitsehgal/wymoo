@@ -638,8 +638,9 @@ background:#f7f7f7;
 background:#eaeaea;
 }
 
+
 .shorting {
-padding-top:11px;
+padding-top:3px;
 padding-left:10px;
 float:left;
 line-height:normal;
@@ -648,7 +649,7 @@ line-height:normal;
 .shorting a {
 height:7px;
 margin-bottom:3px;
-display:grid;
+display:block;
 }
 
 .gradbox {
@@ -2961,10 +2962,5 @@ footer{background-color:#2e2e30;}
 .alert_box figure{display:inline-block; padding:0px; position:absolute; left:5px; top:7px; margin:0px 12px 0px 4px;}
 .alert_box figure .close{background:none;}
 .alert_box strong{padding-left:30px; display:block;}
-body.MSIE .shorting{
-    padding-top:3px !important; 
-}
-body.MSIE .shorting a{
-    display: run-in !important;
-}
+
 /*23-09-2014 */

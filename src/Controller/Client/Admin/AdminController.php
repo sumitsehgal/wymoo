@@ -781,7 +781,8 @@ public function myaccount()
             }
             $this->Users->patchEntity($user, $data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('Your user has been updated.'));
+                $this->Flash->success(__('Your account setting has been updated successfully.'));
+                return $this->redirect('/client/admin/casebrowser');
             }
             else
             {
