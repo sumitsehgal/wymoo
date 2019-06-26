@@ -369,13 +369,13 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
 
   <div class="divfull pt15">
     <div class="floatright" id="floatright_btns">
-      <?php if(!$disabled): ?>
+<!--       <?php // if(!$disabled): ?>
         <div class="floatleft pr10" id="notify_client_btn">
           <div class="btnlt"></div>
-          <div class="btnmid"><?php echo $this->Html->link( 'Notify Client',array('controller'=>'cases','action'=> 'notify_client','admin'=>true,$id),array('id'=>'notify_client'));?></div>
+          <div class="btnmid"><?php //echo $this->Html->link( 'Notify Client',array('controller'=>'cases','action'=> 'notify_client','admin'=>true,$id),array('id'=>'notify_client'));?></div>
           <div class="btnrt"></div>
         </div>
-      <?php endif; ?>
+      <?php  endif; ?> -->
       
       <div class="floatleft pr10"<?php if(!$disabled)?> style="display:none" id="unlockbtndiv">
         <div class="btnlt"></div>

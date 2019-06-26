@@ -41,10 +41,20 @@ class UsersController extends AppController
         }
         if(!empty($conditions))
         {
-           $query = $this->Users->find('all')->where($conditions);
-           $users = $this->paginate($query);
-        }else
-         $users = $this->paginate($this->Users);
+            $conditions['user_type_id !='] = 1; 
+            $conditions['id !='] = $this->Auth->user('id'); 
+            $conditions['role !='] = 'Investigator'; 
+            $query = $this->Users->find('all')->where($conditions);
+            $users = $this->paginate($query);
+        }else{
+            $where=[ 'user_type_id !=' => 1,
+                     'id !='  =>  $this->Auth->user('id'),
+                     'role !=' => 'Investigator',
+                    ];
+            $getdata = $this->Users->find('all')->where($where);
+            $users = $this->paginate($getdata);   
+           // $users = $this->paginate($this->Users);
+        }
         $this->set(compact('users'));
     }
 
@@ -54,7 +64,7 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $data = $this->request->getData();
-
+            $data['role']= Configure::read('user_types')[$data['user_type_id']];
             $validator = new Validator();
 
             $validator

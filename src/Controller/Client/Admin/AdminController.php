@@ -19,7 +19,7 @@ class AdminController extends AppController
         $this->Auth->allow(['casenotes2','export']);
     }
 
-
+   
     public function index()
     {
 
@@ -394,7 +394,9 @@ public function casenotes($id) {
         $attachments['document'][$key]['filename'] = basename($file);
     }
     $this->set('attachments',$attachments);
-
+    $extension = ["doc" => "doc.png", "docx" =>"docx.png", "xls" => "xls.png", "xlsx"=>"xlsx.png",
+                  "pdf" => "pdf.png", "jpg" => "img.png", "gif" => "img.png",  "png" => "img.png", "jpeg" => "img.png"];
+ 
     if($this->request->is('post')){
         $data = $this->request->getData();
         if(isset($data['Cases']['notification']) && !empty($data['Cases']['notification']))
@@ -411,6 +413,15 @@ public function casenotes($id) {
             $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
             $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
             $this->CaseNotifications->save($case_notifications);
+
+             $information = $this->Users->find('all',[
+               'conditions' => [
+                'email' => $user->email
+               ]
+            ])->first();
+            $this->_sendEmail($user->email, [Configure::read('default_email.email')=>Configure::read('default_email.name')], Configure::read('noreply_email.email'), Configure::read('title').' received your Case Data' ,'notify', array('result' =>  $information) );
+
+
         }
         if(isset($data['Cases']['notes']) && !empty($data['Cases']['notes']))
         {
@@ -429,13 +440,14 @@ public function casenotes($id) {
             $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
             $this->CaseNotes->save($case_notes);
 
+           
+
         }
         return $this->redirect(['action' => 'casenotes',$id]);
-            //echo"<pre>";print_r($data);echo "</pre>";die();
     }
     $userList = $this->Users->find('list', ['keyField' => 'id',
         'valueField' => 'fname'])->toArray();
-    $this->set(compact('id','role','breadcumb','caseIcons','model','result', 'userList'));
+    $this->set(compact('id','role','breadcumb','caseIcons','model','result', 'userList', 'extension'));
 }
 
 public function casenotes2($id) {
@@ -468,7 +480,7 @@ public function casenotes2($id) {
 public function export($id)
 {
 
-    $this->viewBuilder()->setLayout('fancybox');
+    $this->viewBuilder()->setLayout('exportdoc');
     $this->loadModel('Cases');
     $this->loadModel('Users');
 
@@ -482,6 +494,15 @@ public function export($id)
             'id' => $id
         ]
     ])->contain(['Quotes','CaseNotes','CaseNotifications'])->first();
+
+    $investor = null;
+    if($case['assigned_to']!=''){
+        $investor = $this->Users->find('all',[
+            'conditions' => [
+                'id'=>$case['assigned_to']
+            ]
+        ])->first();
+    }
 
     $caseTable = TableRegistry::get('cases');
     $caseObj = $caseTable->get($id);;
@@ -503,7 +524,7 @@ public function export($id)
     $result[$model]=$case;
     $result['User']=$user;
         //print_r($result);die();
-    $this->set(compact('id','role','breadcumb','caseIcons','model','result', 'directory'));
+    $this->set(compact('id','role','breadcumb','caseIcons','model','result', 'directory','investor'));
 
 }
 
@@ -690,13 +711,14 @@ public function casebrowser()
     }
     if(!empty($starttime))
     {
+        $this->paginate = ['limit' => 1000];
       $where=['submited_date >=' => strtotime($starttime),'submited_date <=' => strtotime($endtime)];
       $getdata = $this->Cases->find('all')->where($where);
       $pages = $this->paginate($getdata);
       $this->set(compact('pages', 'caseIcons'));
     }else
     {
-     $this->paginate = ['order'=>['Cases.id' => 'desc'], 'conditions'=>$conditions];
+     $this->paginate = ['order'=>['Cases.id' => 'desc'], 'conditions'=>$conditions, 'limit' => 1000, 'maxLimit' => 1000];
      $pages = $this->paginate($this->Cases);
      $this->set(compact('pages', 'caseIcons'));
     }
@@ -770,7 +792,6 @@ public function myaccount()
             'username' => $this->Auth->user('username')
         ]
     ])->first();
-
     if ($this->request->is(['post', 'put'])) {
         $data = $this->request->getData();
         if(!empty($data['passwd']) && ((new DefaultPasswordHasher)->check($data['passwd'], $user->passwd)))
@@ -781,6 +802,7 @@ public function myaccount()
             }
             $this->Users->patchEntity($user, $data);
             if ($this->Users->save($user)) {
+                $this->Auth->setUser($user);
                 $this->Flash->success(__('Your account setting has been updated successfully.'));
                 return $this->redirect('/client/admin/casebrowser');
             }

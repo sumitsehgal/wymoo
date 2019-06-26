@@ -76,7 +76,7 @@
 									<div class="inputlt"></div>
 									<div class="inputmid select244">
 										<?= $form->select('assigned_to', $investors, ['class'=>'select','
-										id'=>'CaseTableAssignedTo','label'=>false, 'empty'=>false]) ?>
+										id'=>'CaseTableAssignedTo','label'=>false, 'empty'=>array('0'=>'Please Select')]) ?>
 									</div>
 									<div class="inputrt"></div>
 								</div>

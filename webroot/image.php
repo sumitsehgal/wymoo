@@ -171,19 +171,19 @@ $eee = explode('.',$image);
 $eee = $eee[(count($eee) -1 )];
 switch($eee){
  case 'pdf';
- $image = '/files/pdf.png';
+ $image = '/files/pdf1.png';
  break;
  case 'doc';
  $image = '/files/doc1.png';
  break;
  case 'docx';
- $image = '/files/docx.png';
+ $image = '/files/doc.png';
  break;
  case 'xls';
- $image = '/files/xls.png';
+ $image = '/files/xls1.png';
  break;
  case 'xlsx';
- $image = '/files/xlsx.png';
+ $image = '/files/xlsx1.png';
  break;
 }
 

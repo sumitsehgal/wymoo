@@ -109,7 +109,7 @@
                         <table width="100%" border="0" cellspacing="8" cellpadding="0">
                             <tbody>
                                 <tr>
-                                    <td width="130">Your FileUploaderst Name:</td>
+                                    <td width="130">Your First Name:</td>
                                     <td>
                                         <div class="inputover floatleft">
                                             <div class="inputlt"></div>

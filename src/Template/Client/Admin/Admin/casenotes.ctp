@@ -230,7 +230,12 @@ if( $case['is_exported']==0 ){
                       <ul>   
                          <?php foreach($attachments['document'] as $key=>$file):?>
                          <li class="search-choice">
-                         <img src="/img/doc.png">
+                        <?php $check=explode('.', $file['filename']);?>
+                        <?php foreach($extension as $key1=>$val1):  ?>
+                        <?php if(end($check) == $key1 ) { ?>
+                         <img src="/img/<?=$val1; ?>">
+                        <?php } ?>
+                        <?php endforeach; ?>
                          <a href="/client/download2/<?=$file['file'];?>" class="newlink ttt" ><?php  echo $file['filename']; ?></a>
                          </li>
                          <?php endforeach; ?>

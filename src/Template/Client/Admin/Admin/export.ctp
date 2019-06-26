@@ -49,7 +49,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
               </tr>
               <tr>
                 <td>
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #9d9879; font-size:10px; font-family:Arial, Helvetica, sans-serif; color:#000;">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #9d9879; font-size:13px; font-family:Arial, Helvetica, sans-serif; color:#000;">
                     <tr>
                       <td width="200" style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px;  vertical-align:top; background-color:#C6D9F1">Case#:</td>
                       <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px;  vertical-align:top"><?php echo $case['id']; ?></td>
@@ -80,7 +80,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                     </tr>
                     <tr>
                       <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1">Assigned To:</td>
-                      <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top"><?php echo $case['assigned_to']; ?></td>
+                      <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top"><?php if(!empty($investor)): ?><?=$investor['fname'].' '.$investor['lname']?><?php endif; ?></td>
                     </tr>
                     
                       <tr>
@@ -115,7 +115,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
               </tr>
               <tr>
                 <td>
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #9d9879; font-size:10px; font-family:Arial, Helvetica, sans-serif; color:#000;">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #9d9879; font-size:13px; font-family:Arial, Helvetica, sans-serif; color:#000;">
                     <tr>
                       <td width="200" style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1">Status:</td>
                       <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top"><span class="floatleft pr10"><?= $case['case_status']?> </span><span class="statusicon" style="padding:2px 0 0;"><?=$this->Html->image($caseIcons[$case['case_status_id']], [
@@ -237,7 +237,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
               </tr>
               <tr>
                 <td>
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #9d9879; font-size:10px; font-family:Arial, Helvetica, sans-serif; color:#000;">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #9d9879; font-size:13px; font-family:Arial, Helvetica, sans-serif; color:#000;">
                     <tr>
                       <td width="200" style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1">First Name:</td>
                       <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top"><?php echo @$quote['first_name']; ?> </td>
@@ -307,7 +307,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
               </tr>
               <tr>
                 <td>
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #9d9879; font-size:10px; font-family:Arial, Helvetica, sans-serif; color:#000;">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #9d9879; font-size:13px; font-family:Arial, Helvetica, sans-serif; color:#000;">
                     <tr>
                       <td width="200" style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1">Pictures:</td>
                       <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top">

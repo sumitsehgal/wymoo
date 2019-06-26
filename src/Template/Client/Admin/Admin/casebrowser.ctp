@@ -294,36 +294,6 @@
                 </div>
             </div>
         
-
-<div class="divfull pt15">
-   <div class="floatleft pr10">
-    <div class="btnlt"></div>
-   <div class="btnmid"> 
-
-    <?php
-    echo $this->Paginator->prev('<< Previos', array('tag' => 'li',  'escape' => false), '<a href="#">&laquo; </a>', array('class' => 'prev disabled btnmid', 'tag' => 'li', 'escape' => false));
-    $numbers = $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a'));
-    $numbers = preg_replace("#\<li class=\"active\"\>([0-9]+)\<\/li\>#", "<li class=\"active\"><a href=''>$1</a></li>",$numbers);
-    ?></div>
-     <div class="btnrt"></div>
-</div>
-    
-<div class="floatleft pr10">
-    <div class="btnlt"></div>
-   <div class="btnmid"> 
-    <?php
-    $numbers = $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentLink' => true, 'currentClass' => 'active', 'currentTag' => 'a'));
-    $numbers = preg_replace("#\<li class=\"active\"\>([0-9]+)\<\/li\>#", "<li class=\"active\"><a href=''>$1</a></li>",$numbers);
-    echo $this->Paginator->next('Next >>', array('tag' => 'li', 'escape' => false), '<a href="#">&raquo;</a>', array('class' => 'prev disabled', 'tag' => 'li', 'escape' => false));
-    ?>
-    </div>
-     <div class="btnrt"></div>   
-     </div> 
-</div>
-  
- 
-          
- 
             <div class="divfull pt15">
                 <div class="floatleft pr10">
                     <div class="btnlt"></div>
