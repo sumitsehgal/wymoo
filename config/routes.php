@@ -68,7 +68,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/client/ajax-upload/*', ['controller' => 'Client', 'action' => 'ajaxUpload']);
     $routes->connect('/client/ajax-delete/*', ['controller' => 'Client', 'action' => 'ajaxDelete']);
     $routes->connect('/client/test', ['controller' => 'Client', 'action' => 'test']);
-     $routes->connect('/client/download2/*', ['controller' => 'Client', 'action' => 'download2']);
+    $routes->connect('/client/download2/*', ['controller' => 'Client', 'action' => 'download2']);
     
     // $routes->connect('/admin/login', ['controller' => 'Client', 'action' => 'adminLogin']);
     // $routes->connect('/admin/casebrowser', ['controller' => 'Client', 'action' => 'adminCasebrowser']);
@@ -116,6 +116,7 @@ Router::prefix('client', function ($routes) {
         $routes->connect('/casenotes/*', ['controller' => 'Admin', 'action' => 'casenotes']);
         $routes->connect('/casenotes2/*', ['controller' => 'Admin', 'action' => 'casenotes2']);
         $routes->connect('/export/*', ['controller' => 'Admin', 'action' => 'export']);
+        $routes->connect('/caseunlock/*', ['controller' => 'Admin', 'action' => 'caseunlock']);
         $routes->connect('/casetracker/*', ['controller' => 'Admin', 'action' => 'casetracker']);
         $routes->connect('/casedelete/*', ['controller' => 'Admin', 'action' => 'casedelete']);
         $routes->connect('/casesend/*', ['controller' => 'Admin', 'action' => 'casesend']);

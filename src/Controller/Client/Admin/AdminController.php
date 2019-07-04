@@ -419,7 +419,7 @@ public function casenotes($id) {
                 'email' => $user->email
                ]
             ])->first();
-            $this->_sendEmail($user->email, [Configure::read('default_email.email')=>Configure::read('default_email.name')], Configure::read('noreply_email.email'), Configure::read('title').' received your Case Data' ,'notify', array('result' =>  $information) );
+           $this->_sendEmail($user->email, [Configure::read('default_email.email')=>Configure::read('default_email.name')], Configure::read('noreply_email.email'),' Your case has been updated' ,'notify', array('result' =>  $information) );
 
 
         }
@@ -476,7 +476,30 @@ public function casenotes2($id) {
         //print_r($result);die();
     $this->set(compact('id','role','breadcumb','caseIcons','model','result'));
 }
-
+public function caseunlock($id = null){
+        if($this->Auth->User("role")=='Administrator'){
+            $this->loadModel('Cases');
+             $case = $this->Cases->find('all',[
+                'conditions' => [  'id' => $id ]])->first(); 
+            if(empty($case)){
+                $this->Session->setFlash(__('Invalid case id.', true), 'error');
+                if ($this->referer() != '/') {
+                    $this->redirect($this->referer());
+                } else {
+                    $this->redirect(array('action' => 'casenotes', $id));
+                }
+            }
+            $updatedData['is_exported'] = 0;
+            $cases = TableRegistry::get('Cases');
+            $query = $cases->query();
+            $query->update()
+            ->set($updatedData)
+            ->where(['id' => $id])
+            ->execute();
+        }
+        $this->redirect(array('action' => 'casenotes',$id));
+        
+}
 public function export($id)
 {
 

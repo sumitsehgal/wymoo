@@ -2964,3 +2964,7 @@ footer{background-color:#2e2e30;}
 .alert_box strong{padding-left:30px; display:block;}
 
 /*23-09-2014 */
+
+.floatleft .scroll-pane{
+    overflow-x: hidden;
+}

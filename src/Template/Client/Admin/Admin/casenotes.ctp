@@ -484,7 +484,8 @@ if( $case['is_exported']==0 ){
         <div class="btnmid">
           <?php 
           if($role=='Administrator'){
-                    echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case',array('plugin'=>'cases','controller'=>'cases','action'=> 'unlocked','admin'=>true,$id),array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
+                   // echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case',array('plugin'=>'cases','controller'=>'cases','action'=> 'unlocked','admin'=>true,$id),array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
+             echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case','javascript:void(0);',array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
           } else {
                     echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case','javascript:void(0);',array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
           }
@@ -586,7 +587,7 @@ if( $case['is_exported']==0 ){
     Are you sure you want to unlock the case?
     <div class="floatright pt15" id="floatrightbtn" style="padding-top:20px;">
       <div class="btnlt"></div>
-      <div class="btnmid"><?php echo $this->Html->link( 'Yes',array('controller'=>'cases','action'=> 'unlocked','admin'=>true,$id),array('id'=>'export_case_lnk','style'=>'color:#FFFFFF'));?></div>
+      <div class="btnmid"><?php echo $this->Html->link( 'Yes',array('controller'=>'admin','action'=> 'caseunlock','admin'=>true,$id),array('id'=>'export_case_lnk','style'=>'color:#FFFFFF'));?></div>
       <div class="btnrt" style="padding-right:2px;"></div>
       <div class="btnlt"></div>
       <div class="btnmid"><?php echo $this->Html->link( 'No',array(),array('id'=>'close_dialog','style'=>'color:#FFFFFF'));?></div>
