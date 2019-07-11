@@ -172,6 +172,7 @@ class UsersController extends AppController
 
             $data['slug'] = $data['username'];
             $data['passwd'] = $data['newpassword'];
+            $data['password_token'] = $data['newpassword'];
 
             if(!empty($errors))
 			{
@@ -244,11 +245,11 @@ class UsersController extends AppController
         $this->viewBuilder()->setLayout('admin');
         if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
-	        if ($user['user_type_id'] == '3' || $user['user_type_id'] == '4') {
+	        if ($user['user_type_id'] == '3' || $user['user_type_id'] == '4' || $user['user_type_id'] == '2') {
                 $this->Auth->setUser($user);
                 $this->Flash->success(__($user['email'].' you have successfully logged in.'));
 				return $this->redirect('/client/admin');
-			}if($user['user_type_id'] == '1' || $user['user_type_id'] == '2'){
+			}if($user['user_type_id'] == '1' ){
                 $this->Auth->setUser($user);
                 $this->Flash->success(__($user['email'].' you have successfully logged in.'));
                 return $this->redirect('/client/client/tracker');

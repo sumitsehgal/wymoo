@@ -98,6 +98,7 @@
                                         <tr class="bg_box">
                                             <td width="40%">Case Status:</td>
                                             <td width="60%">
+                                               <? if(!empty($case['case_status'])) { ?>
                                                 <?=$case['case_status']?>
                                                 <span class="statusicon"><?=$this->Html->image($caseIcons[$case['case_status_id']], [
                                                     "alt" => $case['case_status'],
@@ -105,7 +106,8 @@
                                                     "id" => $case['id'],
                                                     "class" => 'chage_stateus',
                                                     "style" => 'cursor:pointer'
-                                                ]); ?>   
+                                                ]); ?>
+                                                <? } ?>   
                                             </td>
                                         </tr>
 

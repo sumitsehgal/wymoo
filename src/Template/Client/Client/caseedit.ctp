@@ -118,7 +118,7 @@ $form = $this->Form;
 								</div>
 								<div class="col-sm-8">
 									<?=$form->text('subject_dob',['class'=>'form-control datepicker','id'=>'CaseTableSubjectDob', $disabled])?>
-									<input type="hidden" name="subject_dob1" id="CaseTableSubjectDob1" value="<?php echo $case->subject_dob1; ?>" >
+									<input type="hidden" name="subject_dob1" id="CaseTableSubjectDob1" value="<?php if(!empty($case->subject_dob1)) echo $case->subject_dob1; ?>" >
 								</div>
 							</div>
 							<div class="row">

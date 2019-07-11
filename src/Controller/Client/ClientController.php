@@ -123,6 +123,8 @@ class ClientController extends AppController
          }
 
          $data = $this->request->getData();
+        if(!empty($data) && !empty($data['notification']) && !empty($result) )
+        {
          $data['notify'] = '';
 
             // TODO: Validation Pending
@@ -151,14 +153,16 @@ class ClientController extends AppController
                     ->where(['id' => $result->id])
                     ->execute();  
 
-        }
-        $notifications = $this->CaseNotifications->find('all', [
-            'conditions' => [
+        } }
+        if(!empty($result->id))
+        { 
+            $notifications = $this->CaseNotifications->find('all', [
+              'conditions' => [
                 'case_id' => $result->id,
-            ]
-        ])->all();
-         
-        $this->set(compact('notifications'));
+              ]
+            ])->all();
+            $this->set(compact('notifications'));
+        }
         $this->viewBuilder()->setLayout('client');
     }
 
@@ -177,10 +181,10 @@ class ClientController extends AppController
         ])->first();
 
         $session = $this->getRequest()->getSession();
-        $folderid = $case->id;
-        
-        $this->set('folderid', $folderid);
-
+        if(!empty($case->id))
+        { $folderid = $case->id;
+          $this->set('folderid', $folderid);
+          
 
         $attachments = [];
         $directory = Configure::read('AMU.directory') . DS . 'CaseTable' . DS. $folderid .'_photo';		
@@ -205,6 +209,7 @@ class ClientController extends AppController
         }
 
         $this->set('attachments',$attachments);
+    }
         /**
          * <li class="search-choice" id="CaseTable20190305113856-263_photo_chzn_c_0"><span style="cursor: pointer;">Screenshot from 2019-01-14 22-27-53.png</span><a href="javascript:void(0)" class="search-choice-close" rel="0" deletelink="L3Zhci93d3cvaHRtbC93eW1vb0dpdC93eW1vby93ZWJyb290L1BocF9kYXRhL3VwbG9hZHMvZmlsZXMvQ2FzZVRhYmxlLzIwMTkwMzA1MTEzODU2LTI2M19waG90by9TY3JlZW5zaG90IGZyb20gMjAxOS0wMS0xNCAyMi0yNy01My5wbmc="></a></li>
          */
@@ -318,7 +323,7 @@ class ClientController extends AppController
             // $this->Flash->success('Case updated successfully.');
             return $this->redirect(['action' => 'tracker']);
         }
-        if($case->subject_dob != 0)
+        if(!empty($case->subject_dob) && $case->subject_dob != 0)
         {
             $case->subject_dob1 = date('d-m-Y', $case->subject_dob);
             $case->subject_dob = date('d-F-Y', $case->subject_dob);
