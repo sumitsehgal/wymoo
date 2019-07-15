@@ -41,13 +41,15 @@ class UsersController extends AppController
         }
         if(!empty($conditions))
         {
-            $conditions['user_type_id !='] = 1; 
+            $conditions['user_type_id  ='] = 3; 
+            $conditions['user_type_id  ='] = 4; 
             $conditions['id !='] = $this->Auth->user('id'); 
             $conditions['role !='] = 'Investigator'; 
             $query = $this->Users->find('all')->where($conditions);
             $users = $this->paginate($query);
         }else{
-            $where=[ 'user_type_id !=' => 1,
+            $where=[ 'user_type_id =' => 3,
+                     'user_type_id =' => 4,
                      'id !='  =>  $this->Auth->user('id'),
                      'role !=' => 'Investigator',
                     ];

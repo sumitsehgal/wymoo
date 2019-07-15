@@ -316,6 +316,7 @@
                     </div>
                     <div class="btnrt"></div>
                 </div>
+               <?php if($user['user_type_id'] == '4' || $user['user_type_id'] == '2'):?> 
                 <div class="floatleft pr10">
                     <div class="btnlt"></div>
                     <div class="btnmid">
@@ -323,6 +324,8 @@
                     </div>
                     <div class="btnrt"></div>
                 </div>
+               <?php endif; ?> 
+
             </div>
         </form>
         <form action="/client/admin/change_case_status" class="form-inline" id="CaseTableAdminChangeCaseStatusForm" method="post" accept-charset="utf-8">

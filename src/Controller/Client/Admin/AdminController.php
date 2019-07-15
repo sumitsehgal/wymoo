@@ -700,8 +700,15 @@ public function casebrowser()
 {
     $this->viewBuilder()->setLayout('admin');
     $this->loadModel('Cases');
+    $this->loadModel('Users');
+    
     $caseIcons = Configure::read('case_icon');
     $conditions = [];    
+    $user = $this->Users->find('all',[
+        'conditions' => [
+            'username' => $this->Auth->user('username')
+        ]
+    ])->first();
     if ($this->request->is('post')) 
     {
         $data = $this->request->getData();
@@ -738,12 +745,12 @@ public function casebrowser()
       $where=['submited_date >=' => strtotime($starttime),'submited_date <=' => strtotime($endtime)];
       $getdata = $this->Cases->find('all')->where($where);
       $pages = $this->paginate($getdata);
-      $this->set(compact('pages', 'caseIcons'));
+      $this->set(compact('pages', 'caseIcons','user'));
     }else
     {
      $this->paginate = ['order'=>['Cases.id' => 'desc'], 'conditions'=>$conditions, 'limit' => 1000, 'maxLimit' => 1000];
      $pages = $this->paginate($this->Cases);
-     $this->set(compact('pages', 'caseIcons'));
+     $this->set(compact('pages', 'caseIcons','user'));
     }
           
 }
@@ -815,30 +822,94 @@ public function myaccount()
             'username' => $this->Auth->user('username')
         ]
     ])->first();
-    if ($this->request->is(['post', 'put'])) {
+    $errors='';
+    $temppassword = '';
+    if(!empty($user->password_token))
+    { $temppassword= $user->password_token; }
+    if ($this->request->is(['post', 'put']))
+    {
+        $validator = new Validator();
+        $validator
+                ->requirePresence('username')
+                ->notEmpty('username','This field cannot be left blank, please try again.')
+                
+                ->requirePresence('fname')
+                ->notEmpty('fname','This field cannot be left blank, please try again.')
+                
+                ->requirePresence('lname')
+                ->notEmpty('lname','This field cannot be left blank, please try again.')
+                
+                ->requirePresence('email')
+                ->notEmpty('email','This field cannot be left blank, please try again.') 
+               
+                ->requirePresence('passwd')
+                ->notEmpty('passwd','This field cannot be left blank, please try again.')  
+              
+                ->add('email', 'validFormat', [
+                    'rule' => 'email',
+                    'message' => 'Must be a valid email address.'
+                ]);
+
         $data = $this->request->getData();
-        if(!empty($data['passwd']) && ((new DefaultPasswordHasher)->check($data['passwd'], $user->passwd)))
+        if(!empty($data['newpassword']))
         {
-            if(!empty($data['newpassword']))
-            {
-                $data['passwd'] = $data['newpassword'];
-            }
-            $this->Users->patchEntity($user, $data);
-            if ($this->Users->save($user)) {
-                $this->Auth->setUser($user);
-                $this->Flash->success(__('Your account setting has been updated successfully.'));
-                return $this->redirect('/client/admin/casebrowser');
-            }
-            else
-            {
-                $this->Flash->error(__('Unable to update your user.'));
-            }
+               $validator->add('newpassword', 'length', ['rule' => ['lengthBetween', 6, 15], 'message'=>'Passwords must be between 6 and 15 characters long.' ]);
         }
-        else
+        $errors = $validator->errors($this->request->getData());
+        if(!empty($data['username']))
         {
-            $this->Flash->error(__('Please Enter Correct Current Password.'));
+                $check_username = $this->Users->find('all',[
+                    'conditions' => [
+                        'username' => $data['username'],
+                        'id !=' =>  $user->id
+                    ]
+                ])->first();
+                if($check_username)
+                {   
+                    $errors['username'][] = 'This username is already in use.';
+                }
         }
+        if(!empty($data['phone']))
+        {
+                if(!preg_match("/^\d+\.?\d*$/",$data['phone']))
+                {
+                    $errors['phone'][] = 'Must be a valid Phone Number';
+                }
+        }
+        if(!empty($data['email']))
+        {
+                $check_email = $this->Users->find('all',[
+                    'conditions' => [
+                        'email' => $data['email'],
+                        'id !=' =>  $user->id
+                    ]
+                ])->first();
+                if($check_email)
+                {   
+                    $errors['email'][] = 'This email is already in use.';
+                }
+        }
+        if(!empty($data['passwd']) &&  !empty($temppassword) && $temppassword != $data['passwd'])
+        {
+            $errors['passwd'][]='Current password does not match, please try again.';
+        }
+            $user['password_token'] = $data['passwd'];
+            if(empty($errors))
+            {            
+                if(!empty($data['newpassword']))
+                {
+                    $data['passwd'] = $data['newpassword'];
+                    $data['password_token'] = $data['newpassword'];
+                } 
+                $this->Users->patchEntity($user, $data);
+                if ($this->Users->save($user)) {
+                     $this->Auth->setUser($user);
+                     $this->Flash->success(__('Your account setting has been updated successfully.'));
+                     return $this->redirect('/client/admin/casebrowser');
+                }
+                  
+            }
     }
-    $this->set('user', $user);
+    $this->set(compact('user','errors'));
 }
 }

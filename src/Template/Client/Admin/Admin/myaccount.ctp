@@ -1,5 +1,7 @@
 <h1 class="relative">Admin <span>Details </span>
-<?php if($user['user_type_id'] == '4'):?> 
+<?php  $current_pass=""; if(!empty($user['password_token'])) $current_pass=$user['password_token']; ?>
+
+<?php if($user['user_type_id'] == '4' || $user['user_type_id'] == '2'):?> 
   <div class="btnh1">
     <div class="btnlt"></div>
     <div class="btnmid">
@@ -34,11 +36,23 @@
                     <div class="inputlt"></div>
                     <div class="inputmid">
                         <?php echo $this->Form->control('username', ['type' => 'text', 'class'=>'wid243', 'id'=>'UserUsername', 'label'=>false]); ?>
+                          
                     </div>
                     <div class="inputrt"></div>
                   </div>
                 </td>
               </tr>
+            <?php if(isset($errors) && isset($errors['username'])): ?>
+            <tr>
+            <td>&nbsp;</td>
+            <td><small  style="color:#FF0000;">
+                  <?php foreach( $errors['username'] as $err ): ?>
+                      <?php echo $err; ?> 
+                  <?php endforeach; ?>
+                </small>
+            </td>
+            </tr>
+            <?php endif; ?>
               <tr>
                 <td>First Name:</td>
                 <td><div class="inputover floatleft pr20">
@@ -50,6 +64,17 @@
                 </div>
               </td>
             </tr>
+           <?php if(isset($errors) && isset($errors['fname'])): ?>
+            <tr>
+            <td>&nbsp;</td>
+            <td><small  style="color:#FF0000;">
+                  <?php foreach( $errors['fname'] as $err ): ?>
+                      <?php echo $err; ?> 
+                  <?php endforeach; ?>
+                </small>
+            </td>
+            </tr>
+            <?php endif; ?>
             <tr>
               <td>Last Name:</td>
               <td>
@@ -63,6 +88,17 @@
                 <span class="pt5 floatleft"></span>
               </td>
             </tr>
+            <?php if(isset($errors) && isset($errors['lname'])): ?>
+            <tr>
+            <td>&nbsp;</td>
+            <td><small  style="color:#FF0000;">
+                  <?php foreach( $errors['lname'] as $err ): ?>
+                      <?php echo $err; ?> 
+                  <?php endforeach; ?>
+                </small>
+            </td>
+            </tr>
+            <?php endif; ?>
             <tr>
               <td>Your Email:</td>
               <td>
@@ -75,6 +111,17 @@
                 </div>
               </td>
             </tr>
+            <?php if(isset($errors) && isset($errors['email'])): ?>
+            <tr>
+            <td>&nbsp;</td>
+            <td><small  style="color:#FF0000;">
+                  <?php foreach( $errors['email'] as $err ): ?>
+                      <?php echo $err; ?> 
+                  <?php endforeach; ?>
+                </small>
+            </td>
+            </tr>
+            <?php endif; ?>
           </table>
         </td>
         <td valign="top">
@@ -84,12 +131,23 @@
               <td><div class="inputover floatleft pr20">
                 <div class="inputlt"></div>
                 <div class="inputmid">
-                    <?php echo $this->Form->control('passwd', ['type' => 'password', 'class'=>'wid243', 'id'=>'UserPassword', 'label'=>false, 'value'=>'']); ?>
+                    <?php echo $this->Form->control('passwd', ['type' => 'password', 'class'=>'wid243', 'id'=>'UserPassword', 'label'=>false, 'value'=>$current_pass]); ?>
                 </div>
                 <div class="inputrt"></div>
               </div>
             </td>
           </tr>
+          <?php if(isset($errors) && isset($errors['passwd'])): ?>
+           <tr>
+            <td>&nbsp;</td>
+            <td><small  style="color:#FF0000;">
+                  <?php foreach( $errors['passwd'] as $err ): ?>
+                      <?php echo $err; ?> 
+                  <?php endforeach; ?>
+                </small>
+            </td>
+            </tr>
+          <?php endif; ?>
           <tr>
             <td>New Password:</td>
             <td><div class="inputover floatleft pr20">
@@ -101,6 +159,17 @@
             </div>
           </td>
         </tr>
+        <?php if(isset($errors) && isset($errors['newpassword'])): ?>
+            <tr>
+            <td>&nbsp;</td>
+            <td><small  style="color:#FF0000;">
+                  <?php foreach( $errors['newpassword'] as $err ): ?>
+                      <?php echo $err; ?> 
+                  <?php endforeach; ?>
+                </small>
+          </td>
+          </tr>
+         <?php endif; ?>
         <tr>
           <td>Phone:</td>
           <td>
@@ -113,6 +182,17 @@
             </div>
           </td>
         </tr>
+         <?php if(isset($errors) && isset($errors['phone'])): ?>
+            <tr>
+            <td>&nbsp;</td>
+            <td><small  style="color:#FF0000;">
+                  <?php foreach( $errors['phone'] as $err ): ?>
+                      <?php echo $err; ?> 
+                  <?php endforeach; ?>
+                </small>
+            </td>
+            </tr>
+            <?php endif; ?>
         <tr>
           <td>&nbsp;</td>
           <td>

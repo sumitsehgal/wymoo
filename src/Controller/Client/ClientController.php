@@ -6,6 +6,7 @@ use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
+use Cake\Auth\DefaultPasswordHasher; 
 
 class ClientController extends AppController
 {
@@ -341,30 +342,95 @@ class ClientController extends AppController
                 'username' => $this->Auth->user('username')
             ]
         ])->first();
-        
-        if ($this->request->is(['post', 'put'])) {
+        $errors='';
+        $temppassword = '';
+        if(!empty($user->password_token))
+        { $temppassword= $user->password_token; }
+        if ($this->request->is(['post', 'put']))
+        {
+            $validator = new Validator();
+            $validator
+                    ->requirePresence('username')
+                    ->notEmpty('username','This field cannot be left blank, please try again.')
+                    
+                    ->requirePresence('fname')
+                    ->notEmpty('fname','This field cannot be left blank, please try again.')
+                    
+                    ->requirePresence('lname')
+                    ->notEmpty('lname','This field cannot be left blank, please try again.')
+                    
+                    ->requirePresence('email')
+                    ->notEmpty('email','This field cannot be left blank, please try again.') 
+                   
+                    ->requirePresence('passwd')
+                    ->notEmpty('passwd','This field cannot be left blank, please try again.')  
+                  
+                    ->add('email', 'validFormat', [
+                        'rule' => 'email',
+                        'message' => 'Must be a valid email address.'
+                    ]);
+
+            
             $data = $this->request->getData();
-            if(!empty($data['password']) && ((new DefaultPasswordHasher)->check($data['password'], $user->passwd)))
+            if(!empty($data['newpassword']))
             {
+               $validator->add('newpassword', 'length', ['rule' => ['lengthBetween', 6, 15], 'message'=>'Passwords must be between 6 and 15 characters long.' ]);
+            }
+            $errors = $validator->errors($this->request->getData());
+            if(!empty($data['username']))
+            {
+                $check_username = $this->Users->find('all',[
+                    'conditions' => [
+                        'username' => $data['username'],
+                        'id !=' =>  $user->id
+                    ]
+                ])->first();
+                if($check_username)
+                {   
+                    $errors['username'][] = 'This username is already in use.';
+                }
+            }
+            if(!empty($data['phone']))
+            {
+                if(!preg_match("/^\d+\.?\d*$/",$data['phone']))
+                {
+                    $errors['phone'][] = 'Must be a valid Phone Number';
+                }
+            }
+            if(!empty($data['email']))
+            {
+                $check_email = $this->Users->find('all',[
+                    'conditions' => [
+                        'email' => $data['email'],
+                        'id !=' =>  $user->id
+                    ]
+                ])->first();
+                if($check_email)
+                {   
+                    $errors['email'][] = 'This email is already in use.';
+                }
+            }
+            if(!empty($data['passwd']) &&  !empty($temppassword) && $temppassword != $data['passwd'])
+            {
+               $errors['passwd']['_empty']='Current password does not match, please try again.';
+            }
+            $user['password_token'] = $data['passwd'];
+            if(empty($errors))
+            {            
                 if(!empty($data['newpassword']))
                 {
-                    $data['password'] = $data['newpassword'];
-                }
-                $this->Users->patchEntity($user, $data);
+                    $data['passwd'] = $data['newpassword'];
+                    $data['password_token'] = $data['newpassword'];
+                } 
+                $check=$this->Users->patchEntity($user, $data);
                 if ($this->Users->save($user)) {
-                    $this->Flash->success(__('Your user has been updated.'));
+                    $this->Auth->setUser($user);
+                    $this->Flash->success(__('Your account setting has been updated successfully.'));
+                    return $this->redirect(['action' => 'tracker']);
                 }
-                else
-                {
-                    $this->Flash->error(__('Unable to update your user.'));
-                }
-            }
-            else
-            {
-                $this->Flash->error(__('Please Enter Correct Current Password.'));
             }
         }
-        $this->set('user', $user);
+        $this->set(compact('user','errors'));
     }
 
 }

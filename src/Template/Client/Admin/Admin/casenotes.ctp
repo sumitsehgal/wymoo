@@ -518,7 +518,7 @@ if( $case['is_exported']==0 ){
                   <table width="100%" style="width:550px" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
                     <?php $class = 'even'; foreach($notes as $InvestigatorNote): $class = ($class=='even')? 'odd' : 'even'; ?>
                     <tr class="<?php echo $class;?>" >
-                      <td width="150"><?=$userList[$InvestigatorNote['user_id']];?>: (<?=date('d-m-Y',$InvestigatorNote['created']);?>):</td>
+                      <td width="150"><?php echo @$userList[$InvestigatorNote['user_id']];?>: (<?=date('d-m-Y',$InvestigatorNote['created']);?>):</td>
                       <td><?=nl2br($InvestigatorNote['case_notes'])  ;?> </td>
                     </tr>
                   <?php endforeach; ?>
