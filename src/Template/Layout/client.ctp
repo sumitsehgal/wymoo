@@ -81,13 +81,17 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <div class="gray_bg"></div>
 </header>
 <div class="container">
-
       <div class="tab_case">
         <div class="bs-example bs-example-tabs">  
         <ul id="myTab" class="nav nav-tabs" style="margin-top: -34px;">
                 <li class="<?php echo $this->request->getParam('action') == 'tracker' ? 'active' : ''; ?>">
                     <a href="/client/client/tracker" class="">Case Tracker</a></li>
-                <li class="<?php echo $this->request->getParam('action') == 'notifications' ? 'active' : ''; ?>">
+                <li  style="position: relative;" class="<?php echo $this->request->getParam('action') == 'notifications' ? 'active' : ''; ?>">
+                    <?php
+                    $session = $this->getRequest()->getSession();
+                     if($session->check('notification') && $session->read('notification') == 1 ) : ?>
+                    <img src="/img/email.png"  class="email_img" style="position: absolute;right: -5px;top: -12px;z-index: 6;" alt="">
+                    <?php endif; ?>
                     <a href="/client/client/notifications" class="">Notifications</a></li>
                 <li class="<?php echo $this->request->getParam('action') == 'caseedit' ? 'active' : ''; ?>">
                     <a href="/client/client/caseedit" class="">Edit Case Data</a></li>

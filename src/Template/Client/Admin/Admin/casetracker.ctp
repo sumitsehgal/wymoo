@@ -130,7 +130,7 @@
 								<div class="inputover floatleft pr20">
 									<div class="inputlt"></div>
 									<div class="inputmid">
-										<?= $form->text('fee',['class'=>'wid243','id' => 'fee', 'readonly']) ?>
+										$<?= $form->text('fee',['class'=>'wid243','id' => 'fee', 'readonly']) ?>
 									</div>
 									<div class="inputrt"></div>
 								</div>

@@ -54,11 +54,11 @@ if( $case['is_exported']==0 ){
     $("div#export_case_dialog" ).dialog("close");
     <?php if($disabled==false){ ?>
       $("div#export_case_dialog" ).html('<div style="color: #535353;font-family: Arial,Helvetica,sans-serif;font-size: 12px;padding:5px;"><div id="msg" style="text-align:justify;">The case has been locked, you cannnot change anything.');
-      <?php if($role=='Administrator'){ ?>
+      <?php if($role=='Administrator' || $role=='Investigator' ){ ?>
         $("div#msg" ).append('To unlock this case click on "<b>Unlock Case</b>" button.');
       <?php } ?>
       $("#notify_client_btn").remove();
-      <?php if($role=='Administrator'){ ?>
+      <?php if($role=='Administrator' || $role=='Investigator' ){ ?>
         $("#export_case1").click(function(e){
           $("div#unlock_case_dialog").dialog("open");
           e.preventDefault();
@@ -122,7 +122,7 @@ if( $case['is_exported']==0 ){
             </tr>
             <tr class="odd">
               <td>Due Date:</td>
-              <td><?php if($case['due_date']=="Pending") echo "Pending"; else echo date('Y-m-d',$case['due_date']); ?> </td>
+              <td><?php if($case['due_date']=="Pending" || empty($case['due_date'])) echo "Pending"; else echo date('l, F d, Y',$case['due_date']); ?> </td>
             </tr>
             <tr class="even">
               <td>Assigned To:</td>
@@ -258,6 +258,8 @@ if( $case['is_exported']==0 ){
                   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
                     <?php $class = 'even';
                     foreach($notifications as $Communication):
+                    if($Communication['notification_type'] != 'Investigator'):
+                     
                       $class = ($class=='even')? 'odd' : 'even';
                       $style = '';
                       if($Communication['notification_type']=='Admin'):
@@ -271,6 +273,7 @@ if( $case['is_exported']==0 ){
                           <div style="word-wrap:break-word;margin-right: 15px; width:290px"><?= nl2br($Communication['comments'])  ;?></div>
                         </td>
                       </tr>
+                      <?php   endif; ?>
                     <?php endforeach; ?>
                   </table>
                 </div>
@@ -483,8 +486,8 @@ if( $case['is_exported']==0 ){
         <div class="btnlt"></div>
         <div class="btnmid">
           <?php 
-          if($role=='Administrator'){
-                   // echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case',array('plugin'=>'cases','controller'=>'cases','action'=> 'unlocked','admin'=>true,$id),array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
+          if($role == 'Administrator' || $role == 'Investigator'){
+                    // echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case',array('plugin'=>'cases','controller'=>'cases','action'=> 'unlocked','admin'=>true,$id),array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
              echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case','javascript:void(0);',array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
           } else {
                     echo $this->Html->link( $this->Html->image('unlock.png',array('style'=>'vertical-align: text-bottom;')).'&nbsp;&nbsp;Unlock Case','javascript:void(0);',array('escape'=>false,'id'=>'export_case1','style'=>'color:#FFFFFF'));
@@ -516,12 +519,14 @@ if( $case['is_exported']==0 ){
               <div class="scroll-pane" >
                 <div style="width:100%">
                   <table width="100%" style="width:550px" border="0" cellspacing="0" cellpadding="0" class="tblcaselist">
-                    <?php $class = 'even'; foreach($notes as $InvestigatorNote): $class = ($class=='even')? 'odd' : 'even'; ?>
+                   <?php  if(!empty($userList)) { ?>
+                    <?php $class = 'even'; $userList=array_reverse($userList); foreach($userList as $InvestigatorNote): $class = ($class=='even')? 'odd' : 'even'; ?>
                     <tr class="<?php echo $class;?>" >
-                      <td width="150"><?php echo @$userList[$InvestigatorNote['user_id']];?>: (<?=date('d-m-Y',$InvestigatorNote['created']);?>):</td>
-                      <td><?=nl2br($InvestigatorNote['case_notes'])  ;?> </td>
+                      <td width="150"><?php   echo $InvestigatorNote['fname'].' '.$InvestigatorNote['lname'];?>: (<?=date('d-m-Y',$InvestigatorNote['created']);?>):</td>
+                      <td><?=nl2br($InvestigatorNote['comments'])  ;?> </td>
                     </tr>
                   <?php endforeach; ?>
+                <?php } ?>
                 </table>
               </div>
             </div>
@@ -583,7 +588,7 @@ if( $case['is_exported']==0 ){
 
 <div id="preview_dialog_info" title="Preview" ></div>
 <div id="unlock_case_dialog" title="Unlock Case" ><br/>
-  <?php if($role=='Administrator'){ ?>
+  <?php if($role=='Administrator' || $role=='Investigator' ){ ?>
     Are you sure you want to unlock the case?
     <div class="floatright pt15" id="floatrightbtn" style="padding-top:20px;">
       <div class="btnlt"></div>
@@ -601,7 +606,7 @@ if( $case['is_exported']==0 ){
   <div style="color: #535353;font-family: Arial,Helvetica,sans-serif;font-size: 12px;padding:5px;">
     <div style="text-align:justify;">
       <?php if($disabled) { echo 'The case has been locked, you cannnot change anything.'; 
-      if($role=='Administrator'){ 
+      if($role=='Administrator' || $role=='Investigator' ){ 
         echo 'To unlock this case click on "<b>Unlock Case</b>" button.'; 
       } 
     } else {

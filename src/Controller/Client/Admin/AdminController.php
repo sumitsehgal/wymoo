@@ -337,7 +337,6 @@ public function casenotes($id) {
             'id' => $id
         ]
     ])->contain(['Quotes','CaseNotes','CaseNotifications'])->first();
-
     $investor = null;
     if($case['assigned_to']!=''){
         $investor = $this->Users->find('all',[
@@ -370,10 +369,8 @@ public function casenotes($id) {
         ])->first();
         $case['case_notifications'][$key]['creator_name'] = $creator['fname'].' '.$creator['lname'];
     }
-        //echo"<pre>";print_r($case);echo "</pre>";die();
     $result[$model]=$case;
     $result['User']=$user;
-        //print_r($result);die();
     $attachments = [];
     $directory = Configure::read('AMU.directory') . DS . 'CaseTable' . DS. $id .'_photo';     
     $files = glob ("$directory/*");
@@ -401,7 +398,6 @@ public function casenotes($id) {
         $data = $this->request->getData();
         if(isset($data['Cases']['notification']) && !empty($data['Cases']['notification']))
         {
-
             $case_notifications = $this->CaseNotifications->newEntity();
             $caseNdata['case_id']=$id;
             $caseNdata['user_id']=$case['user_id'];
@@ -413,43 +409,72 @@ public function casenotes($id) {
             $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
             $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
             $this->CaseNotifications->save($case_notifications);
-
+            
              $information = $this->Users->find('all',[
                'conditions' => [
                 'email' => $user->email
                ]
             ])->first();
            $this->_sendEmail($user->email, [Configure::read('default_email.email')=>Configure::read('default_email.name')], Configure::read('noreply_email.email'),' Your case has been updated' ,'notify', array('result' =>  $information) );
-
-
         }
         if(isset($data['Cases']['notes']) && !empty($data['Cases']['notes']))
         {
-            $caseNdata = [];
-            $case_notes = $this->CaseNotes->newEntity();
+            $case_notifications = $this->CaseNotifications->newEntity();
             $caseNdata['case_id']=$id;
             $caseNdata['user_id']=$case['user_id'];
-            $caseNdata['case_notes']=$data['Cases']['notes'];
+            $caseNdata['comments']=$data['Cases']['notes'];
             $caseNdata['creator_id']=$this->Auth->User('id');
-            $caseNdata['fields_values']='[]';
-            $caseNdata['case_status'] = (isset($data['Cases']['case_status']) && !empty($data['Cases']['case_status'])) ? $data['Cases']['case_status'] : '';
-            $caseNdata['case_status_id'] = (isset($data['Cases']['case_status_id']) && !empty($data['Cases']['case_status_id'])) ? $data['Cases']['case_status_id'] : 0;
+            $caseNdata['notification_type']='Investigator';
             $caseNdata['created']=time();
             $caseNdata['modified']=time();
-            $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
-            $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
-            $this->CaseNotes->save($case_notes);
+            $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
+            $case_notifications = $this->CaseNotifications->patchEntity($case_notifications, $caseNdata);
+            $this->CaseNotifications->save($case_notifications);
+            
 
-           
+            // $caseNdata = [];
+            // $case_notes = $this->CaseNotes->newEntity();
+            // $caseNdata['case_id']=$id;
+            // $caseNdata['user_id']=$case['user_id'];
+            // $caseNdata['case_notes']=$data['Cases']['notes'];
+            // $caseNdata['creator_id']=$this->Auth->User('id');
+            // $caseNdata['fields_values']='[]';
+            // $caseNdata['case_status'] = (isset($data['Cases']['case_status']) && !empty($data['Cases']['case_status'])) ? $data['Cases']['case_status'] : '';
+            // $caseNdata['case_status_id'] = (isset($data['Cases']['case_status_id']) && !empty($data['Cases']['case_status_id'])) ? $data['Cases']['case_status_id'] : 0;
+            // $caseNdata['created']=time();
+            // $caseNdata['modified']=time();
+            // $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+            // $case_notes = $this->CaseNotes->patchEntity($case_notes, $caseNdata);
+            // $this->CaseNotes->save($case_notes);
 
         }
         return $this->redirect(['action' => 'casenotes',$id]);
     }
-    $userList = $this->Users->find('list', ['keyField' => 'id',
-        'valueField' => 'fname'])->toArray();
+    $user_data = $this->Users->find('all')->toArray();
+    $notification = $this->CaseNotifications->find('all',['conditions'=>[
+            'user_id =' => $case['user_id'],
+            'notification_type ='  => 'Investigator'
+    ]])->toArray();
+    if($notification)
+    {   foreach($notification  as $userdata)
+        {
+            $detail = $this->Users->find('all',['conditions'=>[
+            'id =' => $userdata['creator_id'],
+            ]])->first();
+            if($detail)
+            {
+                $data_list['fname']=$detail['fname'];
+                $data_list['lname']=$detail['lname'];
+                $data_list['comments']=$userdata['comments'];
+                $data_list['created']=$userdata['created'];
+            } 
+            $userList[] = $data_list;
+        } 
+    }if(empty($userList)){
+        $userList = '';
+    }
     $this->set(compact('id','role','breadcumb','caseIcons','model','result', 'userList', 'extension'));
 }
-
 public function casenotes2($id) {
     $this->viewBuilder()->setLayout('fancybox');
     $this->loadModel('Cases');
@@ -476,28 +501,29 @@ public function casenotes2($id) {
         //print_r($result);die();
     $this->set(compact('id','role','breadcumb','caseIcons','model','result'));
 }
-public function caseunlock($id = null){
-        if($this->Auth->User("role")=='Administrator'){
-            $this->loadModel('Cases');
-             $case = $this->Cases->find('all',[
-                'conditions' => [  'id' => $id ]])->first(); 
-            if(empty($case)){
-                $this->Session->setFlash(__('Invalid case id.', true), 'error');
-                if ($this->referer() != '/') {
-                    $this->redirect($this->referer());
-                } else {
-                    $this->redirect(array('action' => 'casenotes', $id));
-                }
+public function caseunlock($id = null)
+{
+    if($this->Auth->User("role")=='Administrator' || $this->Auth->User("role")=='Investigator' ){
+        $this->loadModel('Cases');
+         $case = $this->Cases->find('all',[
+            'conditions' => [  'id' => $id ]])->first(); 
+        if(empty($case)){
+            $this->Session->setFlash(__('Invalid case id.', true), 'error');
+            if ($this->referer() != '/') {
+                $this->redirect($this->referer());
+            } else {
+                $this->redirect(array('action' => 'casenotes', $id));
             }
-            $updatedData['is_exported'] = 0;
-            $cases = TableRegistry::get('Cases');
-            $query = $cases->query();
-            $query->update()
-            ->set($updatedData)
-            ->where(['id' => $id])
-            ->execute();
         }
-        $this->redirect(array('action' => 'casenotes',$id));
+        $updatedData['is_exported'] = 0;
+        $cases = TableRegistry::get('Cases');
+        $query = $cases->query();
+        $query->update()
+        ->set($updatedData)
+        ->where(['id' => $id])
+        ->execute();
+    }
+    $this->redirect(array('action' => 'casenotes',$id));
         
 }
 public function export($id)
@@ -506,8 +532,9 @@ public function export($id)
     $this->viewBuilder()->setLayout('exportdoc');
     $this->loadModel('Cases');
     $this->loadModel('Users');
-
-
+    
+    $discounts = Configure::read('discount');
+    
     $role = $this->Auth->User('role');
     $breadcumb = '<h1 class="relative">Case <span>Notes </span></h1>';
     $caseIcons = Configure::read('case_icon');
@@ -517,7 +544,15 @@ public function export($id)
             'id' => $id
         ]
     ])->contain(['Quotes','CaseNotes','CaseNotifications'])->first();
-
+    
+    $discount= '';
+    if(!empty($case['discount'])){
+        foreach ($discounts as $key1 => $val1) {
+            if($key1 == $case['discount']){
+                $discount=$val1;
+            }
+        }
+    }
     $investor = null;
     if($case['assigned_to']!=''){
         $investor = $this->Users->find('all',[
@@ -547,7 +582,7 @@ public function export($id)
     $result[$model]=$case;
     $result['User']=$user;
         //print_r($result);die();
-    $this->set(compact('id','role','breadcumb','caseIcons','model','result', 'directory','investor'));
+    $this->set(compact('id','role','breadcumb','caseIcons','model','result', 'directory','investor','discount'));
 
 }
 

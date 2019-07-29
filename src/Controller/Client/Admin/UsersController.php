@@ -68,7 +68,6 @@ class UsersController extends AppController
             $data = $this->request->getData();
             $data['role']= Configure::read('user_types')[$data['user_type_id']];
             $validator = new Validator();
-
             $validator
 					->requirePresence('username')
 					->notEmpty('username','This field cannot be left blank, please try again.')

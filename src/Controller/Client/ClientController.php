@@ -92,23 +92,22 @@ class ClientController extends AppController
 
     public function notifications()
     {
+        $session = $this->getRequest()->getSession();
         $this->loadModel('Cases');
+        $this->loadModel('Users');
         $this->loadModel('CaseNotifications');
         $this->CaseNotifications->updateAll(array('is_new'=>0),array('user_id'=>$this->Auth->User('id')));
-
+        $session->delete('notification');
         $result = $this->Cases->find('all',array('conditions'=>array('Cases.user_id'=>$this->Auth->User('id'))))->first();
-        // echo "<pre>"; print_r($result); die;
+       
         if(!empty($result) && $result->is_exported==1)
         {
             $this->Flash->error('Your case is in progress and notifications are now closed.  Contact your investigator for assistance.');
             $this->set('valid', 'disabled');
 
         }
-
         $this->set('result', $result);
-
         $isPost = $this->request->is('post');
-        
         if ($isPost) 
         {
             if(!empty($result) && $result->is_exported==1)
@@ -126,10 +125,9 @@ class ClientController extends AppController
          $data = $this->request->getData();
         if(!empty($data) && !empty($data['notification']) && !empty($result) )
         {
-         $data['notify'] = '';
-
+            $data['notify'] = '';
             // TODO: Validation Pending
-         $cases= TableRegistry::get('Cases');
+            $cases= TableRegistry::get('Cases');
             $case = $cases->get($result->id); // Return article with id = $id (primary_key of row which need to get updated)
             $case->is_notifications = '';
 

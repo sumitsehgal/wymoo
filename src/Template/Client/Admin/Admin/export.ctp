@@ -76,7 +76,7 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                     </tr>
                     <tr>
                       <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1">Due Date:</td>
-                      <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top"><?php if($case['due_date']=="Pending") echo "Pending"; else echo date('Y-m-d',$case['due_date']); ?></td>
+                      <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top"><?php if($case['due_date']=="Pending" || empty($case['due_date'])) echo "Pending"; else echo date('l, F d, Y',$case['due_date']); ?></td>
                     </tr>
                     <tr>
                       <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1">Assigned To:</td>
@@ -90,11 +90,11 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
                     <tr>
                       <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1">Discount:</td>
                       <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top">     
-                        <?php echo $case['discount']; ?></td>
+                        <?php if(!empty($discount)){ echo $discount; }else{  echo '0';  }  ?></td>
                     </tr>
                       <tr>
                       <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1">Fee:</td>
-                      <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top"><?php echo $case['fee'];?></td>
+                      <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top"><?php if(!empty($case['fee'])){ echo '$'.$case['fee'];}else { echo '0'; } ?></td>
                     </tr>
                    
                   </table>

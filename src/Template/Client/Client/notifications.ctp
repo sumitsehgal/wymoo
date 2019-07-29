@@ -1,7 +1,3 @@
-
-<style>
-
-</style>
 <?= $this->Flash->render() ?>
 <div id="myTabContent" class="tab-content">
 

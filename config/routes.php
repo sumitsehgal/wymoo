@@ -69,7 +69,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/client/ajax-delete/*', ['controller' => 'Client', 'action' => 'ajaxDelete']);
     $routes->connect('/client/test', ['controller' => 'Client', 'action' => 'test']);
     $routes->connect('/client/download2/*', ['controller' => 'Client', 'action' => 'download2']);
-    
+    $routes->connect('/client/users/login', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('/client/users', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('/client/login', ['controller' => 'Users', 'action' => 'login']);
+   
     // $routes->connect('/admin/login', ['controller' => 'Client', 'action' => 'adminLogin']);
     // $routes->connect('/admin/casebrowser', ['controller' => 'Client', 'action' => 'adminCasebrowser']);
     
