@@ -87,11 +87,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <li class="<?php echo $this->request->getParam('action') == 'tracker' ? 'active' : ''; ?>">
                     <a href="/client/client/tracker" class="">Case Tracker</a></li>
                 <li  style="position: relative;" class="<?php echo $this->request->getParam('action') == 'notifications' ? 'active' : ''; ?>">
-                    <?php
-                    $session = $this->getRequest()->getSession();
-                     if($session->check('notification') && $session->read('notification') == 1 ) : ?>
-                    <img src="/img/email.png"  class="email_img" style="position: absolute;right: -5px;top: -12px;z-index: 6;" alt="">
-                    <?php endif; ?>
+                    <img src="/img/email.png"  class="check_notify" style="position: absolute;right: -5px;top: -12px;z-index: 6; display: none;">
+                    
                     <a href="/client/client/notifications" class="">Notifications</a></li>
                 <li class="<?php echo $this->request->getParam('action') == 'caseedit' ? 'active' : ''; ?>">
                     <a href="/client/client/caseedit" class="">Edit Case Data</a></li>
@@ -164,6 +161,25 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </div>
         </div>
     </footer>
+    <script type="text/javascript">
+           setInterval(function(){
+               var url = "<?php echo $_SERVER['REQUEST_URI']; ?>";
+               if(url != '/client/client/notifications')
+               {    var id = "<?php echo $Auth->user('id'); ?>";
+                    $.ajax(
+                    {   type : 'POST',
+                        url  : '/client/admin/checknotify',
+                        data : {id:id},  
+                        success: function(success) 
+                        { if(success == '1')
+                           {
+                             $('.check_notify').show();
+                           }
+                        }
+                    }); 
+               }
+            },20);
+    </script>
     
 </body>
 </html>

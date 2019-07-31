@@ -132,26 +132,7 @@ class UsersController extends AppController
 
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
-	        if(!empty($user))
-            {
-                $this->loadModel('CaseNotifications');  
-                $notification = $this->CaseNotifications->find('all',['conditions'=>[
-                    'user_id =' => $user['id'],
-                    'is_new ='  => '1'
-                ]])->toArray();
-                if($notification)
-                {
-                    $user['notification'] = "1";
-                    $session->write('notification', 1);
-                }
-                else{
-                    $user['notification'] = "0"; 
-                    $session->write('notification', 0);
-                }
-
-
-            }
-            if ($user['user_type_id'] == '1') {
+	        if ($user['user_type_id'] == '1') {
 		        $this->Auth->setUser($user);
                 $this->Flash->success(__($user['email'].' you have successfully logged in.'));
                 return $this->redirect('/client/client/tracker');

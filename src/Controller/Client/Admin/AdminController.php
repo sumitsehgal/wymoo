@@ -53,6 +53,7 @@ class AdminController extends AppController
         ->where(['id' => $id])
         ->execute(); 
         
+
         foreach ($case['case_notes'] as $key => $note) {
             $note_creator = $this->Users->find('all',[
                 'conditions' => [
@@ -154,6 +155,24 @@ public function checkread()
 
     }  
 
+}
+public function checknotify()
+{
+    if(!empty($this->request->getData()['id']))
+    {
+         $this->loadModel('CaseNotifications');  
+                $notification = $this->CaseNotifications->find('all',['conditions'=>[
+                    'user_id =' => $this->request->getData()['id'],
+                    'is_new ='  => '1'
+                ]])->toArray();
+        if($notification){
+          echo '1'; die;
+        }
+        else{
+          echo '0';  die;         
+        }
+    }
+   
 } 
 public function caseedit($id){
     $this->viewBuilder()->setLayout('admin');
@@ -532,7 +551,7 @@ public function export($id)
     $this->viewBuilder()->setLayout('exportdoc');
     $this->loadModel('Cases');
     $this->loadModel('Users');
-    
+    $this->loadModel('CaseNotifications');
     $discounts = Configure::read('discount');
     
     $role = $this->Auth->User('role');
@@ -581,7 +600,52 @@ public function export($id)
     ])->first();
     $result[$model]=$case;
     $result['User']=$user;
-        //print_r($result);die();
+    $notification = $this->CaseNotifications->find('all',['conditions'=>[
+            'user_id =' => $case['user_id'],
+            'notification_type ='  => 'Investigator'
+    ]])->toArray();
+    if($notification)
+    {   foreach($notification  as $userdata)
+        {
+            $detail = $this->Users->find('all',['conditions'=>[
+            'id =' => $userdata['creator_id'],
+            ]])->first();
+            if($detail)
+            {
+                $fname=$detail['fname'];
+                $lname=$detail['lname'];
+                $data_list['created_by']=$fname.' '.$lname;
+                $data_list['comments']=$userdata['comments'];
+                $data_list['created']=$userdata['created'];
+            } 
+            $userList[] = $data_list;
+            $result['InvestigatorNote']=$userList;
+        } 
+    }if(empty($userList)){
+         $result['InvestigatorNote']='';
+    }
+    $notification1 = $this->CaseNotifications->find('all',['conditions'=>[
+            'user_id =' => $case['user_id'],
+            'notification_type !='  => 'Investigator'
+    ]])->toArray();
+    if($notification1)
+    {   foreach($notification1  as $userdata1)
+        {
+            $detail1 = $this->Users->find('all',['conditions'=>[
+            'id =' => $userdata1['creator_id'],
+            ]])->first();
+            if($detail1)
+            {
+                $data_list1['notification_type']=$userdata1['notification_type'];
+                $data_list1['comments']=$userdata1['comments'];
+                $data_list1['created']=$userdata1['created'];
+            } 
+            $userList1[] = $data_list1;
+            $result['Communication']=$userList1;
+        } 
+    }if(empty($userList1)){
+        $result['Communication'] = '';
+    }
     $this->set(compact('id','role','breadcumb','caseIcons','model','result', 'directory','investor','discount'));
 
 }

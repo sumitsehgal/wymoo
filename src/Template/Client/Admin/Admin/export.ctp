@@ -345,8 +345,104 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
               </tr>
              
            
-        
+          <?php if(!empty($result['Communication'])){?>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td><img src="<?php echo $base_url.'img/communication.jpg'; ?>" width="151" /></td>
+              </tr>
+              <tr>
+                <td valign="top">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #9d9879; font-size:13px; font-family:Arial, Helvetica, sans-serif; color:#000;">
+                    <?php 
+          $class = 'even';
+          foreach($result['Communication'] as $Communication){
+            $class = ($class=='even')? 'odd' : 'even';
+            $style = ($Communication['notification_type']=='Admin')? 'style="font-weight:bold"' : '';
+            if($Communication['notification_type']=='Admin'){
+              $Communication['notification_type'] = 'Investigator';
+            
+            }
+            if($class=='even'){
+        ?>
+                    <tr class="<?php //echo $class;?>" <?php echo $style;?>>
+                      <td  width="200" style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1"><?php echo $Communication['notification_type'] . '('. date('d-m-Y',$Communication['created']) ;?>):</td>
+                      <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top" >
+                        <div style="width:200px; word-wrap:break-word;"><?php echo nl2br($Communication['comments'])  ;?></div>
+                      </td>
+                    </tr>
+                    <?php 
+            }else{ ?>
+                    <tr class="<?php //echo $class;?>" <?php echo $style;?>>
+                      <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1"><?php echo $Communication['notification_type'] . '('. date('d-m-Y',$Communication['created']) ;?>):</td>
+                      <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top" >
+                        <div style="width:200px; word-wrap:break-word;"><?php echo nl2br($Communication['comments'])  ;?></div>
+                      </td>
+                    </tr>
+                    <?php
+              
+              }
+    } ?>
+                  </table>
+                </td>
+              </tr>
+              <?php } ?>
+    
             </table>
+          </td>
+        </tr>
+       
+        <tr>
+          <td valign="top">&nbsp;</td>
+        </tr>
+        <?php if(!empty($result['InvestigatorNote'])){?>
+        <tr>
+          <td valign="top"><img src="<?php echo $base_url.'img/investigator_notes.jpg'; ?>" width="151" /></td>
+        </tr>
+        <tr>
+          <td  valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #9d9879; font-size:13px; font-family:Arial, Helvetica, sans-serif; color:#000;">
+              <?php 
+          $class = 'even';
+          foreach($result['InvestigatorNote'] as $InvestigatorNote){
+            $class = ($class=='even')? 'odd' : 'even';
+        if($class=='even'){   
+        ?>
+              <tr class="<?php echo $class;?>" >
+                <td  width="200" style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1"><?php echo $InvestigatorNote['created_by'];?>: (<?php echo  date('d-m-Y',$InvestigatorNote['created']);?>):</td>
+                <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top">
+                  <div style="width:400px; word-wrap:break-word;"><?php echo nl2br($InvestigatorNote['comments'])  ;?></div>
+                </td>
+              </tr>
+              <?php 
+        }else{?>
+              <tr class="<?php echo $class;?>" >
+                <td  width="200" style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top; background-color:#C6D9F1"><?php echo $InvestigatorNote['created_by'];?>: (<?php echo  date('d-m-Y',$InvestigatorNote['created']);?>):</td>
+                <td style="border-left:1px solid #ffffff; border-right:1px solid #dadada; border-bottom:1px solid #e8e8e8; border-top:1px solid #fbfbfb; padding:3px 10px; line-height:18px; vertical-align:top">
+                  <div style="width:400px; word-wrap:break-word;"><?php echo nl2br($InvestigatorNote['comments'])  ;?> </div>
+                </td>
+              </tr>
+              <?php }
+     
+     } ?>
+            </table>
+          </td>
+        </tr>
+        <?php } ?>
+         
+        <tr>
+          <td valign="top">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>        
+           
+
+
+
+            <!-- </table>
           </td>
         </tr>
        
@@ -357,4 +453,4 @@ $this->Form->create($result,['class'=>'form-inline','id'=>'CaseTableAdminCasenot
         <tr>
           <td valign="top">&nbsp;</td>
         </tr>
-      </table>
+      </table> -->

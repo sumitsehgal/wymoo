@@ -97,7 +97,6 @@ class ClientController extends AppController
         $this->loadModel('Users');
         $this->loadModel('CaseNotifications');
         $this->CaseNotifications->updateAll(array('is_new'=>0),array('user_id'=>$this->Auth->User('id')));
-        $session->delete('notification');
         $result = $this->Cases->find('all',array('conditions'=>array('Cases.user_id'=>$this->Auth->User('id'))))->first();
        
         if(!empty($result) && $result->is_exported==1)
