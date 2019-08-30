@@ -14,20 +14,14 @@
             </script>
         </div>
 
-        <div class="table-responsive border_color" style="height:100%">
-                <table class="table table-hover table_td">
-                    <tbody>
-                    <?php if(!empty($notifications)):  ?>
-                    <?php foreach($notifications as $noti):  ?>
-                        <tr class="odd">
-                            <td width="40%"><?php echo $noti->notification_type; ?> (<?php echo date('d-m-Y', $noti->created); ?>):</td>
-                            <td width="60%"><?php echo $noti->comments; ?></td>
-                        </tr>
-            <?php endforeach;  ?>
-            <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
+        <div class="table-responsive border_color" style="height:100%"> <table
+        class="table table-hover table_td"> <tbody> <?php
+        if(!empty($notifications)):  ?> <?php   foreach($notifications as
+        $noti):  ?> <tr class="odd"> <td width="40%"><?php echo
+        ($noti->notification_type == 'Admin')? "Investigator" :
+        $noti->notification_type ?> (<?php echo date('d-m-Y', $noti->created);
+        ?>):</td> <td width="60%"><?php echo $noti->comments; ?></td> </tr>
+        <?php endforeach;  ?> <?php endif; ?> </tbody> </table> </div>
 
         <div class="notification_case">
 

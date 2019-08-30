@@ -27,6 +27,6 @@ Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $result['password_
 
 				echo $this->Html->link($url,$url);?> <?php /*?> or just copy and paste this URL <?php echo $this->Html->link($url,$url);?> on your browser's address bar and press the return or enter key<?php */?> <br>
                         <br  />
-                <small>Copyright © . Wymoo, LLC. All Rights Reserved. All services are strictly confidential.</small>
+                <small>Copyright © Wymoo, LLC. All Rights Reserved. All services are strictly confidential.</small>
 
                 

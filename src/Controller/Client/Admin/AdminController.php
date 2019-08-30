@@ -163,7 +163,8 @@ public function checknotify()
          $this->loadModel('CaseNotifications');  
                 $notification = $this->CaseNotifications->find('all',['conditions'=>[
                     'user_id =' => $this->request->getData()['id'],
-                    'is_new ='  => '1'
+                    'is_new ='  => '1',
+                    'notification_type !=' => 'Investigator',
                 ]])->toArray();
         if($notification){
           echo '1'; die;
@@ -865,11 +866,9 @@ public function changeCase()
         {
                 //$this->loadModel('CaseStatus');
             $case_status = Configure::read('case_status');
-
-
+          
             $updatedData = ['case_status_id' => $data['case_status'], 'case_status' => $case_status[$data['case_status']]['title'] ];
-
-
+             
 
             if($data['case_status'] >= 4  && $result['is_submited']!=1)
             {
@@ -890,10 +889,10 @@ public function changeCase()
             $case_notes = $this->CaseNotes->newEntity();
             $caseNdata['case_id']=$data['case_id'];
             $caseNdata['user_id']=$result['user_id'];
-            $caseNdata['case_notes']=$case_status[$result['case_status_id']]['description'];
+            $caseNdata['case_notes']=$case_status[$data['case_status']]['description'];
             $caseNdata['creator_id']=$this->Auth->User('id');
-            $caseNdata['case_status_id']=$result['case_status_id'];
-            $caseNdata['case_status']=$case_status[$result['case_status_id']]['title'];
+            $caseNdata['case_status_id']=$data['case_status'];
+            $caseNdata['case_status']=$case_status[$data['case_status']]['title'];
             $caseNdata['created']=time();
             $caseNdata['modified']=time();
             $caseNdata['fields_values']="";

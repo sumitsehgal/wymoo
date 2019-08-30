@@ -43,6 +43,17 @@ class ClientController extends AppController
                 'id' => $id
             ]
         ])->contain(['CaseNotes', 'CaseNotes.Users'])->first();
+       
+        foreach ($case['case_notes'] as $key => $note) {
+            $note_creator = $this->Users->find('all',[
+                'conditions' => [
+                    'id'=>$note['creator_id']
+                ]
+            ])->first();
+            $case['case_notes'][$key]['creator_user']=$note_creator;
+        }
+
+   
         $investor = null;
         if($case['assigned_to']!=''){
             $investor = $this->Users->find('all',[
@@ -154,11 +165,15 @@ class ClientController extends AppController
         } }
         if(!empty($result->id))
         { 
-            $notifications = $this->CaseNotifications->find('all', [
-              'conditions' => [
+
+            $conditions= [
                 'case_id' => $result->id,
-              ]
-            ])->all();
+                'notification_type !=' => 'Investigator',
+              ];
+            $notifications=$this->CaseNotifications->find('all', 
+                array('conditions' => $conditions,
+                    'order'=>array('CaseNotifications.id' => 'DESC')))->all();
+
             $this->set(compact('notifications'));
         }
         $this->viewBuilder()->setLayout('client');

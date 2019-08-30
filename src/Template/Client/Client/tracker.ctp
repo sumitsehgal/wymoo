@@ -140,10 +140,14 @@
                             <td>Case Status</td>
                         </tr>
                         <?php if(!empty($case['case_notes'])): $class ='even'; foreach($case['case_notes'] as $key=>$note): $class=($class=="even")?'odd':'even'; ?>
+                      
                             <tr class="<?=$class ?>">
                                 <td style="width:502px;"><?=$note['case_notes']?></td>
-                                <td width="15%"><?=date('D, M j',$note['created'])?></td>
-                                <td width="15%"><?=$note['user']['fname'].' '.$note['user']['lname']?></td>
+                                 <td width="15%"><?=date('D, M j',$note['created'])?></td>
+                                  <td width="15%">
+                                    <?php
+                              echo ($case['user_id'] != $note['creator_id']) ? 'Admin' : $note['creator_user']['fname'].' '.$note['creator_user']['lname'];  ?> 
+                                </td>
                                 <td width="" style="border-right:none;">
                                     <span class="floatleft"><?=$note['case_status']?></span> 
                                     <span class="statusicon"><?=$this->Html->image($caseIcons[$note['case_status_id']], [
